@@ -30,3 +30,13 @@ And the Norse symbolism is fitting: Lífþrasir survives Ragnarök and participa
 
 A fitting name for an operating system designed not merely to survive, but to continually renew itself. ᛟ
 
+
+## Roadmap and Research
+
+**Status: research and engineering design.** The proposed platform is not yet implemented.
+
+- [Master Roadmap to Completion](ROADMAP-TO-COMPLETION.md)
+- [Six implementation books](roadmap/INDEX.md)
+- [Research Atlas](research/00-RESEARCH-ATLAS.md)
+
+Priorities: local-first Linux health monitoring, safe repair, explicit user consent, rollback, isolated kernel experiments, and human-reviewed upstream contributions.
