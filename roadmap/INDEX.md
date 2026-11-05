@@ -10,3 +10,8 @@ Start with the [Master Roadmap](../ROADMAP-TO-COMPLETION.md).
 6. [Bibliography and open research questions](06-bibliography-and-research-ledger.md)
 
 Documentation describes **future work**, not verified software functionality. Each phase needs independent test evidence.
+
+## Execution appendices
+
+- [Issue-level implementation backlog and dependencies](07-IMPLEMENTATION-BACKLOG.md)
+- [Cross-platform validation and completion gates](08-TEST-MATRIX-AND-RELEASE-GATES.md)
