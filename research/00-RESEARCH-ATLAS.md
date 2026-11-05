@@ -11,6 +11,10 @@ Four separate verbs define the lifecycle:
 3. **Repair** using constrained, reversible plans approved at the appropriate risk tier.
 4. **Improve** in disposable sandboxes, publish only after independent evidence and human review.
 
+## Execution roadmap
+
+See the [Master Roadmap to Completion](../ROADMAP-TO-COMPLETION.md) and [implementation phase books](../roadmap/INDEX.md). Entries labeled *planned* below are not yet written.
+
 ## Navigating the library
 ### Foundations
 - [01 Vision and boundaries](01-VISION-AND-BOUNDARIES.md)
@@ -26,30 +30,30 @@ Four separate verbs define the lifecycle:
 - [09 Mímir memory and RAG](09-MIMIR-KNOWLEDGE-AND-RAG.md)
 - [10 Local AI model runtime](10-LOCAL-AI-RUNTIME.md)
 - [11 Agent sandbox and capability security](11-AGENT-SANDBOXING.md)
-- [12 Kernel, drivers and hardware](12-KERNEL-DRIVER-RESEARCH.md)
-- [13 Distribution compatibility](13-DISTRO-INTEGRATION.md)
+- 12 Kernel, drivers and hardware *(planned research file)*
+- 13 Distribution compatibility *(planned research file)*
 
 ### Engineering laboratory
-- [14 Reproduction and regression tests](14-TESTING-AND-REPRODUCTION.md)
-- [15 Fuzzing and fault injection](15-FUZZING-AND-FAULT-INJECTION.md)
-- [16 Continuous optimization](16-OPTIMIZATION-RESEARCH.md)
-- [17 Scheduler, memory, storage](17-RESOURCE-MANAGEMENT.md)
-- [18 GPU, NPU and accelerators](18-ACCELERATOR-SUPPORT.md)
-- [19 Immutable snapshots and boot recovery](19-TRANSACTIONAL-DEPLOYMENT.md)
-- [20 Distributed experimental federation](20-DISTRIBUTED-FEDERATION.md)
+- 14 Reproduction and regression tests *(planned research file)*
+- 15 Fuzzing and fault injection *(planned research file)*
+- 16 Continuous optimization *(planned research file)*
+- 17 Scheduler, memory, storage *(planned research file)*
+- 18 GPU, NPU and accelerators *(planned research file)*
+- 19 Immutable snapshots and boot recovery *(planned research file)*
+- 20 Distributed experimental federation *(planned research file)*
 
 ### Contribution, operations and strategy
-- [21 Upstream kernel gateway](21-UPSTREAM-CONTRIBUTIONS.md)
-- [22 Supply chain and provenance](22-PROVENANCE-AND-SUPPLY-CHAIN.md)
-- [23 Policy, governance and ethics](23-GOVERNANCE-AND-HUMAN-CONTROL.md)
-- [24 Privacy and offline mode](24-PRIVACY-AND-OFFLINE.md)
-- [25 Project APIs and contracts](25-API-AND-EVENT-SCHEMAS.md)
-- [26 Quality metrics and evaluation](26-EVALUATION-AND-METRICS.md)
-- [27 Roadmap and milestones](27-ROADMAP-AND-MILESTONES.md)
-- [28 Prototype experiments](28-PROTOTYPE-EXPERIMENTS.md)
-- [29 Security playbooks](29-INCIDENT-RESPONSE-PLAYBOOKS.md)
-- [30 Licensing and dependency review](30-LICENSING-AND-DEPENDENCIES.md)
-- [31 Research bibliography](31-RESEARCH-BIBLIOGRAPHY.md)
+- 21 Upstream kernel gateway *(planned research file)*
+- 22 Supply chain and provenance *(planned research file)*
+- 23 Policy, governance and ethics *(planned research file)*
+- 24 Privacy and offline mode *(planned research file)*
+- 25 Project APIs and contracts *(planned research file)*
+- 26 Quality metrics and evaluation *(planned research file)*
+- 27 Roadmap and milestones *(planned research file)*
+- 28 Prototype experiments *(planned research file)*
+- 29 Security playbooks *(planned research file)*
+- 30 Licensing and dependency review *(planned research file)*
+- 31 Research bibliography *(planned research file)*
 
 ### Advanced research
 - [32 AUTONOMOUS PATCH LIFECYCLE](32-AUTONOMOUS-PATCH-LIFECYCLE.md)
