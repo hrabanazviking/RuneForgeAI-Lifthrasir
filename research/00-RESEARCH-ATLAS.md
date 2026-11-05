@@ -51,6 +51,16 @@ Four separate verbs define the lifecycle:
 - [30 Licensing and dependency review](30-LICENSING-AND-DEPENDENCIES.md)
 - [31 Research bibliography](31-RESEARCH-BIBLIOGRAPHY.md)
 
+### Advanced research
+- [32 AUTONOMOUS PATCH LIFECYCLE](32-AUTONOMOUS-PATCH-LIFECYCLE.md)
+- [33 FORMAL POLICY VERIFICATION](33-FORMAL-POLICY-VERIFICATION.md)
+- [34 CLI DESKTOP AND ACCESSIBILITY](34-CLI-DESKTOP-AND-ACCESSIBILITY.md)
+- [35 POWER THERMALS AND MOBILITY](35-POWER-THERMALS-AND-MOBILITY.md)
+- [36 BUG LOCALIZATION AND STATIC ANALYSIS](36-BUG-LOCALIZATION-AND-STATIC-ANALYSIS.md)
+- [37 MYTHIC ECOSYSTEM INTEGRATION](37-MYTHIC-ECOSYSTEM-INTEGRATION.md)
+- [38 RELIABILITY CHAOS AND DISASTER RECOVERY](38-RELIABILITY-CHAOS-AND-DISASTER-RECOVERY.md)
+- [39 OPEN RESEARCH QUESTIONS](39-OPEN-RESEARCH-QUESTIONS.md)
+
 ## Cross-cutting tenets
 - The LLM never holds unrestricted root; deterministic executors enforce explicit scoped permissions.
 - **Research hypothesis is not a proven fix.** A passing test is evidence for a specified scope, not a guarantee.
