@@ -13,6 +13,8 @@ Lífþrasir is a **Mythic Engineering / RuneForgeAI research project** exploring
 
 **Current status:** research documents, GPLv2 license, project art and initial project organization. The planned autonomous Linux features are **not yet implemented**; proposals are labeled accordingly. Production kernel edits, boot changes and destructive system actions are outside the initial scope.
 
+![Viking_Tux_With_Girlfriends1.png](Viking_Tux_With_Girlfriends1.png)
+
 ## The engineering pantheon
 
 | Role | Technical purpose |
