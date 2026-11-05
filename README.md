@@ -1,3 +1,5 @@
+![Lifthrasir_Linux_Kernal_Project_Viking_Tux.png](Lifthrasir_Linux_Kernal_Project_Viking_Tux.png)
+
 # RuneForgeAI Lifthrasir
 
 ᛚᛁᚠᚦᚱᚨᛊᛁᚱ ⚡🌳
