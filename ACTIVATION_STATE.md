@@ -43,12 +43,16 @@ workers are claimed for slice A.
   F01 fault loop inside the VM (slice F), reset-to-golden proven
   twice (slice E), kill-switch halts the loop mid-run (slice G),
   host untouched throughout (lab-only work, all slices).
-- **Phase 2 — Host observe + propose: NOT STARTED.** Phase 1 exit
-  evidence now banked, so the block is lifted; entry also requires the
-  observer design checked against docs/CONFINEMENT-REVIEW.md. NEXT
-  SLICE (H): observer design + first unprivileged user-unit run
-  (read-only collectors -> ~/.local/state/lifthrasir/, proposals as
-  plan records, never executes; kill-switch flag stops it).
+- **Phase 2 — Host observe + propose: IN PROGRESS (started
+  2026-11-12, keeper run 12, slice H).** Observer design checked
+  against docs/CONFINEMENT-REVIEW.md (docs/OBSERVER-DESIGN.md);
+  lifthrasir-observer.service user unit ACTIVE on purpleraider
+  (read-only, hardened, quotas in force), writing cycles to
+  ~/.local/state/lifthrasir/. Phase 2 exit needs 7 days of observer
+  operation with zero host mutations — the clock started
+  2026-11-12 14:11 EST at the first unit run. NEXT: daily digest
+  review + continued operation; Phase 3 stays blocked on Phase 2
+  exit + Volmarr seeing the broker design.
 - **Phase 3 — Approval-gated repair classes: NOT STARTED.** Blocked on
   Phase 2 exit evidence + Volmarr seeing the broker design.
 - **Phase 4 — Upstream pipeline live: NOT STARTED.** Design is written
@@ -302,3 +306,20 @@ Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-ag
 - Suite: 1528 passed / 0 failed (unchanged -- the driver is lab tooling, no new unit tests claimed, as with slices E/F).
 - PHASE 1 EXIT MET (all items, each with a banked evidence pack): F01 fault detect -> propose -> approve -> fix -> verify -> rollback inside the VM (slice F); reset-to-golden proven twice (slice E); kill-switch halts the loop mid-run (slice G); host untouched throughout Phase 1 (slices A-G, lab-only). Phase tracker updated: Phase 1 COMPLETE.
 - NEXT SLICE (H, Phase 2 entry): observer design checked against docs/CONFINEMENT-REVIEW.md, then the first unprivileged systemd user-unit observer run (read-only host collectors -> ~/.local/state/lifthrasir/, proposals drafted as plan records only, NEVER executes; quotas bound it; kill-switch flag + documented command stops it; daily plain-language digest for Volmarr). Phase 2 exit needs 7 days of observer operation, so its clock starts when the unit first runs.
+
+---
+
+## Keeper tick - 2026-11-12 13:57-14:15 EST (keeper run 12)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers claimed. Work had stopped after run 11 (Phase 1 complete, no observer, no lab processes), so the keeper continued with slice H, the Phase 2 entry named by run 11.
+
+### Slice H - observer design + first unprivileged user-unit run: DONE -- Phase 2 STARTED
+
+- docs/OBSERVER-DESIGN.md (new): design checked against docs/CONFINEMENT-REVIEW.md in its own recommendation order -- systemd hardening first (adopted, adapted to a user unit), cgroup v2 caps (adopted), probe-dont-presume (adopted: NO user-namespace assumption, the Ubuntu/AppArmor conditional row), Landlock second and LSM last honestly NOT claimed. Catalog v0.2 recorded as Phase 3 preparation.
+- lab/host_observer.py (new): read-only live collectors (systemctl list-units --failed, df, /proc) via the LIF-0202/0203/0204 lab modules; writes ONLY inside ~/.local/state/lifthrasir/ (events.jsonl, latest.json, proposals.json, DIGEST.md); proposals are lifthrasir.plan.v0.1 records validated by approval.plan_digest, records only, never executed; STOP flag file or engaged KillSwitch halts a cycle before collecting. Tests tests/test_host_observer.py: 6 tests.
+- units/lifthrasir-observer.service (new, banked template) installed to ~/.config/systemd/user/ and ENABLED + ACTIVE (pid 995441 at check): NoNewPrivileges yes, PrivateTmp, ProtectSystem strict, ProtectHome read-only with ReadWritePaths for exactly the state dir, CPUQuota 25pct, MemoryMax 512M, TasksMax 64, Nice 10, 300 s cycle. Its first confined cycle wrote cleanly. systemd-analyze verify on the template: no findings for this unit.
+- BUG FOUND AND FIXED IN-SLICE: the first manual cycle drafted 20 critical proposals for snap squashfs mounts, which are read-only and 100pct full BY DESIGN (false incidents), with duplicate plan_ids across filesystem/inode alerts. Fix: alerts on squashfs mountpoints excluded in gather_live; build_proposals dedupes by plan_id (new test). The false cycle stays in events.jsonl as honest history. After the fix: manual cycle = observed, 0 proposals, honest non-issue (no failed units; root 9pct, vault 1pct).
+- Kill-switch drill (scratch state dir): STOP flag -> cycle halted, nothing collected; flag removed -> observed. (The Phase 1 KillSwitch machinery drill remains slice G.)
+- Evidence: lab/evidence/sliceH-evidence.json (SLICEH_OK). Suite: 1534 passed / 0 failed (1528 + 6 new).
+- Phase 2 exit NOT met and not claimed: 7 days of observer operation with zero host mutations are required; the clock started 2026-11-12 14:11 EST. Host mutations this slice: none outside the observer state dir and the user-unit install itself; no broker; no root; Volmarr seat0 undisturbed; no Docker; no fingerprint; nothing pushed to the fixes repo.
+- NEXT: keeper verifies the observer is still cycling each tick, reviews the digest, and logs any real proposal; Phase 3 remains blocked on Phase 2 exit evidence + Volmarr seeing the broker design.

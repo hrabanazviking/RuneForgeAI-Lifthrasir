@@ -1,0 +1,29 @@
+[Unit]
+Description=Lifthrasir Phase 2 host observer (read-only, unprivileged)
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 %h/lifthrasir-forge/lab/host_observer.py --state-dir %h/.local/state/lifthrasir --interval 300
+Restart=on-failure
+RestartSec=30
+Nice=10
+# Confinement per docs/CONFINEMENT-REVIEW.md recommendation 2 (systemd
+# hardening first) and recommendation 4 (cgroup v2 caps). No user
+# namespaces are assumed (Ubuntu mediates them via AppArmor).
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.local/state/lifthrasir
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_UNIX
+LockPersonality=yes
+CPUQuota=25%
+MemoryMax=512M
+TasksMax=64
+
+[Install]
+WantedBy=default.target
