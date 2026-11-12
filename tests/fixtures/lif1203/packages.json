@@ -1,0 +1,88 @@
+{
+  "packages": [
+    {
+      "checksum": "sha256:bb3c41456f235593f3eaaec068c81be3e2f254e608f2f69127e1b3aac41ccf47",
+      "config_defaults": {
+        "demo.legacy": "on",
+        "demo.mode": "safe",
+        "demo.timeout": "30"
+      },
+      "files": {
+        "usr/lib/lifthrasir/core.bin": "core-1",
+        "usr/share/lifthrasir/demo.txt": "demo v1\n",
+        "usr/share/lifthrasir/legacy.txt": "legacy\n"
+      },
+      "name": "lifthrasir-demo",
+      "services": [
+        "lifthrasir-demo.service"
+      ],
+      "user_data_keys": [
+        "demo.user.notes"
+      ],
+      "version": "1.0.0"
+    },
+    {
+      "checksum": "sha256:4c30f692b0b0222648552f5c22e79271014061bb52edf57a735c6bcfd279ff05",
+      "config_defaults": {
+        "demo.mode": "safe",
+        "demo.new": "yes",
+        "demo.timeout": "45"
+      },
+      "files": {
+        "usr/lib/lifthrasir/core.bin": "core-2",
+        "usr/share/lifthrasir/demo.txt": "demo v2\n",
+        "usr/share/lifthrasir/new.txt": "new in v2\n"
+      },
+      "name": "lifthrasir-demo",
+      "services": [
+        "lifthrasir-demo.service",
+        "lifthrasir-helper.service"
+      ],
+      "user_data_keys": [
+        "demo.user.notes"
+      ],
+      "version": "1.1.0"
+    }
+  ],
+  "tampered": {
+    "checksum": "sha256:bb3c41456f235593f3eaaec068c81be3e2f254e608f2f69127e1b3aac41ccf47",
+    "config_defaults": {
+      "demo.legacy": "on",
+      "demo.mode": "safe",
+      "demo.timeout": "30"
+    },
+    "files": {
+      "usr/lib/lifthrasir/core.bin": "core-x",
+      "usr/share/lifthrasir/demo.txt": "demo v1\n",
+      "usr/share/lifthrasir/legacy.txt": "legacy\n"
+    },
+    "name": "lifthrasir-demo",
+    "services": [
+      "lifthrasir-demo.service"
+    ],
+    "user_data_keys": [
+      "demo.user.notes"
+    ],
+    "version": "1.0.0"
+  },
+  "unpinned": {
+    "config_defaults": {
+      "demo.legacy": "on",
+      "demo.mode": "safe",
+      "demo.timeout": "30"
+    },
+    "files": {
+      "usr/lib/lifthrasir/core.bin": "core-1",
+      "usr/share/lifthrasir/demo.txt": "demo v1\n",
+      "usr/share/lifthrasir/legacy.txt": "legacy\n"
+    },
+    "name": "lifthrasir-demo",
+    "services": [
+      "lifthrasir-demo.service"
+    ],
+    "user_data_keys": [
+      "demo.user.notes"
+    ],
+    "version": "1.0.0"
+  }
+}
