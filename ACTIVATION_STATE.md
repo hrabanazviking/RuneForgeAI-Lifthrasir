@@ -151,3 +151,31 @@ Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-ag
 - Banked: commit 008c4990bfc9ff31a73a8a38572d722af043bf5c (fetch-first, explicit refspec HEAD:refs/heads/main, ls-remote verified == local HEAD). Nothing pushed to the fixes repo; scrub gate still design-only.
 - Phase 1 exit NOT met: installed-system golden (D2, in progress), the F01 fault loop inside the guest, and the kill-switch drill remain.
 - Invariants: lab only; caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10, one VM); host untouched, Volmarr's session undisturbed; no Docker; no fingerprint; no QEMU left running by completed attempts.
+
+---
+
+## Keeper tick - 2026-11-12 11:47 EST (keeper run 5)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers claimed. Work had NOT stopped: slice D2 attempt 4 driver (pid 920324) and QEMU (pid 920339) were both alive, so no new slice was launched and no second VM was started (one-VM law).
+
+- Verified at 11:47-11:48 EST: driver log last line remains [11:37:22] calamares launched; polling until it exits or budget ends. Serial log shows repeated CALA_RUNNING polls.
+- Stall evidence strengthened: install-target.qcow2 still 193K (unchanged from launch); QEMU CPU time static at 00:00:54 over a 5s probe (guest near-idle). Calamares is running in guest but not installing.
+- Driver source check: branding staging line in lab/run_sliceD2.py is correct (/tmp/lifcfg/branding); no new code defect claimed from the serial echo rendering.
+- Action taken: NONE against the running attempt - do not relaunch blind, per run-4 instruction. The driver keeps polling to its 35-min budget (~12:12 EST), then should power off and write sliceD2-evidence.json with the calamares log tail naming the stall cause.
+- NEXT TICK: read sliceD2-evidence.json / sliceD2-run.log FIRST; iterate D2 from the named cause in the calamares log. F01 fault loop and kill-switch drill still remain after D2.
+- Phase 1 exit NOT met. Invariants: lab only, caps honoured, host/session untouched, no Docker, no fingerprint, nothing pushed to fixes repo.
+
+---
+
+## Keeper tick - 2026-11-12 11:49-12:35 EST (keeper run 6)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers claimed. Run 5's state entry was found appended but UNBANKED; this tick banks it with its own.
+
+### Slice D2 attempts 4-6: stall root-caused; attempt 7 in flight
+
+- Attempt 4 rode out its 35-min budget untouched (one-VM law; driver pid 920324, QEMU 920339). At 12:12:22 EST the budget expired; the driver collected its log, powered off, wrote evidence, exited clean (no QEMU left). Verdict: calamares_exited=False, target_partitioned=False, SLICED2_INCOMPLETE. Attempt-4 cala.log tail held ONLY three Qt XDG_RUNTIME_DIR warnings - Calamares hung right after Qt init with zero module logging (evidence: lab/evidence/sliceD2-attempt4-evidence.json, banked this tick).
+- Driver hardened for attempt 5 (run_sliceD2.py sha 78a4f5ae): calamares launched with -d debug + XDG_RUNTIME_DIR=/tmp/runtime-root (dir staged as root, mode 700); polls now record cala.log size + host-side target size every cycle and declare a stall after 4 unchanged polls (~3.5 min instead of 35); collection tail widened to 6000. Suite still 1520 passed / 0 failed.
+- Attempt 5 (12:17-12:24 EST): cala.log reached 11219 bytes in the first poll (debug logging works), then froze; stall detector broke at 12:21:58 and collected. BUT the collection markers had no arithmetic suffix, so the tty echo of the collection command satisfied wait_for before the real output arrived - evidence captured only the echo. That marker-race (the same class fixed in attempt 3) is a proven driver bug, fixed for attempt 6 (suffixed LOG_END2/POST_END2 markers + extra drain; sha c6440559). Evidence: lab/evidence/sliceD2-attempt5-evidence.json (poll_history + stall_detected=true are its real content).
+- Attempt 6 (12:26-12:32 EST): same stall signature (cala.log 11153 bytes, frozen from poll 1; target 197120 throughout), and the fixed collection captured the full log tail. ROOT CAUSE NAMED from the guest debug log (lab/evidence/sliceD2-attempt6-evidence.json): Calamares loads its modules, reports 9 view steps loaded, runs the requirements checker, then sits in the offscreen GUI on the partition ChoicePage - calculateNextEnabled: No partitioning choice has been made yet; applyActionChoice InstallChoice NoChoice none - followed by a GeoIP lookup from a view step, then silence. It is waiting for an interactive partitioning choice that no one will ever make: the unattended exec sequence never auto-started the install.
+- Attempt 7 (launched 12:34 EST, IN FLIGHT at banking): collection tail widened 6000 -> 12000 (the whole ~11 KB log) so the next evidence includes the log HEAD - which settings file and sequence Calamares actually parsed - to decide the fix (candidate roads for next tick, in order: (1) if our settings.conf was not the one parsed, fix delivery of it; (2) restore the stock show sequence with prompt-install false + pre-seeded partition choice via the partition view module config (initialPartitioningMode/initialSwapChoice already set - check why the ChoicePage still defaults to NoChoice; the staged partition.conf may need the full stock key set, e.g. defaultPartitionType / efi keys, to yield a choice); (3) only if Calamares proves unusable unattended, fall back to a scripted manual install road (partition + unpack by hand inside the guest) and record the deviation against the LIF-0101 recipe explicitly).
+- Phase 1 exit NOT met: installed golden (D2), F01 fault loop, kill-switch drill remain. Invariants: lab only; caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10, one VM at a time); host and Volmarr session untouched; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.

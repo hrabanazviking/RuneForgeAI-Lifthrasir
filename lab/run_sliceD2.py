@@ -193,34 +193,58 @@ def install_serial(ev, pid):
             return False
         ser.buf = ""
         log("config mounted; merging over stock module configs")
-        ser.send("rm -rf /tmp/lifcfg; mkdir -p /tmp/lifcfg/modules; cp /etc/calamares/modules/*.conf /tmp/lifcfg/modules/; cp /mnt/cfg/settings.conf /tmp/lifcfg/; cp /mnt/cfg/modules/*.conf /tmp/lifcfg/modules/; ln -s /usr/share/calamares/qml /tmp/lifcfg/qml; cp -r /etc/calamares/branding /tmp/lifcfg/branding; echo LIF_D2_STAGED$((1+1))")
+        ser.send("rm -rf /tmp/lifcfg; mkdir -p /tmp/lifcfg/modules; cp /etc/calamares/modules/*.conf /tmp/lifcfg/modules/; cp /mnt/cfg/settings.conf /tmp/lifcfg/; cp /mnt/cfg/modules/*.conf /tmp/lifcfg/modules/; ln -s /usr/share/calamares/qml /tmp/lifcfg/qml; cp -r /etc/calamares/branding /tmp/lifcfg/branding; sudo mkdir -p /tmp/runtime-root; sudo chmod 700 /tmp/runtime-root; echo LIF_D2_STAGED$((1+1))")
         if not ser.wait_for("LIF_D2_STAGED2", 30):
             ev["error"] = "config merge produced no marker"
             return False
         ser.buf = ""
-        ser.send("sudo QT_QPA_PLATFORM=offscreen nohup calamares -c /tmp/lifcfg >/tmp/cala.log 2>&1 & echo LIF_D2_CALA_LAUNCHED")
+        ser.send("sudo env QT_QPA_PLATFORM=offscreen XDG_RUNTIME_DIR=/tmp/runtime-root nohup calamares -d -c /tmp/lifcfg >/tmp/cala.log 2>&1 & echo LIF_D2_CALA_LAUNCHED")
         ser.wait_for("LIF_D2_CALA_LAUNCHED", 30)
         log("calamares launched; polling until it exits or budget ends")
         deadline = time.time() + INSTALL_BUDGET_S
         gone = False
+        ev["poll_history"] = []
+        ev["stall_detected"] = False
+        last_sig = None
+        stall_polls = 0
+        t0 = time.time()
         while time.time() < deadline:
             time.sleep(40)
             ser.buf = ""
-            ser.send("echo LIF_D2_STAT; pgrep -x calamares >/dev/null && echo CALA_RUNNING$((1+1)) || echo CALA_GONE$((1+1)); echo LIF_D2_STAT_END$((1+1))")
+            ser.send("echo LIF_D2_STAT; pgrep -x calamares >/dev/null && echo CALA_RUNNING$((1+1)) || echo CALA_GONE$((1+1)); wc -c /tmp/cala.log; echo LIF_D2_STAT_END$((1+1))")
             if not ser.wait_for("LIF_D2_STAT_END2", 25):
                 log("stat poll timed out (guest busy?)")
                 continue
             if "CALA_GONE2" in ser.buf:
                 gone = True
                 break
+            wm = re.findall(r"(\d+)\s+/tmp/cala\.log", ser.buf)
+            logsz = int(wm[-1]) if wm else -1
+            try:
+                tsz = TARGET.stat().st_size
+            except OSError:
+                tsz = -1
+            ev["poll_history"].append([round(time.time() - t0), logsz, tsz])
+            log(f"poll: cala.log={logsz} target={tsz}")
+            sig = (logsz, tsz)
+            if sig == last_sig:
+                stall_polls += 1
+            else:
+                stall_polls = 0
+                last_sig = sig
+            if stall_polls >= 4:
+                ev["stall_detected"] = True
+                log("stall detected: no log or target growth for 4 polls")
+                break
         ev["calamares_exited"] = gone
         log(f"calamares exited={gone}; collecting log + post state")
         ser.buf = ""
-        ser.send("tail -c 2500 /tmp/cala.log; echo LIF_D2_LOG_END; lsblk -o NAME,SIZE,TYPE; echo LIF_D2_POST_END")
-        ser.wait_for("LIF_D2_POST_END", 60)
-        tail = re.findall(r"(.*?)LIF_D2_LOG_END", ser.buf, re.S)
-        ev["cala_log_tail"] = (tail[-1][-2500:] if tail else "")
-        post = re.findall(r"LIF_D2_LOG_END(.*?)LIF_D2_POST_END", ser.buf, re.S)
+        ser.send("tail -c 12000 /tmp/cala.log; echo LIF_D2_LOG_END$((1+1)); lsblk -o NAME,SIZE,TYPE; ps aux | grep -i cala | grep -v grep; cat /proc/$(pgrep -x calamares | head -1)/status 2>/dev/null | head -n 12; echo LIF_D2_POST_END$((1+1))")
+        ser.wait_for("LIF_D2_POST_END2", 60)
+        ser.drain(3)
+        tail = re.findall(r"(.*?)LIF_D2_LOG_END2", ser.buf, re.S)
+        ev["cala_log_tail"] = (tail[-1][-12000:] if tail else "")
+        post = re.findall(r"LIF_D2_LOG_END2(.*?)LIF_D2_POST_END2", ser.buf, re.S)
         ev["post_lsblk"] = (post[-1].strip() if post else "")
         tm = re.search(r"(vd[ab])\s+32G", ev["post_lsblk"])
         ev["target_disk"] = tm.group(1) if tm else None
