@@ -1,0 +1,7 @@
+{
+  "fixture": {"fixture_id": "linux-6.12.117-x86_64", "arch": "x86_64", "source": {"version": "6.12.117"}, "safety": {"disposable_vm_only": true}},
+  "ltp_plan": {"plan_id": "ltp-subset-001", "workload": "ltp", "target": {"name": "lab-guest-01", "environment": "disposable-lab", "disposable": true}, "ltp_tests": ["open01", "read01", "fork01"], "seed": 42},
+  "syzkaller_plan": {"plan_id": "syz-001", "workload": "syzkaller", "target": {"name": "lab-guest-02", "environment": "disposable-lab", "disposable": true}, "syzkaller": {"iterations": 250, "timeout_s": 900}, "seed": 7},
+  "host_plan": {"plan_id": "evil-host", "workload": "syzkaller", "target": {"name": "production-host", "environment": "host", "disposable": false}},
+  "nondisposable_plan": {"plan_id": "evil-persist", "workload": "ltp", "target": {"name": "persistent-vm", "environment": "disposable-lab", "disposable": false}}
+}
