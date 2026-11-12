@@ -1,0 +1,1 @@
+{"baseline_samples":[0.1,0.102,0.098,0.101,0.099],"candidate_samples":[0.08,0.081,0.079,0.08,0.082],"schema":"lifthrasir.benchmark.v0.1","spec":{"pinned_env":{"OMP_NUM_THREADS":"1"},"repetitions":5,"schema":"lifthrasir.benchmark.v0.1","seed":7,"timeout_s":30.0,"warmup":1,"workload_id":"hash-chain"}}
