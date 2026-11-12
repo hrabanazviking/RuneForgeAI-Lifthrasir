@@ -50,3 +50,25 @@ survive the install (use a per-golden VARS copy); install time on
 
 No claim is made that unattended install works yet — this note is
 the research slice C owed; slice D is the proof.
+
+## Verdict 2026-11-12 (keeper runs 4-7, attempts 4-9): Calamares road DISPROVEN here
+
+The assumption above ("Calamares supports unattended operation" via an
+exec-first pre-seeded sequence) is false for stock Calamares 3.3.5 in
+this serial/offscreen lab, on two independent grounds, each with banked
+evidence (lab/evidence/sliceD2-attempt{4..7,9}-evidence.json):
+
+1. Exec-first sequence: the official settings.conf documentation states
+   an exec phase enqueues jobs only from viewmodules listed in the
+   immediately preceding SHOW phase. With no preceding show phase, the
+   partition/users viewmodules offer no jobs; Calamares sits in its GUI
+   on the partition ChoicePage (NoChoice) forever (attempts 4-7).
+2. Show-first sequence (attempt 9): the wizard parks on its first page
+   awaiting Next navigation; offscreen/serial operation provides none,
+   stock 3.3.5 has no auto-advance, and the partition pre-seed still
+   constructs as NoChoice during page setup.
+
+Adopted road (slice D3): scripted manual install inside the guest
+(partition + unsquashfs unpack + chroot configuration + GRUB EFI),
+which honours the LIF-0101 pin (same ISO, same packages.txt set) -
+the recipe never mandated Calamares. See ACTIVATION_STATE.md run 7.

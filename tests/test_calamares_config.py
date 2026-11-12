@@ -35,6 +35,8 @@ def test_settings_unattended_stock_keys():
     assert s["disable-cancel"] is True
     assert s["disable-cancel-during-exec"] is True
     assert s["prompt-install"] is False
+    assert s["hide-back-and-next-during-exec"] is True
+    assert s["quit-at-end"] is True
     assert s["dont-chroot"] is False
     assert "dont-cancel" not in s
     assert "disable-during-installation" not in s
@@ -42,7 +44,10 @@ def test_settings_unattended_stock_keys():
 
 def test_exec_is_stock_order_and_complete():
     s = build_settings(set(FULL))
-    exec_mods = s["sequence"][0]["exec"]
+    show_mods = s["sequence"][0]["show"]
+    assert "partition" in show_mods and "users" in show_mods
+    assert "summary" in show_mods
+    exec_mods = s["sequence"][1]["exec"]
     assert set(CRITICAL) <= set(exec_mods)
     assert "packages" in exec_mods and "automirror" in exec_mods
     order = [exec_mods.index(m) for m in
@@ -50,7 +55,7 @@ def test_exec_is_stock_order_and_complete():
     assert order == sorted(order)
     for stale in ("initcpiocfg", "initcpio", "services-systemd"):
         assert stale not in exec_mods
-    assert s["sequence"][1] == {"show": ["finished"]}
+    assert s["sequence"][2] == {"show": ["finished"]}
 
 
 def test_missing_critical_refused():
@@ -65,6 +70,7 @@ def test_render_settings_conf_stock_shape():
     assert "prompt-install: false" in text
     assert "modules-search: [ local ]" in text
     assert "- exec:" in text and "- partition" in text
+    assert "- show:" in text and "quit-at-end: true" in text
     assert "dont-cancel" not in text
 
 
@@ -73,8 +79,15 @@ def test_module_configs():
     u = users_config()
     assert u["user"]["name"] == "lab"
     assert u["hostname"]["template"] == "lifthrasir-lab"
-    ops = packages_config()["operations"][0]["install"]
-    assert ops == PINNED_PACKAGES
+    ops = packages_config()["operations"]
+    install = [op["install"] for op in ops if "install" in op]
+    assert install == [PINNED_PACKAGES]
+    remove = [op["remove"] for op in ops if "remove" in op]
+    assert remove and "calamares" in remove[0]
+    pc = partition_config()
+    assert pc["efiSystemPartition"] == "/boot/efi"
+    assert pc["userSwapChoices"] == ["none", "file"]
+    assert pc["luksGeneration"] == "luks2"
 
 
 def test_render_module_conf():

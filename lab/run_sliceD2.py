@@ -123,7 +123,7 @@ def stage_config(ev):
     for kind in ("partition", "users", "packages"):
         (STAGE / "modules" / f"{kind}.conf").write_text(render_module_conf(kind))
     ev["staged_files"] = sorted(str(p.relative_to(STAGE)) for p in STAGE.rglob("*") if p.is_file())
-    ev["exec_sequence"] = settings["sequence"][0]["exec"]
+    ev["exec_sequence"] = next(ph["exec"] for ph in settings["sequence"] if "exec" in ph)
 
 def install_phase(ev):
     """Boot live image, run Calamares unattended; True if target partitioned."""

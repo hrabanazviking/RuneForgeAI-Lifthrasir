@@ -48,7 +48,8 @@ def build_settings(discovered: set[str]) -> dict:
     return {
         "modules-search": ["local"],
         "instances": [],
-        "sequence": [{"exec": pick(EXEC)},
+        "sequence": [{"show": pick(SHOW)},
+                     {"exec": pick(EXEC)},
                      {"show": pick(FINISH)}],
         "branding": "kubuntu",
         "prompt-install": False,
@@ -56,16 +57,27 @@ def build_settings(discovered: set[str]) -> dict:
         "oem-setup": False,
         "disable-cancel": True,
         "disable-cancel-during-exec": True,
+        "hide-back-and-next-during-exec": True,
+        "quit-at-end": True,
     }
 
 
 def partition_config() -> dict:
-    return {"defaultFileSystemType": "ext4",
+    # Full-file replacement in the guest, so this must carry the
+    # stock keys the D2 attempts proved Calamares needs (attempts
+    # 5-7 warnings: luksGeneration, userSwapChoices, EFI partition).
+    # LUKS layout dropped: erase mode, no encryption, GPT, ext4.
+    return {"efiSystemPartition": "/boot/efi",
+            "enableLuksAutomatedPartitioning": False,
+            "luksGeneration": "luks2",
+            "userSwapChoices": ["none", "file"],
+            "initialSwapChoice": "none",
+            "defaultPartitionTableType": "gpt",
+            "defaultFileSystemType": "ext4",
             "availableFileSystemTypes": ["ext4"],
             "drawNestedPartitions": False,
             "allowManualPartitioning": False,
-            "initialPartitioningMode": "erase",
-            "initialSwapChoice": "none"}
+            "initialPartitioningMode": "erase"}
 
 
 def users_config() -> dict:
@@ -76,6 +88,8 @@ def users_config() -> dict:
             "setRootPassword": False,
             "doReusePassword": True,
             "allowWeakPasswords": False,
+            "passwordRequirements": {"minLength": 1,
+                                     "maxLength": -1},
             "user": {"name": LAB_USER, "fullname": "Lab User",
                      "password": "lifthrasir-lab",
                      "shell": "/bin/bash"},
@@ -85,8 +99,14 @@ def users_config() -> dict:
 
 
 def packages_config() -> dict:
-    return {"update_db": False, "backend": "apt",
-            "operations": [{"install": list(PINNED_PACKAGES)}]}
+    # Stock remove ops kept (attempt-7 stock dump): the installed
+    # system should shed the live installer, as a real install does.
+    return {"update_db": True, "backend": "apt",
+            "operations": [
+                {"remove": ["^live-*", "calamares-settings-kubuntu",
+                            "calamares", "cifs-utils",
+                            "kubuntu-installer-prompt"]},
+                {"install": list(PINNED_PACKAGES)}]}
 
 
 def _yaml_scalar(v) -> str:
@@ -167,6 +187,9 @@ def render_settings_conf(s: dict) -> str:
     out.append(f"disable-cancel: {yn(s['disable-cancel'])}")
     out.append("disable-cancel-during-exec: "
                f"{yn(s['disable-cancel-during-exec'])}")
+    out.append("hide-back-and-next-during-exec: "
+               f"{yn(s['hide-back-and-next-during-exec'])}")
+    out.append(f"quit-at-end: {yn(s['quit-at-end'])}")
     return "\n".join(out) + "\n"
 
 
