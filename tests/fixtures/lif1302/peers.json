@@ -1,0 +1,324 @@
+{
+  "schema": "lifthrasir.peer-fixture.v0.1",
+  "network": "simulated-20-node",
+  "reports": [
+    {
+      "report_id": "pr-4442da9c68b31e20",
+      "contributor_id": "node-01",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-7b12a6d2d22aa8d3",
+      "contributor_id": "node-02",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-37f8169ca7b3a81f",
+      "contributor_id": "node-03",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-d31224c16be51477",
+      "contributor_id": "node-04",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-0a702a817324320f",
+      "contributor_id": "node-05",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-06bd65a0395d6cda",
+      "contributor_id": "node-06",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-03af509c9727570a",
+      "contributor_id": "node-07",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-90ebdfa94874fb60",
+      "contributor_id": "node-08",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-c2d9737e752302a6",
+      "contributor_id": "node-09",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-3a32641829ccdb02",
+      "contributor_id": "node-10",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-b702f99f4e4415c8",
+      "contributor_id": "node-11",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-4e111284c29991bc",
+      "contributor_id": "node-12",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-fd89e3bda5f60fff",
+      "contributor_id": "node-13",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-9936759046a7c24d",
+      "contributor_id": "node-14",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-63827d35f11d86da",
+      "contributor_id": "node-15",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-0634718d14adb1fc",
+      "contributor_id": "node-16",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-1c5169056736799d",
+      "contributor_id": "node-17",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=182",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 182,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:f8d180ef69bf585a6f64431efa6e174fe1ba4d06620096ef92db24a9e02cad59",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-e210e421123103b9",
+      "contributor_id": "node-18",
+      "subject": "benchmark:kernel-compile@config-pinned-a",
+      "claim": "duration_seconds=240",
+      "payload": {
+        "config": "config-pinned-a",
+        "duration_seconds": 240,
+        "unit": "seconds",
+        "workload": "kernel-compile"
+      },
+      "content_digest": "sha256:cb8562ef7fe1a6273f6878eb4ce319494e6ad8e79e26cbccdb3ec5d1a15dbc20",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-4ae8e533748693e3",
+      "contributor_id": "node-19",
+      "subject": "incident:oom-kill@host-class-b",
+      "claim": "reproduced",
+      "payload": {
+        "fixture": "oom-kill.synthetic",
+        "outcome": "reproduced",
+        "source_commit": "pinned-fixture"
+      },
+      "content_digest": "sha256:bdaff9c1f5186fa8b887cd2e395735dbf1cb4b69b44881bd736dc2a9e45f07e3",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "reproducer"
+    },
+    {
+      "report_id": "pr-7637ede10da5b515",
+      "contributor_id": "node-20",
+      "subject": "fixture:ltp-subset@2026.11",
+      "claim": "shared",
+      "payload": {
+        "fixture": "ltp-subset",
+        "files": 42,
+        "outcome": "shared"
+      },
+      "content_digest": "sha256:68e6a8081db52537670e0aa404bbf9de27359401c943995b005effb9a3db186b",
+      "issued_at": "2026-11-12T00:00:00Z",
+      "expires_at": "2027-11-12T00:00:00Z",
+      "declared_status": "hypothesis"
+    }
+  ]
+}
