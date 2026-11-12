@@ -1,0 +1,5 @@
+MemTotal:       16384000 kB
+MemFree:         notanumber kB
+this line has no colon at all
+MemAvailable:   12288000 kB
+SwapTotal: 4194304 kB
