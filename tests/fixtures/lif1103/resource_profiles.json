@@ -1,0 +1,110 @@
+{
+  "schema": "lifthrasir.resource-catalog.v0.1",
+  "profiles": [
+    {
+      "schema": "lifthrasir.resource-profile.v0.1",
+      "profile_id": "arm64-sbc-4gb.v1",
+      "device_class": "arm64-sbc",
+      "title": "ARM64 single-board computer, 4 GB class",
+      "description": "Representative low-memory ARM64 SBC class target for the P11 matrix: light fixture workloads only, passive thermal class, agent budget a quarter of total memory. Declared target, not a probed device.",
+      "architecture": "arm64",
+      "cpu_cores": 4,
+      "memory_total_mb": 4096,
+      "memory_budget_mb": 1024,
+      "kernel_fixture_id": "linux-6.12.117-arm64",
+      "sensor_sources": [
+        "cgroup-v2",
+        "proc-meminfo",
+        "proc-stat",
+        "psi"
+      ],
+      "workload_profile_ids": [
+        "graphics-fixture.v1",
+        "io-fixture.v1",
+        "mem-pressure-fixture.v1"
+      ],
+      "thermal_class": "passive",
+      "basis": "declared-target"
+    },
+    {
+      "schema": "lifthrasir.resource-profile.v0.1",
+      "profile_id": "arm64-sbc-8gb.v1",
+      "device_class": "arm64-sbc",
+      "title": "ARM64 single-board computer, 8 GB class",
+      "description": "Representative upper ARM64 SBC class target: adds the compilation fixture to the light set; inference stays unclaimed at this budget. Declared target, not a probed device.",
+      "architecture": "arm64",
+      "cpu_cores": 8,
+      "memory_total_mb": 8192,
+      "memory_budget_mb": 2048,
+      "kernel_fixture_id": "linux-6.12.117-arm64",
+      "sensor_sources": [
+        "cgroup-v2",
+        "proc-meminfo",
+        "proc-stat",
+        "psi"
+      ],
+      "workload_profile_ids": [
+        "compile-fixture.v1",
+        "graphics-fixture.v1",
+        "io-fixture.v1",
+        "mem-pressure-fixture.v1"
+      ],
+      "thermal_class": "passive",
+      "basis": "declared-target"
+    },
+    {
+      "schema": "lifthrasir.resource-profile.v0.1",
+      "profile_id": "highmem-apu-128gb.v1",
+      "device_class": "high-memory-apu",
+      "title": "High-memory APU, 128 GB class",
+      "description": "Representative top unified-memory APU class target (the class the campaign host belongs to): agent budget at the full LIF-0603 quota ceiling. Declared target, not a probed device; no host memory figure is claimed.",
+      "architecture": "x86_64",
+      "cpu_cores": 16,
+      "memory_total_mb": 131072,
+      "memory_budget_mb": 8192,
+      "kernel_fixture_id": "linux-6.12.117-x86_64",
+      "sensor_sources": [
+        "cgroup-v2",
+        "proc-meminfo",
+        "proc-stat",
+        "psi"
+      ],
+      "workload_profile_ids": [
+        "compile-fixture.v1",
+        "graphics-fixture.v1",
+        "inference-fixture.v1",
+        "io-fixture.v1",
+        "mem-pressure-fixture.v1"
+      ],
+      "thermal_class": "active",
+      "basis": "declared-target"
+    },
+    {
+      "schema": "lifthrasir.resource-profile.v0.1",
+      "profile_id": "highmem-apu-32gb.v1",
+      "device_class": "high-memory-apu",
+      "title": "High-memory APU, 32 GB class",
+      "description": "Representative unified-memory APU class target: hosts every LIF-1002 fixture workload within a 4 GB agent budget. Declared target, not a probed device.",
+      "architecture": "x86_64",
+      "cpu_cores": 8,
+      "memory_total_mb": 32768,
+      "memory_budget_mb": 4096,
+      "kernel_fixture_id": "linux-6.12.117-x86_64",
+      "sensor_sources": [
+        "cgroup-v2",
+        "proc-meminfo",
+        "proc-stat",
+        "psi"
+      ],
+      "workload_profile_ids": [
+        "compile-fixture.v1",
+        "graphics-fixture.v1",
+        "inference-fixture.v1",
+        "io-fixture.v1",
+        "mem-pressure-fixture.v1"
+      ],
+      "thermal_class": "active",
+      "basis": "declared-target"
+    }
+  ]
+}
