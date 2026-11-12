@@ -1,0 +1,3 @@
+/home/volmarr/linux/lab/kernel/lifthrasir/replicater.c:61:14: warning: do not use 'else' after 'return' [readability-else-after-return]
+/home/volmarr/linux/lab/drivers/char/lifthrasir/lab_char.c:40:2: error: function 'lab_char_init' has a cognitive complexity of 31 (threshold 25) [bugprone-narrowing-conversions]
+/home/volmarr/linux/lab/kernel/lifthrasir/replicater.c:97:20: warning: unused variable 'scratch' [-Wunused-variable]

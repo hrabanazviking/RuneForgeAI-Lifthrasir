@@ -1,0 +1,4 @@
+this is not analyzer output at all
+it is a grocery list: milk, eggs, rye bread
+severity words like warning and error appear here in prose
+42 is the answer, but no diagnostic grammar matches this file

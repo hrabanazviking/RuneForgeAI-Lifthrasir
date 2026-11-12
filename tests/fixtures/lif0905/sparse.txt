@@ -1,0 +1,5 @@
+drivers/net/ethernet/lifthrasir/lab_net.c:118:9: warning: symbol 'lab_net_probe' was not declared. Should it be static?
+drivers/net/ethernet/lifthrasir/lab_net.c:118:9: warning: symbol 'lab_net_probe' was not declared. Should it be static?
+drivers/net/ethernet/lifthrasir/lab_net.c:240:22: error: incompatible types in comparison expression (different address spaces):
+kernel/lifthrasir/replicater.c:88:13: note: the first expression is here
+kernel/lifthrasir/replicater.c:301:5: warning: context imbalance in 'replicater_submit' - unexpected unlock

@@ -1,0 +1,7 @@
+ERROR: trailing whitespace
+#12: FILE: drivers/char/lifthrasir/lab_char.c:40:
++	retval = lab_char_init();
+
+WARNING: Prefer 'unsigned int' to bare use of 'unsigned'
+#19: FILE: drivers/char/lifthrasir/lab_char.c:52:
++	unsigned mode;

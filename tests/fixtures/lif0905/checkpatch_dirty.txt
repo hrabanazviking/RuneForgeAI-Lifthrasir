@@ -1,0 +1,26 @@
+WARNING: Missing commit description - Add an appropriate one
+
+WARNING: line length of 92 exceeds 80 columns
+#27: FILE: drivers/net/ethernet/lifthrasir/lab_net.c:118:
++static int lab_net_probe(struct platform_device *pdev, struct net_device *ndev, int flags)
+
+ERROR: trailing whitespace
+#63: FILE: drivers/net/ethernet/lifthrasir/lab_net.c:204:
++	(void)lab_net_wake(ndev); 
+
+ERROR: space required before the open brace '{'
+#88: FILE: kernel/lifthrasir/replicater.c:57:
++	if (count > limit){
+
+CHECK: Alignment should match open parenthesis
+#91: FILE: kernel/lifthrasir/replicater.c:61:
++	return replicater_submit(node,
++			pool);
+
+total: 2 errors, 2 warnings, 1 checks, 312 lines checked
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+drivers/net/ethernet/lifthrasir/lab_net.c has style problems, please review.
+kernel/lifthrasir/replicater.c has style problems, please review.
