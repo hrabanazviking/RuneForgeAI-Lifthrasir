@@ -1,0 +1,59 @@
+{
+  "fixture": "lif0407-distro-descriptors",
+  "version": 1,
+  "provenance": "Documentary descriptors assembled for the LIF-0407 review from each distro family's stable, public characteristics (default LSM, package and unit naming, trust-root locations). The ubuntu row additionally carries read-only host observations taken on purpleraider 2026-11-12 (os-release, /sys/kernel/security/lsm, Landlock ABI probe, cgroup v2, systemd 261). No other distro was booted, installed or probed: those rows are documented, NOT verified.",
+  "distros": [
+    {
+      "id": "ubuntu",
+      "display": "Ubuntu / Kubuntu (first target family)",
+      "example_releases": ["Kubuntu 24.04 LTS", "Ubuntu 26.10 (this host)"],
+      "evidence": "host-observed",
+      "package_manager": "apt/dpkg",
+      "init": "systemd",
+      "default_lsm": "apparmor",
+      "host_observation": {
+        "os_release_id": "ubuntu",
+        "version_id": "26.10",
+        "kernel": "7.3.0-10-generic x86_64",
+        "lsm_list": "lockdown,capability,landlock,yama,apparmor,bpf,ima,evm",
+        "apparmor_enabled": "Y",
+        "landlock_abi": 11,
+        "cgroup": "cgroup2fs (unified v2)",
+        "systemd": "261",
+        "userns_restrict_sysctl": "kernel.apparmor_restrict_unprivileged_userns present, value 0 on this host"
+      }
+    },
+    {
+      "id": "debian",
+      "display": "Debian",
+      "example_releases": ["Debian 13"],
+      "evidence": "documented",
+      "package_manager": "apt/dpkg",
+      "init": "systemd (default)",
+      "default_lsm": "apparmor"
+    },
+    {
+      "id": "fedora",
+      "display": "Fedora",
+      "example_releases": ["Fedora 43"],
+      "evidence": "documented",
+      "package_manager": "dnf/rpm",
+      "init": "systemd",
+      "default_lsm": "selinux"
+    },
+    {
+      "id": "opensuse",
+      "display": "openSUSE (Leap / Tumbleweed)",
+      "example_releases": ["openSUSE Leap 16", "openSUSE Tumbleweed"],
+      "evidence": "documented",
+      "package_manager": "zypper/rpm",
+      "init": "systemd",
+      "default_lsm": "apparmor-or-selinux"
+    }
+  ],
+  "out_of_scope_variants": [
+    {"id": "opensuse-microos", "why": "transactional updates and snapshots; live config/package verbs must abstain and go through the native transactional interface (research/13)"},
+    {"id": "nixos", "why": "declarative generations; editing /etc ad hoc is not a repair route (research/13)"},
+    {"id": "ostree-bootc", "why": "image-based deployments are staged, not mutated live (research/13)"}
+  ]
+}
