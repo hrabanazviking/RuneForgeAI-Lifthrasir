@@ -1,0 +1,158 @@
+{
+  "slice": "activation-phase1-B",
+  "lab_root": "/mnt/vault/lifthrasir-lab",
+  "iso_sha256_ok": true,
+  "convert_rc": 0,
+  "golden_bytes": 5457575936,
+  "golden_sha256": "a5d8572769a1d147d2a29e2cc78de548010c2f97c6a4c40c1280f8f7061e99ac",
+  "boot1": {
+    "tag": "boot1",
+    "rc": 0,
+    "pid": 891473,
+    "qmp_status": "running",
+    "alive_after_10s": true,
+    "cpu_ticks_delta_5s": 499,
+    "booted": true,
+    "stopped": true
+  },
+  "boot2": {
+    "tag": "boot2",
+    "rc": 0,
+    "pid": 891570,
+    "qmp_status": "running",
+    "alive_after_10s": true,
+    "cpu_ticks_delta_5s": 499,
+    "booted": true,
+    "stopped": true
+  },
+  "workflow_log": [
+    "create",
+    "reset"
+  ],
+  "overlay_deleted": true,
+  "runner_calls": [
+    {
+      "argv": [
+        "qemu-img",
+        "convert",
+        "-f",
+        "raw",
+        "-O",
+        "qcow2",
+        "/mnt/vault/lifthrasir-lab/kubuntu-24.04.5-desktop-amd64.iso",
+        "/mnt/vault/lifthrasir-lab/golden.qcow2"
+      ],
+      "rc": 0
+    },
+    {
+      "argv": [
+        "qemu-img",
+        "create",
+        "-f",
+        "qcow2",
+        "-F",
+        "qcow2",
+        "-b",
+        "/mnt/vault/lifthrasir-lab/golden.qcow2",
+        "/mnt/vault/lifthrasir-lab/guests/lab-guest-1.qcow2",
+        "8G"
+      ],
+      "rc": 0
+    },
+    {
+      "argv": [
+        "qemu-system-x86_64",
+        "-name",
+        "lifthrasir-lab-guest-1",
+        "-accel",
+        "kvm",
+        "-cpu",
+        "host",
+        "-machine",
+        "q35",
+        "-m",
+        "4096",
+        "-smp",
+        "4",
+        "-drive",
+        "file=/mnt/vault/lifthrasir-lab/guests/lab-guest-1.qcow2,format=qcow2,if=virtio",
+        "-drive",
+        "if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd",
+        "-drive",
+        "if=pflash,format=raw,file=/mnt/vault/lifthrasir-lab/OVMF_VARS.fd",
+        "-netdev",
+        "user,id=n0",
+        "-device",
+        "virtio-net-pci,netdev=n0",
+        "-display",
+        "none",
+        "-pidfile",
+        "/mnt/vault/lifthrasir-lab/qemu-boot1.pid",
+        "-qmp",
+        "unix:/mnt/vault/lifthrasir-lab/qmp-boot1.sock,server,nowait",
+        "-daemonize"
+      ],
+      "rc": 0
+    },
+    {
+      "argv": [
+        "qemu-img",
+        "create",
+        "-f",
+        "qcow2",
+        "-F",
+        "qcow2",
+        "-b",
+        "/mnt/vault/lifthrasir-lab/golden.qcow2",
+        "/mnt/vault/lifthrasir-lab/guests/lab-guest-1.qcow2",
+        "8G"
+      ],
+      "rc": 0
+    },
+    {
+      "argv": [
+        "qemu-system-x86_64",
+        "-name",
+        "lifthrasir-lab-guest-1",
+        "-accel",
+        "kvm",
+        "-cpu",
+        "host",
+        "-machine",
+        "q35",
+        "-m",
+        "4096",
+        "-smp",
+        "4",
+        "-drive",
+        "file=/mnt/vault/lifthrasir-lab/guests/lab-guest-1.qcow2,format=qcow2,if=virtio",
+        "-drive",
+        "if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd",
+        "-drive",
+        "if=pflash,format=raw,file=/mnt/vault/lifthrasir-lab/OVMF_VARS.fd",
+        "-netdev",
+        "user,id=n0",
+        "-device",
+        "virtio-net-pci,netdev=n0",
+        "-display",
+        "none",
+        "-pidfile",
+        "/mnt/vault/lifthrasir-lab/qemu-boot2.pid",
+        "-qmp",
+        "unix:/mnt/vault/lifthrasir-lab/qmp-boot2.sock,server,nowait",
+        "-daemonize"
+      ],
+      "rc": 0
+    },
+    {
+      "argv": [
+        "rm",
+        "--",
+        "/mnt/vault/lifthrasir-lab/guests/lab-guest-1.qcow2"
+      ],
+      "rc": 0
+    }
+  ],
+  "phase1_exit_met": false,
+  "limitations": "Golden is the converted live ISO, not an installed system; fault loop + unattended install remain later Phase 1 slices."
+}

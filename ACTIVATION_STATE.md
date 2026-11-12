@@ -20,10 +20,11 @@ workers are claimed for slice A.
 ## Phase tracker
 
 - **Phase 1 — Lab MVP loop in a disposable VM: IN PROGRESS.** Entry
-  criteria MET 2026-11-12 (see slice A log). The loop itself has not run
-  yet: next slice wires `lab/vm_workflow.py` to a real runner, builds the
-  golden qcow2 (unattended install from the pinned ISO), and proves
-  snapshot/reset.
+  criteria MET 2026-11-12 (see slice A log). Slice B (2026-11-12) wired
+  the real runner, built the golden qcow2 from the pinned ISO, and
+  proved real boot/reset/boot. The fault loop itself has not run yet:
+  next is slice C (guest access / unattended installed golden), then
+  the F01 fault loop inside the guest.
 - **Phase 2 — Host observe + propose: NOT STARTED.** Blocked on Phase 1
   exit evidence, by design.
 - **Phase 3 — Approval-gated repair classes: NOT STARTED.** Blocked on
@@ -76,3 +77,19 @@ workers are claimed for slice A.
 - Upstream: nothing has been pushed to the fixes repo by this campaign
   yet; the scrub gate is design-complete, implementation is a Phase 1–2
   build slice, and the first dossier will go to Volmarr for review.
+
+---
+
+## Keeper tick - 2026-11-12 10:17 EST (keeper run 1)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers are claimed. Work had stopped after slice A (no lab processes), so the keeper continued with the next Phase 1 slice.
+
+### Slice B - real runner + golden qcow2 + real boot/reset cycle: DONE
+
+- lab/real_runner.py (new): SubprocessRunner, the real counterpart to FakeRunner, in its own module. No shell; argv0 allowlist (qemu-img, qemu-system-x86_64, rm); empty/NUL argv refused; per-call timeout; every call recorded for evidence. Tests in tests/test_real_runner.py (4 tests).
+- lab/build_golden.py (new): verifies pinned ISO sha256 (streaming), converts raw to qcow2 golden on the vault, drives VMWorkflow + real runner through create, boot, reset, boot, delete, writes evidence pack.
+- Evidence: vault /mnt/vault/lifthrasir-lab/evidence/sliceB-evidence.json; copy banked at lab/evidence/sliceB-evidence.json. ISO sha OK vs pin; golden.qcow2 5457575936 bytes, sha256 a5d8572769a1d147d2a29e2cc78de548010c2f97c6a4c40c1280f8f7061e99ac; boot1 and boot2 both QMP running, alive after 10s, guest CPU +499 ticks in 5s each, stopped cleanly; workflow log create/reset, delete proven by recorded rm rc=0 and overlay_deleted true; caps honoured (4 vCPU / 4 GiB, one VM, CPU-only); host untouched, session undisturbed, no QEMU left running.
+- Suite: 1509 passed / 0 failed (1505 at slice A + 4 new).
+- Honest limitation: golden is the converted LIVE ISO, not an installed system. Phase 1 exit NOT met: fault loop inside the guest, installed-system golden, and kill-switch drill remain later Phase 1 slices.
+- Next slice (C): guest access path (serial/SSH into live guest or Calamares unattended-install research), then the F01 fault loop inside the guest.
+- Invariants: no host mutation beyond lab files; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
