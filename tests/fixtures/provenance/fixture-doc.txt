@@ -1,0 +1,3 @@
+Lifthrasir provenance fixture document
+Slice LIF-0302 fixture: stable bytes for a known SHA-256.
+Read-only: hashing never modifies a referenced document.

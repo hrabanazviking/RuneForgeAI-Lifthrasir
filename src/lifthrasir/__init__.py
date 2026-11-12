@@ -2,7 +2,7 @@
 
 SPDX-License-Identifier: GPL-2.0-only
 
-Banking union (keeper, LIF-0301 banking): LIF-0201 created this package
+Banking union (keeper, LIF-0301/LIF-0302 banking): LIF-0201 created this package
 with the event bus exports; LIF-0301 added the event store exports on
 its own branch. Both export lists are unioned here. Name note: both
 modules define a SchemaVersionError; the top-level name stays the
@@ -23,6 +23,16 @@ from .eventbus import (
     SchemaVersionError,
     UntypedEventError,
     mint_boot_id,
+)
+from .provenance import (
+    ChangedSourceError,
+    MissingSourceError,
+    ProvenanceError,
+    ProvenanceRegistry,
+    SourceReference,
+    VerificationResult,
+    record_source,
+    verify_reference,
 )
 from .eventstore import (
     CURRENT_SCHEMA_VERSION,
@@ -60,4 +70,12 @@ __all__ = [
     "MalformedRecordError",
     "StorePathError",
     "StoredRecord",
+    "ChangedSourceError",
+    "MissingSourceError",
+    "ProvenanceError",
+    "ProvenanceRegistry",
+    "SourceReference",
+    "VerificationResult",
+    "record_source",
+    "verify_reference",
 ]
