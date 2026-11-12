@@ -1,0 +1,5 @@
+Filesystem     1024-blocks    Used Available Capacity Mounted on
+garbage line here
+/dev/sda2 480589824 notanumber 364210176 21% /
+/dev/sdc1 100000 50000 50000 50% /ok
+short
