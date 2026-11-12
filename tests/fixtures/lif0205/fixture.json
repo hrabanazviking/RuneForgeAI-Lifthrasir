@@ -1,0 +1,66 @@
+{
+  "dataset": "lif0205-fixture",
+  "note": "Stand-in fixture data for LIF-0205. The live local event store is LIF-0301 (Phase P3), not this slice.",
+  "incidents": [
+    {
+      "incident_id": "inc-2026-001",
+      "schema": "lifthrasir.incident.v0.1",
+      "schema_version": "0.1",
+      "status": "investigating",
+      "severity": "medium",
+      "summary": "Noncritical user service demo.service repeatedly fails to start in the disposable lab guest.",
+      "host": {"host_local_id": "lab-guest-01", "boot_id": "boot-7f3a"},
+      "observed_at": "2026-11-05T17:02:11Z",
+      "created_at": "2026-11-05T17:02:15Z",
+      "symptoms": ["systemd reports demo.service in failed state", "three restart attempts within one minute, each exiting with status 1"],
+      "evidence_refs": ["ev-2026-001"],
+      "triggering_event_ids": ["ev-2026-001"],
+      "known_unknowns": ["whether the unit file or its configuration changed before the first failure"]
+    },
+    {
+      "incident_id": "inc-2026-002",
+      "schema": "lifthrasir.incident.v0.1",
+      "schema_version": "0.1",
+      "status": "open",
+      "severity": "low",
+      "summary": "Root filesystem inode usage above 85 percent on the lab guest.",
+      "host": {"host_local_id": "lab-guest-01", "boot_id": "boot-7f3a"},
+      "observed_at": "2026-11-05T18:40:02Z",
+      "created_at": "2026-11-05T18:40:05Z",
+      "symptoms": ["inode usage 87 percent on /", "no failed units correlated"],
+      "evidence_refs": ["ev-2026-014"],
+      "triggering_event_ids": ["ev-2026-014"],
+      "known_unknowns": []
+    }
+  ],
+  "sensors": [
+    {
+      "sensor_id": "systemd-collector",
+      "name": "systemd service collector (LIF-0202)",
+      "reads": ["unit load/active/sub state", "failed unit list", "restart timeline from journal export"],
+      "risk_tier": "L0",
+      "consent_mode": "none"
+    },
+    {
+      "sensor_id": "proc-cgroup-sensors",
+      "name": "/proc and cgroup CPU, memory and PSI sensors (LIF-0203)",
+      "reads": ["CPU counters", "memory counters", "pressure stall information (PSI)"],
+      "risk_tier": "L0",
+      "consent_mode": "none"
+    },
+    {
+      "sensor_id": "disk-network-collectors",
+      "name": "Disk, inode, mount and network health collectors (LIF-0204)",
+      "reads": ["filesystem usage and inode counts", "mount table", "interface counters"],
+      "risk_tier": "L0",
+      "consent_mode": "none"
+    },
+    {
+      "sensor_id": "journal-detail-reader",
+      "name": "Journal detail reader (consented diagnostic data)",
+      "reads": ["journal entries for one named failed unit"],
+      "risk_tier": "L1",
+      "consent_mode": "standing-opt-in"
+    }
+  ]
+}
