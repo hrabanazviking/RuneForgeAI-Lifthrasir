@@ -1,0 +1,15 @@
+{
+  "slice": "LIF-0103",
+  "profile": "restricted-guest-network",
+  "version": 1,
+  "default_policy": "deny",
+  "network_mode": "isolated-host-only",
+  "nat": false,
+  "bridged": false,
+  "host_lan_access": false,
+  "wan_access": false,
+  "routes": [],
+  "allowlist": [],
+  "denied_scopes": ["host-lan", "wan", "host-services"],
+  "notes": "Disposable lab guest has no route to host LAN or WAN by default. The allowlist is empty: any destination not explicitly listed is denied. Adding any destination requires a new explicit named entry and re-validation by lab/guest_boundary.py."
+}

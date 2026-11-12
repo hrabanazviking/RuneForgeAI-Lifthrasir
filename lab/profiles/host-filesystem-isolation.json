@@ -1,0 +1,11 @@
+{
+  "slice": "LIF-0103",
+  "profile": "host-filesystem-isolation",
+  "version": 1,
+  "default_policy": "deny",
+  "allowed_roots": ["$LAB_ROOT"],
+  "guest_writable_roots": ["$LAB_ROOT"],
+  "denied_paths": ["/", "/etc", "/home", "$HOME", "$HOME/.ssh", "/root", "/var", "/usr", "/boot"],
+  "symlink_policy": "resolve-and-recheck",
+  "notes": "Guest disk access is confined to the lab directory only (the $LAB_ROOT token, resolved by lab/guest_boundary.py and by the LIF-0102 workflow's in-lab check). Host home, /, /etc and SSH keys are named-denied. This formalizes as data the boundary lab/vm_workflow.py already enforces in code."
+}

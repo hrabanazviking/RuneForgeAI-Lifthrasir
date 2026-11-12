@@ -24,3 +24,9 @@ Layout:
 First recipe: LIF-0101, Kubuntu 24.04.5 LTS desktop, amd64 (the
 project's initial engineering target: Kubuntu x86-64, README and
 master roadmap SS1/P1).
+
+Boundary profiles (LIF-0103):
+
+- profiles/restricted-guest-network.json - isolated host-only guest network, default deny, empty explicit allowlist, no NAT/bridge/LAN/WAN.
+- profiles/host-filesystem-isolation.json - guest disk confined to the lab directory ($LAB_ROOT); host home, /, /etc and SSH keys named-denied.
+- guest_boundary.py - validator/checker consuming both profiles (validate_profiles, check_files, network_destination_allowed, path_allowed). Opened-up mutants fail its checks; see tests/test_guest_boundary.py.
