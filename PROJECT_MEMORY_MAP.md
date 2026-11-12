@@ -116,17 +116,17 @@ commit — never a bare claim. Queue order and titles per WAVE_PLAN.md.
 | LIF-0602 | P6 | banked | 2ed211b on main (cherry-pick of team-01 commit 37f0449 + seat union of 34 explanations exports + seat-amended collision-guard test rewritten as post-banking union-integrity test, both amended into the slice commit), ls-remote verified 2026-11-12; structured explanation + hypothesis templates with registry-resolved citations (invented citations refused); suite at banking 664 passed / 0 failed (seat full suite); negative control 8 failed / 18 passed as designed; undo = revert 2ed211b |
 | LIF-0603 | P6 | banked | faf72a1 on main (cherry-pick of team-02 10bbd42 + seat union of 29 quotas exports amended; quotas.OUTCOMES stays at submodule), verified 2026-11-12; suite at banking 692 passed / 0 failed (seat full suite); negative control PASS; undo = revert faf72a1. P6 SET COMPLETE |
 | LIF-0701 | P7 | banked | 6300680 on main (cherry-pick of recovered team-03 commit 6570345 + seat union of 32 dagexecutor exports amended; dagexecutor.STATUSES stays at submodule), verified 2026-11-12; RECOVERY: commit was orphaned by branch reset, recovered from reflog, pinned as yrsa/lifthrasir-lif0701-recovery; suite at banking 707 passed / 0 failed (seat full suite); negative control PASS; undo = revert 6300680 |
-| LIF-0702 | P7 | assigned | team-04 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0703 | P7 | built | team-05 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0801 | P8 | built (orphan 876e5ea pinned as yrsa/lifthrasir-lif0801-recovery) | team-06 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0802 | P8 | built | team-07 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0803 | P8 | built | team-08 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0901 | P9 | built (orphan 0aa9447 pinned as yrsa/lifthrasir-lif0901-recovery) | team-09 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0902 | P9 | built | — |
-| LIF-0903 | P9 | built | — |
-| LIF-0904 | P9 | queued | — |
-| LIF-0905 | P9 | built | — |
-| LIF-1001 | P10 | queued | — |
+| LIF-0702 | P7 | banked | bf1d678 on main (cherry-pick of team-04 e14485b + seat union of 32 reproverify exports amended; reproverify EVIDENCE_SCHEMA/OUTCOMES/VERDICTS/MAX_OUTPUT_BYTES/run_verification stay at submodule, names owned by dagexecutor/modelprovider/configpreview/quotas/soak), verified 2026-11-12; suite at banking 725 passed / 0 failed (seat); negative control PASS (3 mutants); undo = revert bf1d678 |
+| LIF-0703 | P7 | banked | 53d5642 on main (cherry-pick of team-05 0e0c76a + seat union of 29 scheduler exports amended; scheduler EVIDENCE_LADDER/MAX_DURATION_S stay at submodule), verified 2026-11-12; suite 745/0 (seat); negative control PASS; undo = revert 53d5642. P7 SET COMPLETE (0701-0703) |
+| LIF-0801 | P8 | banked | 41abfdf on main (cherry-pick of recovered team-06 commit 876e5ea + seat union of 25 thor exports amended; thor.Finding stays at submodule, contextguard owns Finding), verified 2026-11-12; suite 763/0 (seat); negative control PASS; undo = revert 41abfdf |
+| LIF-0802 | P8 | banked | 4a044f3 on main (cherry-pick of team-07 5a5379a + seat union of 36 security_triage exports amended), verified 2026-11-12; suite 777/0 (seat); negative controls PASS (empty-baseline calm drops to 75 percent; threshold mutant 7 failed as designed); undo = revert 4a044f3 |
+| LIF-0803 | P8 | banked | a5ebf6d on main (cherry-pick of team-08 2014a7c + seat union of 10 coordination exports amended; coordination SEVERITIES/MalformedFindingError/validate_finding stay at submodule, security_triage owns those names), verified 2026-11-12; suite 821/0 (seat); negative control PASS; undo = revert a5ebf6d. P8 SET COMPLETE (0801-0803). FOLLOW-UPS recorded by team-08 (in its CAMPAIGN_STATE.md): policy verb-tier reconciliation with the LIF-0401 catalog, and guest-undo semantics for restart_unit_in_guest - cross-slice integration work for a future seat slice |
+| LIF-0901 | P9 | banked | 28cf580 on main (cherry-pick of recovered team-09 commit 0aa9447; lab module, no package union), verified 2026-11-12; suite 866/0 (seat); negative controls PASS (32 refusal tests); undo = revert 28cf580 |
+| LIF-0902 | P9 | banked | 895cef2 on main (cherry-pick of team-01 085594b + seat union of 23 kernellab exports amended; kernellab OUTCOMES/VERDICTS/build_evidence_record stay at submodule), verified 2026-11-12; suite 903/0 (seat); negative control PASS (8 failed as designed); undo = revert 895cef2 |
+| LIF-0903 | P9 | banked | aacd976 on main (cherry-pick of team-09 7a5d2c7; lab module, no package union), verified 2026-11-12; suite 932/0 (seat); negative controls PASS (13 refusal tests); undo = revert aacd976 |
+| LIF-0904 | P9 | banked | ceaea05 on main (cherry-pick of team-06 2e34939 + seat union of 34 patchdossier exports amended; patchdossier EVIDENCE_LADDER/VERDICTS stay at submodule), verified 2026-11-12; suite 955/0 (seat); negative control PASS; undo = revert ceaea05 |
+| LIF-0905 | P9 | banked | 3990dd6 on main (cherry-pick of team-03 458fc34 + seat-amend of 18 staticanalysis exports; staticanalysis SEVERITIES stays at submodule, security_triage owns it), verified 2026-11-12; suite 981/0 (seat; the committed test file carries 26 tests - the team record said 21 from its pre-amend log; seat count governs); negative control PASS (2 failed as designed); undo = revert 3990dd6. P9 SET COMPLETE (0901-0905) |
+| LIF-1001 | P10 | assigned | team-02 assigned 2026-11-12 (keeper tick 04:57 EST, flowing after LIF-0603 banked) |
 | LIF-1002 | P10 | queued | — |
 | LIF-1003 | P10 | queued | — |
 | LIF-1101 | P11 | queued | — |
