@@ -1,0 +1,1 @@
+{"schema":"lif0406-txn-journal/1","transactions":[{"applied":[],"plan_ref":"plan-fixture-201","state":"exploded","txn_id":"txn-weird-1","undo":[]}]}
