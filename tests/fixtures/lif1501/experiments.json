@@ -1,0 +1,333 @@
+{
+ "proposals": [
+  {
+   "approach": "config-optimization",
+   "baseline_id": "baseline-stock-v1",
+   "category": "scheduler-policy",
+   "experiment_id": "exp-sched-config",
+   "guard_metrics": [
+    "energy",
+    "latency"
+   ],
+   "hypothesis": "A shorter scheduler quantum lowers compile latency without raising energy.",
+   "reversible": true,
+   "risk_tier": "L1",
+   "schema": "lifthrasir.experimentselection.v0.1",
+   "title": "Scheduler quantum config tuning",
+   "workload_id": "workload-compile-v1"
+  },
+  {
+   "approach": "kernel-patch",
+   "baseline_id": "baseline-stock-v1",
+   "category": "scheduler-policy",
+   "experiment_id": "exp-sched-kernel",
+   "guard_metrics": [
+    "safety",
+    "fairness",
+    "energy",
+    "latency"
+   ],
+   "hypothesis": "A patched scheduler policy beats the tuned config on compile latency.",
+   "reversible": true,
+   "risk_tier": "L3",
+   "schema": "lifthrasir.experimentselection.v0.1",
+   "title": "Scheduler policy kernel patch",
+   "workload_id": "workload-compile-v1"
+  },
+  {
+   "approach": "config-optimization",
+   "baseline_id": "baseline-stock-v1",
+   "category": "memory-tuning",
+   "experiment_id": "exp-mem-config",
+   "guard_metrics": [
+    "latency"
+   ],
+   "hypothesis": "Aggressive compaction lowers memory-pressure latency.",
+   "reversible": true,
+   "risk_tier": "L2",
+   "schema": "lifthrasir.experimentselection.v0.1",
+   "title": "Memory compaction config tuning",
+   "workload_id": "workload-mempressure-v1"
+  },
+  {
+   "approach": "algorithm",
+   "baseline_id": "baseline-stock-v1",
+   "category": "power-optimization",
+   "experiment_id": "exp-power-algo",
+   "guard_metrics": [
+    "energy"
+   ],
+   "hypothesis": "A new allocation algorithm cuts inference energy at equal latency.",
+   "reversible": true,
+   "risk_tier": "L2",
+   "schema": "lifthrasir.experimentselection.v0.1",
+   "title": "Power governor allocation algorithm",
+   "workload_id": "workload-inference-v1"
+  },
+  {
+   "approach": "kernel-patch",
+   "baseline_id": "baseline-stock-v1",
+   "category": "storage-behavior",
+   "experiment_id": "exp-storage-kernel",
+   "guard_metrics": [
+    "safety",
+    "latency"
+   ],
+   "hypothesis": "A patched storage scheduler cuts I/O latency.",
+   "reversible": false,
+   "risk_tier": "L4",
+   "schema": "lifthrasir.experimentselection.v0.1",
+   "title": "Storage scheduler kernel patch",
+   "workload_id": "workload-io-v1"
+  }
+ ],
+ "runs": {
+  "exp-power-algo": [
+   {
+    "baseline_samples": [
+     100,
+     102,
+     99,
+     101,
+     100
+    ],
+    "candidate_samples": [
+     80,
+     81,
+     79,
+     80,
+     82
+    ],
+    "correctness": "pass",
+    "device_id": "device-a",
+    "experiment_id": "exp-power-algo",
+    "guards": {
+     "energy": {
+      "baseline": [
+       50,
+       51,
+       50,
+       49,
+       50
+      ],
+      "candidate": [
+       40,
+       41,
+       40,
+       39,
+       40
+      ]
+     }
+    },
+    "hardware_class": "x86-64-apu",
+    "schema": "lifthrasir.experimentselection.v0.1"
+   },
+   {
+    "baseline_samples": [
+     200,
+     202,
+     198,
+     201,
+     199
+    ],
+    "candidate_samples": [
+     240,
+     242,
+     238,
+     241,
+     239
+    ],
+    "correctness": "pass",
+    "device_id": "device-b",
+    "experiment_id": "exp-power-algo",
+    "guards": {
+     "energy": {
+      "baseline": [
+       80,
+       81,
+       80,
+       79,
+       80
+      ],
+      "candidate": [
+       78,
+       79,
+       78,
+       77,
+       78
+      ]
+     }
+    },
+    "hardware_class": "arm64-sbc",
+    "schema": "lifthrasir.experimentselection.v0.1"
+   }
+  ],
+  "exp-sched-config": [
+   {
+    "baseline_samples": [
+     100,
+     102,
+     99,
+     101,
+     100
+    ],
+    "candidate_samples": [
+     80,
+     81,
+     79,
+     80,
+     82
+    ],
+    "correctness": "pass",
+    "device_id": "device-a",
+    "experiment_id": "exp-sched-config",
+    "guards": {
+     "energy": {
+      "baseline": [
+       50,
+       51,
+       50,
+       49,
+       50
+      ],
+      "candidate": [
+       48,
+       49,
+       48,
+       47,
+       48
+      ]
+     },
+     "latency": {
+      "baseline": [
+       10,
+       10,
+       11,
+       10,
+       10
+      ],
+      "candidate": [
+       10,
+       10,
+       10,
+       11,
+       10
+      ]
+     }
+    },
+    "hardware_class": "x86-64-apu",
+    "schema": "lifthrasir.experimentselection.v0.1"
+   },
+   {
+    "baseline_samples": [
+     200,
+     202,
+     198,
+     201,
+     199
+    ],
+    "candidate_samples": [
+     160,
+     162,
+     158,
+     161,
+     159
+    ],
+    "correctness": "pass",
+    "device_id": "device-b",
+    "experiment_id": "exp-sched-config",
+    "guards": {
+     "energy": {
+      "baseline": [
+       80,
+       81,
+       80,
+       79,
+       80
+      ],
+      "candidate": [
+       76,
+       77,
+       76,
+       75,
+       76
+      ]
+     },
+     "latency": {
+      "baseline": [
+       20,
+       21,
+       20,
+       20,
+       20
+      ],
+      "candidate": [
+       20,
+       20,
+       21,
+       20,
+       20
+      ]
+     }
+    },
+    "hardware_class": "arm64-sbc",
+    "schema": "lifthrasir.experimentselection.v0.1"
+   },
+   {
+    "baseline_samples": [
+     90,
+     91,
+     89,
+     90,
+     90
+    ],
+    "candidate_samples": [
+     72,
+     73,
+     71,
+     72,
+     72
+    ],
+    "correctness": "pass",
+    "device_id": "device-c",
+    "experiment_id": "exp-sched-config",
+    "guards": {
+     "energy": {
+      "baseline": [
+       45,
+       46,
+       45,
+       44,
+       45
+      ],
+      "candidate": [
+       43,
+       44,
+       43,
+       42,
+       43
+      ]
+     },
+     "latency": {
+      "baseline": [
+       9,
+       9,
+       10,
+       9,
+       9
+      ],
+      "candidate": [
+       9,
+       9,
+       9,
+       10,
+       9
+      ]
+     }
+    },
+    "hardware_class": "x86-64-desktop",
+    "schema": "lifthrasir.experimentselection.v0.1"
+   }
+  ]
+ }
+}
