@@ -13,6 +13,7 @@ lifthrasir.eventstore.SchemaVersionError and is not shadowed there.
 Banking union note (LIF-0305): this slice adds the hypotheses exports below on its branch; the seat must union them with any other in-flight export lists when banking, as with the LIF-0301/LIF-0302 union above.
 
 Banking union note (LIF-0306): contextguard exports added at the seat at banking, per the team-03 flag.
+Banking union note (LIF-0402): policy exports added at the seat at banking.
 """
 from .actions import (
     CATALOG,
@@ -101,6 +102,19 @@ from .contextguard import (
     sanitize_document,
     scan_document,
 )
+from .policy import (
+    POLICY_VERSION,
+    PolicyError,
+    Identity,
+    ResourceInfo,
+    AuthorizationContext,
+    PolicyRequest,
+    PolicyDecision,
+    required_consent_for,
+    request_from_dict,
+    evaluate,
+    evaluate_dict,
+)
 __all__ = [
     "CATALOG",
     "CATALOG_VERSION",
@@ -176,4 +190,15 @@ __all__ = [
     "content_digest",
     "sanitize_document",
     "scan_document",
+    "POLICY_VERSION",
+    "PolicyError",
+    "Identity",
+    "ResourceInfo",
+    "AuthorizationContext",
+    "PolicyRequest",
+    "PolicyDecision",
+    "required_consent_for",
+    "request_from_dict",
+    "evaluate",
+    "evaluate_dict",
 ]

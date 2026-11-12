@@ -1,0 +1,818 @@
+{
+  "description": "LIF-0402 table-tested policy decision cases. Every request is a plain mapping for lifthrasir.policy.evaluate_dict; evaluated_at is fixed so no case depends on wall time.",
+  "cases": [
+    {
+      "name": "allow-l0-observe",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-101",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Observe demo.service status",
+          "status": "submitted",
+          "risk_level": "L0",
+          "consent_mode": "none",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "observe_status",
+              "target": {
+                "type": "systemd-unit",
+                "name": "demo.service"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [],
+          "rollback": {
+            "method": "none-needed",
+            "description": "Read-only; nothing to undo."
+          },
+          "verification": {
+            "method": "status_read",
+            "timeout_seconds": 5
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "user-1",
+          "kind": "human",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "none",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [],
+          "resources": {
+            "demo.service": {
+              "scope": "live-host",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {},
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "ALLOW",
+      "expected_reasons": [
+        "ALL_CHECKS_PASSED"
+      ]
+    },
+    {
+      "name": "allow-l2-guest-edit",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-102",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Edit config inside disposable guest",
+          "status": "submitted",
+          "risk_level": "L2",
+          "consent_mode": "session-blanket",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "edit_config_in_guest",
+              "target": {
+                "type": "config-file",
+                "name": "/etc/demo/demo.conf"
+              },
+              "args": {
+                "guest": "lab-guest-01"
+              }
+            }
+          ],
+          "preconditions": [
+            "lab guest lab-guest-01 is running and disposable"
+          ],
+          "rollback": {
+            "method": "reset_guest",
+            "description": "Delete and recreate the guest."
+          },
+          "verification": {
+            "method": "unit_healthy_in_guest",
+            "timeout_seconds": 30
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "eir-agent",
+          "kind": "agent",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "session-blanket",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [],
+          "resources": {
+            "/etc/demo/demo.conf": {
+              "scope": "lab-guest",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {
+            "lab guest lab-guest-01 is running and disposable": true
+          },
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "ALLOW",
+      "expected_reasons": [
+        "ALL_CHECKS_PASSED"
+      ]
+    },
+    {
+      "name": "allow-l3-allowlisted-restart",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-103",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Restart allowlisted demo.service",
+          "status": "submitted",
+          "risk_level": "L3",
+          "consent_mode": "allowlist-notice",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "restart_unit",
+              "target": {
+                "type": "systemd-unit",
+                "name": "demo.service"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [
+            "demo.service is in failed state"
+          ],
+          "rollback": {
+            "method": "stop_unit",
+            "description": "Stop the unit to restore prior state."
+          },
+          "verification": {
+            "method": "unit_healthy",
+            "timeout_seconds": 20
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "eir-agent",
+          "kind": "agent",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "allowlist-notice",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [
+            "demo.service"
+          ],
+          "resources": {
+            "demo.service": {
+              "scope": "live-host",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {
+            "demo.service is in failed state": true
+          },
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "ALLOW",
+      "expected_reasons": [
+        "ALL_CHECKS_PASSED"
+      ]
+    },
+    {
+      "name": "require-human-l4-without-per-action",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-104",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Stage a package update on the live host",
+          "status": "submitted",
+          "risk_level": "L4",
+          "consent_mode": "per-action",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "stage_package_update",
+              "target": {
+                "type": "package",
+                "name": "demo-pkg"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [],
+          "rollback": {
+            "method": "restore_package",
+            "description": "Reinstall the recorded prior version."
+          },
+          "verification": {
+            "method": "package_integrity",
+            "timeout_seconds": 60
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "eir-agent",
+          "kind": "agent",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "session-blanket",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [],
+          "resources": {
+            "demo-pkg": {
+              "scope": "live-host",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {},
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "REQUIRE_HUMAN",
+      "expected_reasons": [
+        "CONSENT_BELOW_FLOOR"
+      ]
+    },
+    {
+      "name": "deny-prohibited-kernel-even-with-human-consent",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-105",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Replace the live kernel image",
+          "status": "submitted",
+          "risk_level": "L5",
+          "consent_mode": "human-only",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "replace_kernel",
+              "target": {
+                "type": "kernel-image",
+                "name": "vmlinuz"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [],
+          "rollback": {
+            "method": "restore_kernel",
+            "description": "Restore the prior image."
+          },
+          "verification": {
+            "method": "boot_check",
+            "timeout_seconds": 60
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "user-1",
+          "kind": "human",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "human-only",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [],
+          "resources": {
+            "vmlinuz": {
+              "scope": "live-host",
+              "critical": true,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {},
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "DENY",
+      "expected_reasons": [
+        "PROHIBITED_ACTION"
+      ]
+    },
+    {
+      "name": "deny-unknown-verb",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-106",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Observe demo.service status",
+          "status": "submitted",
+          "risk_level": "L0",
+          "consent_mode": "none",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "teleport_unit",
+              "target": {
+                "type": "systemd-unit",
+                "name": "demo.service"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [],
+          "rollback": {
+            "method": "none-needed",
+            "description": "Read-only; nothing to undo."
+          },
+          "verification": {
+            "method": "status_read",
+            "timeout_seconds": 5
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "user-1",
+          "kind": "human",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "none",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [],
+          "resources": {
+            "demo.service": {
+              "scope": "live-host",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {},
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "DENY",
+      "expected_reasons": [
+        "UNKNOWN_ACTION_VERB"
+      ]
+    },
+    {
+      "name": "deny-precondition-failed",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-107",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Restart allowlisted demo.service",
+          "status": "submitted",
+          "risk_level": "L3",
+          "consent_mode": "allowlist-notice",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "restart_unit",
+              "target": {
+                "type": "systemd-unit",
+                "name": "demo.service"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [
+            "demo.service is in failed state"
+          ],
+          "rollback": {
+            "method": "stop_unit",
+            "description": "Stop the unit to restore prior state."
+          },
+          "verification": {
+            "method": "unit_healthy",
+            "timeout_seconds": 20
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "eir-agent",
+          "kind": "agent",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "allowlist-notice",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [
+            "demo.service"
+          ],
+          "resources": {
+            "demo.service": {
+              "scope": "live-host",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {
+            "demo.service is in failed state": false
+          },
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "DENY",
+      "expected_reasons": [
+        "PRECONDITION_FAILED"
+      ]
+    },
+    {
+      "name": "require-human-precondition-unverified",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-108",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Restart allowlisted demo.service",
+          "status": "submitted",
+          "risk_level": "L3",
+          "consent_mode": "allowlist-notice",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "restart_unit",
+              "target": {
+                "type": "systemd-unit",
+                "name": "demo.service"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [
+            "demo.service is in failed state"
+          ],
+          "rollback": {
+            "method": "stop_unit",
+            "description": "Stop the unit to restore prior state."
+          },
+          "verification": {
+            "method": "unit_healthy",
+            "timeout_seconds": 20
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "eir-agent",
+          "kind": "agent",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "allowlist-notice",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [
+            "demo.service"
+          ],
+          "resources": {
+            "demo.service": {
+              "scope": "live-host",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {},
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "REQUIRE_HUMAN",
+      "expected_reasons": [
+        "PRECONDITION_UNVERIFIED"
+      ]
+    },
+    {
+      "name": "deny-expired-plan",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-109",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Observe demo.service status",
+          "status": "submitted",
+          "risk_level": "L0",
+          "consent_mode": "none",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "observe_status",
+              "target": {
+                "type": "systemd-unit",
+                "name": "demo.service"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [],
+          "rollback": {
+            "method": "none-needed",
+            "description": "Read-only; nothing to undo."
+          },
+          "verification": {
+            "method": "status_read",
+            "timeout_seconds": 5
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "user-1",
+          "kind": "human",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T18:06:00Z",
+          "consent_mode_granted": "none",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [],
+          "resources": {
+            "demo.service": {
+              "scope": "live-host",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {},
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "DENY",
+      "expected_reasons": [
+        "PLAN_EXPIRED"
+      ]
+    },
+    {
+      "name": "deny-l3-not-allowlisted",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-110",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Restart allowlisted demo.service",
+          "status": "submitted",
+          "risk_level": "L3",
+          "consent_mode": "allowlist-notice",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "restart_unit",
+              "target": {
+                "type": "systemd-unit",
+                "name": "demo.service"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [
+            "demo.service is in failed state"
+          ],
+          "rollback": {
+            "method": "stop_unit",
+            "description": "Stop the unit to restore prior state."
+          },
+          "verification": {
+            "method": "unit_healthy",
+            "timeout_seconds": 20
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "eir-agent",
+          "kind": "agent",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "allowlist-notice",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [],
+          "resources": {
+            "demo.service": {
+              "scope": "live-host",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {
+            "demo.service is in failed state": true
+          },
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "DENY",
+      "expected_reasons": [
+        "RESOURCE_NOT_ALLOWLISTED"
+      ]
+    },
+    {
+      "name": "deny-risk-underdeclared-critical",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-111",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Restart allowlisted demo.service",
+          "status": "submitted",
+          "risk_level": "L3",
+          "consent_mode": "allowlist-notice",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "restart_unit",
+              "target": {
+                "type": "systemd-unit",
+                "name": "demo.service"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [
+            "demo.service is in failed state"
+          ],
+          "rollback": {
+            "method": "stop_unit",
+            "description": "Stop the unit to restore prior state."
+          },
+          "verification": {
+            "method": "unit_healthy",
+            "timeout_seconds": 20
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "eir-agent",
+          "kind": "agent",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "allowlist-notice",
+          "consent_granted_by_id": "user-1",
+          "consent_granted_by_kind": "human",
+          "allowlist": [
+            "demo.service"
+          ],
+          "resources": {
+            "demo.service": {
+              "scope": "live-host",
+              "critical": true,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {
+            "demo.service is in failed state": true
+          },
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "DENY",
+      "expected_reasons": [
+        "RISK_UNDERDECLARED"
+      ]
+    },
+    {
+      "name": "deny-agent-forged-consent",
+      "request": {
+        "plan": {
+          "schema": "lifthrasir.plan.v0.1",
+          "schema_version": "0.1",
+          "plan_id": "plan-2026-112",
+          "incident_id": "inc-2026-001",
+          "hypothesis_ids": [
+            "hyp-2026-001"
+          ],
+          "title": "Stage a package update on the live host",
+          "status": "submitted",
+          "risk_level": "L4",
+          "consent_mode": "per-action",
+          "steps": [
+            {
+              "step_id": "step-1",
+              "action_verb": "stage_package_update",
+              "target": {
+                "type": "package",
+                "name": "demo-pkg"
+              },
+              "args": {}
+            }
+          ],
+          "preconditions": [],
+          "rollback": {
+            "method": "restore_package",
+            "description": "Reinstall the recorded prior version."
+          },
+          "verification": {
+            "method": "package_integrity",
+            "timeout_seconds": 60
+          },
+          "created_at": "2026-11-05T17:06:00Z",
+          "expires_at": "2026-11-05T18:06:00Z"
+        },
+        "identity": {
+          "principal_id": "eir-agent",
+          "kind": "agent",
+          "authenticated": true
+        },
+        "context": {
+          "evaluated_at": "2026-11-05T17:30:00Z",
+          "consent_mode_granted": "per-action",
+          "consent_granted_by_id": "eir-agent",
+          "consent_granted_by_kind": "agent",
+          "allowlist": [],
+          "resources": {
+            "demo-pkg": {
+              "scope": "live-host",
+              "critical": false,
+              "sensitive": false
+            }
+          },
+          "precondition_snapshot": {},
+          "emergency_stop_active": false
+        }
+      },
+      "expected_outcome": "DENY",
+      "expected_reasons": [
+        "CONSENT_NOT_HUMAN",
+        "SELF_AUTHORIZATION"
+      ]
+    }
+  ]
+}
