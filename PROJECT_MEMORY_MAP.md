@@ -96,15 +96,15 @@ commit — never a bare claim. Queue order and titles per WAVE_PLAN.md.
 | LIF-0301 | P3 | banked | d80dad1 on main (cherry-pick of team commit 3707766; src/lifthrasir/__init__.py UNIONED at seat: eventbus + eventstore exports; top-level SchemaVersionError is the eventbus class, the eventstore class remains at lifthrasir.eventstore.SchemaVersionError; union file sha256 3202e25b87953329a53f03bf0286794956f87561ed376bb41a64d23b6344eb8c), ls-remote verified 2026-11-12; local SQLite event store + migration tests; suite at banking 199 passed / 0 failed (seat full suite); undo = revert d80dad1 |
 | LIF-0302 | P3 | banked | a19e803 on main (cherry-pick of team commit d8875c7; seat src/lifthrasir/__init__.py union extended with provenance exports, union file sha256 b50aec05d4ded855ef5999f13d7c2496c032b1f644e2263065f2604f6b6b0e29), ls-remote verified 2026-11-12; source identity, retrieval date and hash for referenced documentation; suite at banking 211 passed / 0 failed (seat full suite); undo = revert a19e803 |
 | LIF-0303 | P3 | banked | e02514e on main (cherry-pick of team commit 01ec5c9), ls-remote verified 2026-11-12; exact text search; optional embeddings behind a feature flag; suite at banking 226 passed / 0 failed (seat full suite); undo = revert e02514e |
-| LIF-0304 | P3 | queued | — |
-| LIF-0305 | P3 | queued | — |
-| LIF-0306 | P3 | queued | — |
-| LIF-0401 | P4 | queued | — |
-| LIF-0402 | P4 | queued | — |
-| LIF-0403 | P4 | queued | — |
-| LIF-0404 | P4 | queued | — |
-| LIF-0405 | P4 | queued | — |
-| LIF-0406 | P4 | queued | — |
+| LIF-0304 | P3 | banked | c089510 on main (FF/cherry-pick of team-01 commit 98ce3a7), ls-remote verified 2026-11-12; privacy.py redactor, local retention, export preview; suite at banking 250 passed / 0 failed (seat full suite); negative control 4 failed as designed; regex-scope limitations recorded by team; undo = revert c089510 |
+| LIF-0305 | P3 | banked | 42e2b23 on main (cherry-pick of team-02 commit d9bc3d1; its in-branch __init__ hypotheses union applied cleanly), ls-remote verified 2026-11-12; causal hypothesis records incl. failed hypotheses and counterevidence; suite at banking 270 passed / 0 failed (seat full suite); undo = revert 42e2b23 |
+| LIF-0306 | P3 | banked | cad0409 on main (cherry-pick of team-03 commit d2fb517 + seat union of contextguard exports into src/lifthrasir/__init__.py, amended into the slice commit), ls-remote verified 2026-11-12; poisoned-document test suite for model context; suite at banking 286 passed / 0 failed (seat full suite); undo = revert cad0409. P3 SET COMPLETE (0301-0306) |
+| LIF-0401 | P4 | banked | 48f7f55 on main (cherry-pick of team-04 commit 554ff08; __init__ auto-merged union incl. actions exports, 74 __all__ entries verified), ls-remote verified 2026-11-12; typed action catalog and narrow executor interface; dry-run executor only, executes nothing; suite at banking 316 passed / 0 failed (seat full suite); undo = revert 48f7f55 |
+| LIF-0402 | P4 | banked | 272d9e1 on main (cherry-pick of team-05 commit 2a05e27 + seat union of policy exports, amended into the slice commit), ls-remote verified 2026-11-12; policy decisions: identity, resource, risk level, preconditions; suite at banking 338 passed / 0 failed (seat full suite); undo = revert 272d9e1 |
+| LIF-0403 | P4 | banked | 0accdd3 on main (cherry-pick of team-06 commit 8190798 + seat union of executor exports, amended into the slice commit; NOTE: executor.ActionRequest deliberately NOT exported at top level - the name stays with actions.ActionRequest banked in LIF-0401, per the SchemaVersionError precedent; the executor class remains at lifthrasir.executor.ActionRequest), ls-remote verified 2026-11-12; separate process and limited permissions for executor; suite at banking 355 passed / 0 failed (seat full suite); undo = revert 0accdd3 |
+| LIF-0404 | P4 | banked | 4f352eb on main (cherry-pick of team-07 commit 782c708 + seat union of approval exports, amended into the slice commit), ls-remote verified 2026-11-12; user approval UX and signed/unique plan references; suite at banking 372 passed / 0 failed (seat full suite); undo = revert 4f352eb |
+| LIF-0405 | P4 | building | team-08 building (still building at banking closure 2026-11-12) |
+| LIF-0406 | P4 | built | team-09 commit c1b6aa8 built, awaiting banking - banks after LIF-0405 (team-08, still building) |
 | LIF-0407 | P4 | queued | — |
 | LIF-0501 | P5 | queued | — |
 | LIF-0502 | P5 | queued | — |
