@@ -22,8 +22,8 @@ workers are claimed for slice A.
 - **Phase 1 — Lab MVP loop in a disposable VM: IN PROGRESS.** Entry
   criteria MET 2026-11-12 (see slice A log). Slice B (2026-11-12) wired
   the real runner, built the golden qcow2 from the pinned ISO, and
-  proved real boot/reset/boot. The fault loop itself has not run yet:
-  next is slice C (guest access / unattended installed golden), then
+  proved real boot/reset/boot. Slice C (2026-11-12) proved the guest access path: serial-console login + a working shell inside the live guest.
+  Next is slice D (Calamares unattended install -> installed golden), then
   the F01 fault loop inside the guest.
 - **Phase 2 — Host observe + propose: NOT STARTED.** Blocked on Phase 1
   exit evidence, by design.
@@ -93,3 +93,22 @@ Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-ag
 - Honest limitation: golden is the converted LIVE ISO, not an installed system. Phase 1 exit NOT met: fault loop inside the guest, installed-system golden, and kill-switch drill remain later Phase 1 slices.
 - Next slice (C): guest access path (serial/SSH into live guest or Calamares unattended-install research), then the F01 fault loop inside the guest.
 - Invariants: no host mutation beyond lab files; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
+
+---
+
+## Keeper tick - 2026-11-12 10:27 EST (keeper run 2)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers are claimed. Work had stopped after slice B (no lab processes), so the keeper continued with the next Phase 1 slice.
+
+### Slice C - guest access path (serial console) + unattended-install research: DONE
+
+- lab/guest_access.py (new): direct-kernel boot argv (kernel/initrd extracted from the pinned ISO), console=ttyS0 serial console over a QEMU chardev socket with logfile capture, QGA virtio-serial channel wired, caps enforced (<=8 vCPU / <=16 GiB); parse_serial_log + access_verdict grading. Tests in tests/test_guest_access.py (4 tests).
+- lab/run_sliceC.py (new) driver + evidence: vault /mnt/vault/lifthrasir-lab/evidence/sliceC-evidence.json; copy banked at lab/evidence/sliceC-evidence.json. ISO sha OK vs pin; kernel 16992648 B / initrd 90599405 B extracted via isoinfo.
+- REAL PROOF: the guest booted to a serial login prompt; interactive login as the casper live user kubuntu (empty password) succeeded; commands ran INSIDE the guest: id -> uid=1000(kubuntu), uname -r -> 7.0.0-31-generic, marker LIFTHRASIR_GUEST_OK printed (serial log + transcript tail in the evidence pack). Final verdict: shell. VM stopped cleanly; overlay deleted; no QEMU left running; caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10); host untouched, session undisturbed.
+- QGA probe: answered=false (TimeoutError) - HONEST result: the live image ships no qemu-guest-agent and no openssh-server (ISO manifest grep: calamares 3.3.5 + openssh-client only). QGA/SSH light up only on the installed golden, whose pinned package set (packages.txt) already names qemu-guest-agent + openssh-server.
+- Grading note: boot markers kernel_started/casper/systemd_reached read false because this boot passed `quiet`; login + shell are the operative proof. APPEND no longer passes `quiet` from this banking on, so future transcripts grade fully; the evidence pack preserves the exact argv actually used in this run.
+- lab/UNATTENDED_INSTALL.md (new): Calamares unattended road for slice D (config CD + settings.conf design; module names to be read from the live guest at runtime, never assumed; risks). No unattended-install claim is made yet.
+- Suite: 1513 passed / 0 failed (1509 at slice B + 4 new).
+- Phase 1 exit NOT met: installed-system golden (slice D), the F01 fault loop inside the guest, and the kill-switch drill remain.
+- Next slice (D): Calamares unattended install -> golden-installed.qcow2; boot it; verify serial + QGA + SSH; snapshot/reset proof; then the F01 fault loop.
+- Invariants: lab only; no host mutation beyond lab files; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
