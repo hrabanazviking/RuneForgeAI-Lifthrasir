@@ -592,6 +592,18 @@ from .security_triage import (
     triage,
     evaluate_corpus,
 )
+from .coordination import (
+    COORDINATION_VERSION,
+    COORDINATION_SCHEMA,
+    FINDING_SCHEMA,
+    OUTCOME_EXECUTABLE,
+    OUTCOME_ABSTAIN,
+    CoordinationError,
+    SecurityFinding,
+    ResponseProposal,
+    propose_response,
+    build_transaction_record,
+)
 __all__ = [
     "CATALOG",
     "CATALOG_VERSION",
@@ -1113,4 +1125,14 @@ __all__ = [
     "triage_finding",
     "triage",
     "evaluate_corpus",
+    "COORDINATION_VERSION",
+    "COORDINATION_SCHEMA",
+    "FINDING_SCHEMA",
+    "OUTCOME_EXECUTABLE",
+    "OUTCOME_ABSTAIN",
+    "CoordinationError",
+    "SecurityFinding",
+    "ResponseProposal",
+    "propose_response",
+    "build_transaction_record",
 ]
