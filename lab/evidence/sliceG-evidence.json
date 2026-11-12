@@ -1,0 +1,139 @@
+{
+  "slice": "activation-phase1-G-killswitch-drill",
+  "golden": "/mnt/vault/lifthrasir-lab/golden-installed.qcow2",
+  "started_at": "2026-11-12T18:56:41Z",
+  "golden_sha256": "d9edd18c4d0d8406038fc180ce6a177c9d7d16a0892f12263d791331bf192c90",
+  "golden_sha_ok": true,
+  "host": {
+    "fixture_pid": 989918,
+    "foreign_pid": 989919,
+    "fixture_alive_before": true,
+    "foreign_alive_before": true,
+    "loop_iterations_before_halt": 6,
+    "loop_halted_at_iter": 6,
+    "loop_thread_alive_after": false,
+    "termination": {
+      "terminated": [
+        989918
+      ],
+      "killed_after_term": [],
+      "already_dead": [],
+      "skipped": []
+    },
+    "fixture_dead_after": true,
+    "foreign_alive_after_engage": true,
+    "restart_sees_halt": true,
+    "require_clear_refused": true,
+    "audit_chain_ok": true,
+    "recovery": {
+      "preserved_committed": [
+        "txn-committed-1"
+      ],
+      "rolled_back": [
+        {
+          "txn_id": "txn-inflight-1",
+          "undo_steps": [
+            "undo-step-two",
+            "undo-step-one"
+          ]
+        }
+      ],
+      "expired_prepared": [
+        "txn-prepared-1"
+      ],
+      "untouched": [
+        "txn-aborted-1"
+      ],
+      "changed": true
+    },
+    "recovery_second_changed": false,
+    "released": true,
+    "engaged_after_release": false,
+    "require_clear_after_release": true,
+    "audit_chain_ok_after_release": true,
+    "foreign_cleaned_by_owner": true,
+    "host_drill_passed": true
+  },
+  "boot": {
+    "argv": [
+      "qemu-system-x86_64",
+      "-name",
+      "lifthrasir-lab-G",
+      "-accel",
+      "kvm",
+      "-cpu",
+      "host",
+      "-machine",
+      "q35",
+      "-m",
+      "4096",
+      "-smp",
+      "4",
+      "-drive",
+      "if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd",
+      "-drive",
+      "if=pflash,format=raw,file=/mnt/vault/lifthrasir-lab/OVMF_VARS-G.fd",
+      "-drive",
+      "file=/mnt/vault/lifthrasir-lab/overlay-G.qcow2,format=qcow2,if=virtio",
+      "-chardev",
+      "socket,id=ser0,path=/mnt/vault/lifthrasir-lab/serial-G.sock,server=on,wait=off,logfile=/mnt/vault/lifthrasir-lab/serial-G.log",
+      "-serial",
+      "chardev:ser0",
+      "-chardev",
+      "socket,id=qga0,path=/mnt/vault/lifthrasir-lab/qga-G.sock,server=on,wait=off",
+      "-device",
+      "virtio-serial-pci,id=virtio-serial0",
+      "-device",
+      "virtserialport,chardev=qga0,name=org.qemu.guest_agent.0",
+      "-netdev",
+      "user,id=n0,hostfwd=tcp:127.0.0.1:2227-:22",
+      "-device",
+      "virtio-net-pci,netdev=n0",
+      "-display",
+      "none",
+      "-pidfile",
+      "/mnt/vault/lifthrasir-lab/qemu-G.pid",
+      "-qmp",
+      "unix:/mnt/vault/lifthrasir-lab/qmp-G.sock,server,nowait",
+      "-daemonize"
+    ],
+    "launcher_rc": 0,
+    "pid": 989933,
+    "boot_markers": {
+      "kernel_started": true,
+      "casper_live": true,
+      "systemd_reached": true,
+      "login_prompt": true,
+      "shell_proven": false
+    },
+    "qga_sock": "/mnt/vault/lifthrasir-lab/qga-G.sock"
+  },
+  "vm": {
+    "hb_first": 3,
+    "guest_loop_started": true,
+    "hb_second": 5,
+    "guest_loop_advancing": true,
+    "qga_ping_before_halt": true,
+    "ssh_tcp_before_halt": true,
+    "halt_record": {
+      "actor": "keeper-sliceG",
+      "reason": "campaign stop: halt lab loop mid-run",
+      "engaged_at": "2026-11-12T18:57:27.414150+00:00",
+      "nonce": "dda056aee8e94599926a3ffa7cef74c6"
+    },
+    "flag_written": true,
+    "halted_at_cycle": 0,
+    "driver_loop_saw_engage": true,
+    "vm_stopped": true,
+    "engaged_after_vm_down": true,
+    "audit_chain_ok": true,
+    "released_after_halt": true,
+    "flag_removed": true,
+    "overlay_deleted": true,
+    "vm_drill_passed": true
+  },
+  "drill_proven": true,
+  "golden_sha_after": "d9edd18c4d0d8406038fc180ce6a177c9d7d16a0892f12263d791331bf192c90",
+  "golden_unchanged": true,
+  "finished_at": "2026-11-12T18:57:39Z"
+}

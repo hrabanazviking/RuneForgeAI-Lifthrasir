@@ -19,7 +19,7 @@ workers are claimed for slice A.
 
 ## Phase tracker
 
-- **Phase 1 — Lab MVP loop in a disposable VM: IN PROGRESS.** Entry
+- **Phase 1 — Lab MVP loop in a disposable VM: COMPLETE (2026-11-12, keeper run 11).** Entry
   criteria MET 2026-11-12 (see slice A log). Slice B (2026-11-12) wired
   the real runner, built the golden qcow2 from the pinned ISO, and
   proved real boot/reset/boot. Slice C (2026-11-12) proved the guest access path: serial-console login + a working shell inside the live guest.
@@ -36,10 +36,19 @@ workers are claimed for slice A.
   ordering blemish in its driver (QGA/SSH probed BEFORE poweroff).
   Slice F (2026-11-12, keeper run 10) PROVED the F01 fault loop
   inside the guest end-to-end (detect -> propose -> approve -> fix ->
-  verify -> rollback, evidence pack banked). Next: the kill-switch
-  drill (last Phase 1 exit item).
-- **Phase 2 — Host observe + propose: NOT STARTED.** Blocked on Phase 1
-  exit evidence, by design.
+  verify -> rollback, evidence pack banked). Slice G (2026-11-12,
+  keeper run 11) PROVED the kill-switch drill at fixture level AND
+  against the live lab loop (see run 11 entry). **Phase 1 COMPLETE
+  2026-11-12**: every exit item is banked with its evidence pack --
+  F01 fault loop inside the VM (slice F), reset-to-golden proven
+  twice (slice E), kill-switch halts the loop mid-run (slice G),
+  host untouched throughout (lab-only work, all slices).
+- **Phase 2 — Host observe + propose: NOT STARTED.** Phase 1 exit
+  evidence now banked, so the block is lifted; entry also requires the
+  observer design checked against docs/CONFINEMENT-REVIEW.md. NEXT
+  SLICE (H): observer design + first unprivileged user-unit run
+  (read-only collectors -> ~/.local/state/lifthrasir/, proposals as
+  plan records, never executes; kill-switch flag stops it).
 - **Phase 3 — Approval-gated repair classes: NOT STARTED.** Blocked on
   Phase 2 exit evidence + Volmarr seeing the broker design.
 - **Phase 4 — Upstream pipeline live: NOT STARTED.** Design is written
@@ -277,3 +286,19 @@ Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-ag
 - Suite: 1528 passed / 0 failed (unchanged - the driver is lab tooling, no new unit tests claimed, as with slice E).
 - Phase 1 exit NOT met: only the kill-switch drill remains (halting the loop mid-run, per the Phase 1 exit evidence in ACTIVATION_PLAN.md). NEXT SLICE (G): kill-switch drill against the lab loop (killswitch.py machinery + campaign flag: engage mid-run, prove the loop halts and state is consistent, release, evidence pack). Phase 2 stays blocked on Phase 1 exit, by design.
 - Invariants: lab only; host and Volmarr session untouched; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
+
+---
+
+## Keeper tick - 2026-11-12 13:47-14:05 EST (keeper run 11)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers claimed. Work had stopped after run 10 (no lab processes, no QEMU, no tmux), so the keeper continued with slice G (the kill-switch drill, named next by run 10). Machine idle at tick start (load 0.22); no sibling banking observed.
+
+### Slice G - kill-switch drill: DONE -- Phase 1 exit COMPLETE
+
+- lab/run_sliceG_killswitch.py (new driver, 252 lines): two-part drill, caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10, one VM); golden sha256 d9edd18c... verified before and after, unchanged; evidence lab/evidence/sliceG-evidence.json (SLICEG_OK, drill_proven=True).
+- Part 1 (host, fixture level, killswitch.py machinery): a worker loop thread ran under require_clear; engage_and_stop (actor keeper-sliceG) halted it at iteration 6 (KillSwitchEngaged). The registered sleeper fixture was terminated (report terminated=[pid], no SIGKILL escalation needed) and verified dead; an UNREGISTERED foreign sleeper was never signalled and stayed alive through the engage (cleaned up afterwards by its owner, this driver). A fresh KillSwitch instance over the same state dir still saw the halt (durable across restart); require_clear refused while engaged; hash-chained audit verified True before and after release. Journal recovery via RecoveryCoordinator while engaged: committed txn-committed-1 preserved byte-for-byte, in-flight txn-inflight-1 rolled back (undo steps in reverse order), prepared txn-prepared-1 expired, aborted txn untouched; second recovery changed nothing (idempotent). Release returned True and require_clear passed again.
+- Part 2 (live lab loop): disposable overlay boot of golden-installed; guest heartbeat loop started (counter in /root/hb.txt advancing 3 -> 5 across probes); QGA ping + SSH banner both True BEFORE the halt. Campaign stop engaged mid-run (flag file /mnt/vault/lifthrasir-lab/STOP-G.flag + KillSwitch.engage on its own state dir); the driver loop saw the engage at cycle 0 and halted the loop: serial poweroff, VM stopped cleanly, overlay deleted. After VM down the halt was STILL engaged (durable) with audit chain True; then released and the flag file removed -- both verified absent/complete in the evidence pack.
+- Host-untouched note (Phase 1 exit item): Part 1 touched only the lab state dirs on the vault plus this project's own fixture processes by design; Part 2 touched only the disposable guest overlay. No host config, journal, service, or session state was changed by this drill; Volmarr's seat0 session undisturbed; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only (Phase 4).
+- Suite: 1528 passed / 0 failed (unchanged -- the driver is lab tooling, no new unit tests claimed, as with slices E/F).
+- PHASE 1 EXIT MET (all items, each with a banked evidence pack): F01 fault detect -> propose -> approve -> fix -> verify -> rollback inside the VM (slice F); reset-to-golden proven twice (slice E); kill-switch halts the loop mid-run (slice G); host untouched throughout Phase 1 (slices A-G, lab-only). Phase tracker updated: Phase 1 COMPLETE.
+- NEXT SLICE (H, Phase 2 entry): observer design checked against docs/CONFINEMENT-REVIEW.md, then the first unprivileged systemd user-unit observer run (read-only host collectors -> ~/.local/state/lifthrasir/, proposals drafted as plan records only, NEVER executes; quotas bound it; kill-switch flag + documented command stops it; daily plain-language digest for Volmarr). Phase 2 exit needs 7 days of observer operation, so its clock starts when the unit first runs.
