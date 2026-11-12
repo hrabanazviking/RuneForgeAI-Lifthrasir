@@ -1,0 +1,22 @@
+[
+  {
+    "incident_id": "inc-2026-001",
+    "recorded_at": "2026-11-12T09:15:00Z",
+    "category": "incident-summaries",
+    "summary": "Root filesystem reached 97 percent on the workstation of operator bob@example.org; oldest journal rotated.",
+    "contact": "bob@example.org"
+  },
+  {
+    "incident_id": "inc-2026-002",
+    "recorded_at": "2026-11-11T22:40:00Z",
+    "category": "incident-summaries",
+    "summary": "Build node at 192.168.1.20 lost its token ghp_0123456789abcdefghij0123456789abcd during rotation.",
+    "host_path": "/home/bob/lifthrasir/lab"
+  },
+  {
+    "incident_id": "inc-2026-003",
+    "recorded_at": "2026-08-01T08:00:00Z",
+    "summary": "Undeclared-category record with an old timestamp, reachable at 10.0.0.8.",
+    "operator": "carol@example.net"
+  }
+]

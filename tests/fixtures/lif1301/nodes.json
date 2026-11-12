@@ -1,0 +1,182 @@
+[
+ {
+  "node_id": "node-01",
+  "categories": [
+   "incident-summaries",
+   "benchmark-results"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-02",
+  "categories": [
+   "incident-summaries",
+   "candidate-packages"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-03",
+  "categories": [
+   "incident-summaries",
+   "code-revisions"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-04",
+  "categories": [
+   "incident-summaries",
+   "test-fixtures"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-05",
+  "categories": [
+   "incident-summaries",
+   "benchmark-results"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-06",
+  "categories": [
+   "incident-summaries",
+   "benchmark-results"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-07",
+  "categories": [
+   "incident-summaries",
+   "candidate-packages"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-08",
+  "categories": [
+   "incident-summaries",
+   "code-revisions"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-09",
+  "categories": [
+   "incident-summaries",
+   "test-fixtures"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-10",
+  "categories": [
+   "incident-summaries",
+   "benchmark-results"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-11",
+  "categories": [
+   "incident-summaries",
+   "benchmark-results"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-12",
+  "categories": [
+   "incident-summaries",
+   "candidate-packages"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-13",
+  "categories": [
+   "incident-summaries",
+   "code-revisions"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-14",
+  "categories": [
+   "incident-summaries",
+   "test-fixtures"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-15",
+  "categories": [
+   "incident-summaries",
+   "benchmark-results"
+  ],
+  "expires_in_days": 30,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-16",
+  "categories": [
+   "incident-summaries",
+   "benchmark-results"
+  ],
+  "expires_in_days": 1,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-17",
+  "categories": [
+   "incident-summaries",
+   "candidate-packages"
+  ],
+  "expires_in_days": 1,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-18",
+  "categories": [
+   "incident-summaries",
+   "code-revisions"
+  ],
+  "expires_in_days": 1,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-19",
+  "categories": [
+   "incident-summaries",
+   "test-fixtures"
+  ],
+  "expires_in_days": 1,
+  "max_records_per_export": 100
+ },
+ {
+  "node_id": "node-20",
+  "categories": [
+   "incident-summaries",
+   "benchmark-results"
+  ],
+  "expires_in_days": 1,
+  "max_records_per_export": 100
+ }
+]
