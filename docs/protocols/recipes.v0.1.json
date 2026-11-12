@@ -1,0 +1,379 @@
+{
+  "recipe_version": "0.1",
+  "recipes": [
+    {
+      "abstain_when": [
+        {
+          "condition_id": "unit-intentionally-stopped",
+          "description": "The user intentionally stopped this unit; Eir never countermands an intentional stop (research/07)"
+        },
+        {
+          "condition_id": "unit-is-critical-infrastructure",
+          "description": "The unit is critical infrastructure; live agent action on it is prohibited by the catalog"
+        },
+        {
+          "condition_id": "restart-loop-detected",
+          "description": "The unit has restarted repeatedly in the window; a further restart would feed a restart loop"
+        }
+      ],
+      "consent_mode": "allowlist-notice",
+      "expected_outcome": "The named unit is active and passes its health check.",
+      "health_issue": "An allowlisted noncritical systemd unit is in failed state although it is expected to be running.",
+      "parameters": [
+        {
+          "description": "Exact systemd unit name to restart",
+          "kind": "unit",
+          "name": "unit",
+          "required": true
+        }
+      ],
+      "preconditions": [
+        "$unit is in failed state",
+        "$unit is expected to be running",
+        "$unit is on the human-approved allowlist"
+      ],
+      "recipe_id": "rec-restart-failed-service",
+      "risk_level": "L3",
+      "rollback": {
+        "description": "Stop the restarted unit, restoring its pre-repair state.",
+        "method": "stop_unit"
+      },
+      "schema": "lifthrasir.recipe.v0.1",
+      "schema_version": "0.1",
+      "steps": [
+        {
+          "action_verb": "read_service_status",
+          "args": {},
+          "effects": [
+            {
+              "expected": "failed",
+              "observable": "service_state",
+              "target": {
+                "name": "$unit",
+                "type": "systemd-unit"
+              }
+            }
+          ],
+          "step_id": "step-1",
+          "target": {
+            "name": "$unit",
+            "type": "systemd-unit"
+          },
+          "undo_verb": "none"
+        },
+        {
+          "action_verb": "restart_unit",
+          "args": {},
+          "effects": [
+            {
+              "expected": "active",
+              "observable": "service_state",
+              "target": {
+                "name": "$unit",
+                "type": "systemd-unit"
+              }
+            }
+          ],
+          "step_id": "step-2",
+          "target": {
+            "name": "$unit",
+            "type": "systemd-unit"
+          },
+          "undo_verb": "stop_unit"
+        }
+      ],
+      "title": "Restart a failed noncritical service",
+      "verification": {
+        "method": "unit_healthy",
+        "timeout_seconds": 60
+      }
+    },
+    {
+      "abstain_when": [
+        {
+          "condition_id": "config-intentionally-changed",
+          "description": "The drift is an intentional user edit, not a fault"
+        },
+        {
+          "condition_id": "config-target-protected",
+          "description": "The path sits under a protected prefix; agent mutation there is prohibited by the catalog"
+        },
+        {
+          "condition_id": "prior-version-missing",
+          "description": "No recorded prior version exists to revert to"
+        }
+      ],
+      "consent_mode": "allowlist-notice",
+      "expected_outcome": "The file matches its recorded prior version and validates.",
+      "health_issue": "A managed user-level configuration file differs from its recorded prior version and the service misbehaves.",
+      "parameters": [
+        {
+          "description": "Exact absolute path of the configuration file",
+          "kind": "path",
+          "name": "config_path",
+          "required": true
+        },
+        {
+          "description": "Digest of the recorded prior version to restore",
+          "kind": "string",
+          "name": "prior_version_digest",
+          "required": true
+        }
+      ],
+      "preconditions": [
+        "$config_path differs from its recorded prior version",
+        "the recorded prior version digest is available locally",
+        "the configuration owner expects the prior version"
+      ],
+      "recipe_id": "rec-revert-user-config",
+      "risk_level": "L3",
+      "rollback": {
+        "description": "Revert the file again to the version recorded before this repair ran.",
+        "method": "revert_user_config"
+      },
+      "schema": "lifthrasir.recipe.v0.1",
+      "schema_version": "0.1",
+      "steps": [
+        {
+          "action_verb": "revert_user_config",
+          "args": {
+            "prior_version_digest": "$prior_version_digest"
+          },
+          "effects": [
+            {
+              "expected": "$prior_version_digest",
+              "observable": "config_digest",
+              "target": {
+                "name": "$config_path",
+                "type": "config-file"
+              }
+            }
+          ],
+          "step_id": "step-1",
+          "target": {
+            "name": "$config_path",
+            "type": "config-file"
+          },
+          "undo_verb": "revert_user_config"
+        }
+      ],
+      "title": "Revert a drifted user-level configuration file",
+      "verification": {
+        "method": "config_valid",
+        "timeout_seconds": 60
+      }
+    },
+    {
+      "abstain_when": [
+        {
+          "condition_id": "package-is-boot-or-trust",
+          "description": "The package is a boot or trust-root package; agent installation of it is prohibited by the catalog"
+        },
+        {
+          "condition_id": "integrity-check-passes",
+          "description": "The package verifies clean; there is nothing to repair"
+        },
+        {
+          "condition_id": "version-not-staged",
+          "description": "The exact version is not staged locally; installing would require an unreviewed fetch"
+        }
+      ],
+      "consent_mode": "per-action",
+      "expected_outcome": "The exact staged version is installed and its files verify against the package database.",
+      "health_issue": "An installed package's files no longer match the package database and the exact staged version is available.",
+      "parameters": [
+        {
+          "description": "Exact package name",
+          "kind": "name",
+          "name": "package",
+          "required": true
+        },
+        {
+          "description": "Exact staged package version to install",
+          "kind": "string",
+          "name": "version",
+          "required": true
+        }
+      ],
+      "preconditions": [
+        "package $package fails its integrity check",
+        "exact version $version is staged from the distribution repository",
+        "a removal rollback is staged before install"
+      ],
+      "recipe_id": "rec-reinstall-broken-package",
+      "risk_level": "L4",
+      "rollback": {
+        "description": "Remove the installed package version, restoring the pre-repair package state.",
+        "method": "remove_package"
+      },
+      "schema": "lifthrasir.recipe.v0.1",
+      "schema_version": "0.1",
+      "steps": [
+        {
+          "action_verb": "check_package_integrity",
+          "args": {},
+          "effects": [
+            {
+              "expected": "failed",
+              "observable": "package_integrity",
+              "target": {
+                "name": "$package",
+                "type": "package"
+              }
+            }
+          ],
+          "step_id": "step-1",
+          "target": {
+            "name": "$package",
+            "type": "package"
+          },
+          "undo_verb": "none"
+        },
+        {
+          "action_verb": "install_package",
+          "args": {
+            "version": "$version"
+          },
+          "effects": [
+            {
+              "expected": "$version",
+              "observable": "package_version",
+              "target": {
+                "name": "$package",
+                "type": "package"
+              }
+            }
+          ],
+          "step_id": "step-2",
+          "target": {
+            "name": "$package",
+            "type": "package"
+          },
+          "undo_verb": "remove_package"
+        }
+      ],
+      "title": "Reinstall a package that fails integrity checks",
+      "verification": {
+        "method": "package_integrity",
+        "timeout_seconds": 120
+      }
+    },
+    {
+      "abstain_when": [
+        {
+          "condition_id": "guest-not-disposable",
+          "description": "The guest is not marked disposable; lab verbs must never reach a persistent system"
+        },
+        {
+          "condition_id": "guest-is-live-host",
+          "description": "The named target is the live host, not a lab guest"
+        },
+        {
+          "condition_id": "setting-already-correct",
+          "description": "The setting already holds the proposed value; there is nothing to repair"
+        }
+      ],
+      "consent_mode": "session-blanket",
+      "expected_outcome": "The guest unit is active with the corrected setting.",
+      "health_issue": "A configuration setting inside a disposable lab guest is wrong and the guest's unit fails with it.",
+      "parameters": [
+        {
+          "description": "Exact disposable lab guest name",
+          "kind": "name",
+          "name": "guest",
+          "required": true
+        },
+        {
+          "description": "Exact config path inside the guest",
+          "kind": "path",
+          "name": "config_path",
+          "required": true
+        },
+        {
+          "description": "Exact setting name to change",
+          "kind": "name",
+          "name": "setting",
+          "required": true
+        },
+        {
+          "description": "Exact value to set",
+          "kind": "string",
+          "name": "value",
+          "required": true
+        },
+        {
+          "description": "Exact unit inside the guest to restart",
+          "kind": "unit",
+          "name": "unit",
+          "required": true
+        }
+      ],
+      "preconditions": [
+        "lab guest $guest is running and disposable",
+        "$config_path inside the guest holds the faulty setting"
+      ],
+      "recipe_id": "rec-lab-guest-config-fix",
+      "risk_level": "L2",
+      "rollback": {
+        "description": "Reset the disposable guest to its pinned clean state.",
+        "method": "reset_lab_guest"
+      },
+      "schema": "lifthrasir.recipe.v0.1",
+      "schema_version": "0.1",
+      "steps": [
+        {
+          "action_verb": "edit_config_in_guest",
+          "args": {
+            "guest": "$guest",
+            "setting": "$setting",
+            "value": "$value"
+          },
+          "effects": [
+            {
+              "expected": "$value",
+              "observable": "config_setting",
+              "target": {
+                "name": "$config_path",
+                "type": "config-file"
+              }
+            }
+          ],
+          "step_id": "step-1",
+          "target": {
+            "name": "$config_path",
+            "type": "config-file"
+          },
+          "undo_verb": "reset_lab_guest"
+        },
+        {
+          "action_verb": "restart_unit_in_guest",
+          "args": {
+            "guest": "$guest"
+          },
+          "effects": [
+            {
+              "expected": "active",
+              "observable": "service_state",
+              "target": {
+                "name": "$unit",
+                "type": "systemd-unit"
+              }
+            }
+          ],
+          "step_id": "step-2",
+          "target": {
+            "name": "$unit",
+            "type": "systemd-unit"
+          },
+          "undo_verb": "none"
+        }
+      ],
+      "title": "Fix a faulty setting inside a disposable lab guest",
+      "verification": {
+        "method": "unit_healthy_in_guest",
+        "timeout_seconds": 30
+      }
+    }
+  ],
+  "schema": "lifthrasir.recipes.v0.1"
+}
