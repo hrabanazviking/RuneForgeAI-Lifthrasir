@@ -1,0 +1,33 @@
+{
+  "manifest_version": 1,
+  "project": "Lifthrasir",
+  "slice": "LIF-0005",
+  "project_license_spdx": "GPL-2.0-only",
+  "generated_for_platform": "purpleraider (Kubuntu-family Linux, x86-64)",
+  "runtime_dependencies": [],
+  "dependencies": [
+    {
+      "name": "pytest",
+      "version": "9.1.1",
+      "kind": "dev-test",
+      "language": "python",
+      "license_spdx": "MIT",
+      "purpose": "Repo automation test runner (tests/).",
+      "upstream": "https://pytest.org/"
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.19.2",
+      "kind": "dev-test",
+      "language": "python",
+      "license_spdx": "MIT",
+      "purpose": "Validates docs/protocols JSON Schemas v0.1 and this manifest.",
+      "upstream": "https://python-jsonschema.readthedocs.io/"
+    }
+  ],
+  "notes": [
+    "Runtime dependencies: none yet - the repo ships no runtime code as of LIF-0005.",
+    "Versions are the versions in use on purpleraider at build time (Python 3.14.8).",
+    "Every entry must carry name, version, and license_spdx; tests/test_licensing_governance.py enforces this."
+  ]
+}

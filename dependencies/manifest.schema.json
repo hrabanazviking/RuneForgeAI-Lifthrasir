@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lifthrasir dependency manifest",
+  "type": "object",
+  "required": ["manifest_version", "project_license_spdx", "runtime_dependencies", "dependencies"],
+  "properties": {
+    "manifest_version": {"type": "integer", "const": 1},
+    "project_license_spdx": {"type": "string", "const": "GPL-2.0-only"},
+    "runtime_dependencies": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+    "dependencies": {"type": "array", "items": {"$ref": "#/$defs/entry"}}
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": ["name", "version", "kind", "license_spdx"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "enum": ["runtime", "dev-test", "build", "optional"]},
+        "license_spdx": {"type": "string", "minLength": 1},
+        "language": {"type": "string"},
+        "purpose": {"type": "string"},
+        "upstream": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  }
+}
