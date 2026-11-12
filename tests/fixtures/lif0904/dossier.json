@@ -1,0 +1,26 @@
+{
+  "dossier_id": "dossier-fixture-counter-1",
+  "incident_id": "inc-kernel-lab-1",
+  "title": "fixture counter increments before the device is armed",
+  "problem": "fixture_count() increments when fixture_ready() is true even before fixture_armed(), so the recorded count is one too high on the pinned baseline.",
+  "affected_commit": "0123456789abcdef0123456789abcdef01234567",
+  "arch": "x86_64",
+  "kernel_release": "6.12.117",
+  "reproducer": {
+    "description": "grep-based minimal reproducer over the fixture source: exits 1 while the unguarded call is present, 0 once the guard is applied.",
+    "baseline": {"runs": 5, "failures": 5},
+    "candidate": {"runs": 5, "failures": 0},
+    "control": {"runs": 3, "failures": 0},
+    "control_expectation": "pass",
+    "reversed_patch": {"runs": 3, "failures": 3}
+  },
+  "test_matrix": [
+    {"name": "kunit fixture_counter suite", "outcome": "passed", "detail": "recorded fixture TAP"},
+    {"name": "kselftest fixture behaviour", "outcome": "passed", "detail": "recorded fixture TAP"},
+    {"name": "checkpatch", "outcome": "passed", "detail": "0 errors, 0 warnings on fixture diff"}
+  ],
+  "analyzer_summary": "sparse/smatch fixture run: no new diagnostics on the touched file.",
+  "limitations": ["fixture source only; no real kernel build or boot is claimed", "arm64 not yet run for this candidate"],
+  "regressions": [],
+  "evidence_status": "lab-verified"
+}

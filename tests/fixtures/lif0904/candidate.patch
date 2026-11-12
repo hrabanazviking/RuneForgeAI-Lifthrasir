@@ -1,0 +1,11 @@
+diff --git a/drivers/fixture/fixture_counter.c b/drivers/fixture/fixture_counter.c
+--- a/drivers/fixture/fixture_counter.c
++++ b/drivers/fixture/fixture_counter.c
+@@ -10,7 +10,7 @@ static int fixture_count(void)
+ \tint count = 0;
+ 
+-\tif (fixture_ready())
++\tif (fixture_ready() && fixture_armed())
+ \t\tcount++;
+ 
+ \treturn count;
