@@ -29,8 +29,13 @@ workers are claimed for slice A.
   inside the guest. Slice D3 (2026-11-12, keeper run 8) COMPLETED the
   installed golden via the scripted manual road: golden-installed.qcow2
   (9.2G, sha256 d9edd18c...) boots UEFI, serial lab login + ssh +
-  qemu-guest-agent all active inside the guest. Next: snapshot/reset
-  proof against the installed golden, then the F01 fault loop.
+  qemu-guest-agent all active inside the guest. Slice E (2026-11-12,
+  keeper run 9) PROVED reset-to-golden twice against the installed
+  golden (dirty marker -> overlay deleted/recreated -> marker absent,
+  services active; golden sha unchanged) and fixed the D3 verify-
+  ordering blemish in its driver (QGA/SSH probed BEFORE poweroff).
+  Next: the F01 fault loop inside the guest, then the kill-switch
+  drill (last two Phase 1 exit items).
 - **Phase 2 — Host observe + propose: NOT STARTED.** Blocked on Phase 1
   exit evidence, by design.
 - **Phase 3 — Approval-gated repair classes: NOT STARTED.** Blocked on
@@ -234,4 +239,19 @@ Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-ag
 - Evidence (lab/evidence/sliceD3-evidence.json, SLICED3_OK): install_done=True, all markers; verify boot reached serial login; login as lab succeeded; inside the INSTALLED guest: id uid=1000(lab), uname 6.8.0-149-generic, systemctl is-active ssh = active, qemu-guest-agent = active, ss LISTEN 0.0.0.0:22 + [::]:22; verify shell proven in 43 s. Golden copied: /mnt/vault/lifthrasir-lab/golden-installed.qcow2, 9.2G, sha256 d9edd18c4d0d8406038fc180ce6a177c9d7d16a0892f12263d791331bf192c90. No QEMU left; both boots stopped cleanly; caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10, one VM at a time).
 - Honest blemish: evidence fields qga_ping=False / ssh_tcp=False are a VERIFY-ORDERING BUG inherited from D2 (both are probed AFTER the serial poweroff is sent, so the guest is already going down). The in-guest service proof above supersedes them; the ordering fix (probe before poweroff) is owed in the next slice that touches the verify phase -- recorded here, not hidden.
 - Phase 1 exit NOT met: snapshot/reset proof against the installed golden (twice), the F01 fault loop inside the guest, and the kill-switch drill remain. NEXT SLICE: reset-to-golden proof x2 against golden-installed.qcow2, then F01 fault loop (detect -> propose -> approve -> fix -> verify -> rollback inside the guest, evidence pack).
+- Invariants: lab only; host and Volmarr session untouched; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
+
+---
+
+## Keeper tick - 2026-11-12 13:27-13:42 EST (keeper run 9)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers claimed. Work had stopped after run 8 (no lab processes), so the keeper continued with slice E (reset-to-golden proof x2, the next Phase 1 item named by run 8).
+
+### Slice E - reset-to-golden proof x2: DONE
+
+- lab/run_sliceE_reset.py (new driver): per round, fresh qcow2 overlay backed by golden-installed.qcow2 (sha verified d9edd18c... before and after), UEFI boot, serial lab login, dirty the guest (~/RESET_DIRTY marker + sync), poweroff, DELETE overlay, recreate fresh overlay from the golden, boot again, prove marker absent + ssh/qemu-guest-agent active. Caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10, one VM at a time).
+- D3 blemish FIXED in this driver: QGA ping + SSH banner are probed BEFORE poweroff is sent. In all four boots both probes returned True before poweroff (D3 evidence had them False purely from ordering).
+- Attempt 1 (evidence preserved as lab/evidence/sliceE-attempt1-evidence.json): all four boots actually passed (clean transcripts show RESET_CLEAN2, services active, qga/ssh True) but the driver graded reset_proven=False - a grading bug of the known tty-echo class: the check searched the transcript tail for the plain marker name, which appears in the ECHO of the shell command itself. Fixed to the arithmetic-suffixed output form (RESET_DIRTY_STILL_THERE2), which the echo can never contain; attempt 2 re-ran the full proof.
+- Attempt 2 (lab/evidence/sliceE-evidence.json, SLICEE_OK): round 1 dirty=True clean reset=True; round 2 dirty=True clean reset=True; reset_x2_proven=True; golden sha unchanged after; overlay deleted; no QEMU left. Suite: 1528 passed / 0 failed (unchanged - the driver is lab tooling, no new unit tests claimed).
+- Phase 1 exit NOT met: the F01 fault loop inside the guest (detect -> propose -> approve -> fix -> verify -> rollback, evidence pack) and the kill-switch drill remain. NEXT SLICE (F): F01 loop in the guest - F01 fixture is a failed demo.service; inject inside the disposable guest only, observe via lab collectors/oracle, authorise one narrow reversible fix through policy+approval library path, apply, verify, roll back, evidence pack.
 - Invariants: lab only; host and Volmarr session untouched; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
