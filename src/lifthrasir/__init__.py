@@ -12,6 +12,7 @@ lifthrasir.eventstore.SchemaVersionError and is not shadowed there.
 
 Banking union note (LIF-0305): this slice adds the hypotheses exports below on its branch; the seat must union them with any other in-flight export lists when banking, as with the LIF-0301/LIF-0302 union above.
 
+Banking union note (LIF-0306): contextguard exports added at the seat at banking, per the team-03 flag.
 """
 from .eventbus import (
     SCHEMA_VERSION,
@@ -66,6 +67,19 @@ from .eventstore import (
     StoredRecord,
 )
 
+from .contextguard import (
+    CONTEXT_HEADER,
+    ContextAssembly,
+    ContextGuardError,
+    Finding,
+    MalformedDocumentError,
+    Quarantine,
+    ScanResult,
+    build_context_block,
+    content_digest,
+    sanitize_document,
+    scan_document,
+)
 __all__ = [
     "SCHEMA_VERSION",
     "SUPPORTED_SCHEMA_VERSIONS",
@@ -111,4 +125,15 @@ __all__ = [
     "VerificationResult",
     "record_source",
     "verify_reference",
+    "CONTEXT_HEADER",
+    "ContextAssembly",
+    "ContextGuardError",
+    "Finding",
+    "MalformedDocumentError",
+    "Quarantine",
+    "ScanResult",
+    "build_context_block",
+    "content_digest",
+    "sanitize_document",
+    "scan_document",
 ]
