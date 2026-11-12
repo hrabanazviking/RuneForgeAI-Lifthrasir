@@ -1,0 +1,10 @@
+  UNIT                LOAD   ACTIVE SUB    DESCRIPTION
+● alpha-fail.service  loaded failed failed Alpha demo failing service
+garbage line with no columns at all
+● broken.service loaded
+  gamma-ok.service    loaded active running Gamma healthy service
+
+truncated row follows
+zzz
+
+2 loaded units listed.

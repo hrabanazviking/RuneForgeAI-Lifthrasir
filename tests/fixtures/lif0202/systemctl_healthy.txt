@@ -1,0 +1,5 @@
+  UNIT                LOAD   ACTIVE SUB    DESCRIPTION
+  gamma-ok.service    loaded active running Gamma healthy service
+  delta-ok.service    loaded active running Delta healthy service
+
+2 loaded units listed.

@@ -1,0 +1,11 @@
+Id=alpha-fail.service
+ActiveState=failed
+SubState=failed
+NRestarts=3
+ActiveEnterTimestamp=Wed 2026-11-11 09:15:00 UTC
+InactiveEnterTimestamp=Wed 2026-11-11 09:14:58 UTC
+
+Id=beta-fail.service
+ActiveState=failed
+SubState=failed
+ActiveEnterTimestamp=Wed 2026-11-11 09:20:00 UTC

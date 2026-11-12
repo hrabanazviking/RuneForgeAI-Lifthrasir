@@ -1,0 +1,9 @@
+{"__REALTIME_TIMESTAMP": "1794477600000000", "_SYSTEMD_UNIT": "alpha-fail.service", "MESSAGE": "alpha-fail.service: Scheduled restart job, restart counter is at 2.", "PRIORITY": "6", "_BOOT_ID": "fixtureboot0001"}
+{"__REALTIME_TIMESTAMP": "1794477000000000", "_SYSTEMD_UNIT": "alpha-fail.service", "MESSAGE": "Started Alpha demo failing service.", "PRIORITY": "6", "_BOOT_ID": "fixtureboot0001"}
+{"__REALTIME_TIMESTAMP": "1794478200000000", "_SYSTEMD_UNIT": "beta-fail.service", "MESSAGE": "beta-fail.service: Failed with result exit-code.", "PRIORITY": "3", "_BOOT_ID": "fixtureboot0001"}
+{"__REALTIME_TIMESTAMP": "1794477300000000", "_SYSTEMD_UNIT": "alpha-fail.service", "MESSAGE": "alpha-fail.service: Failed with result exit-code.", "PRIORITY": "3", "_BOOT_ID": "fixtureboot0001"}
+{"__REALTIME_TIMESTAMP": "1794477900000000", "_SYSTEMD_UNIT": "alpha-fail.service", "MESSAGE": "alpha-fail.service: Scheduled restart job, restart counter is at 3.", "PRIORITY": "6", "_BOOT_ID": "fixtureboot0001"}
+{"__REALTIME_TIMESTAMP": "1794477100000000", "_SYSTEMD_UNIT": "gamma-ok.service", "MESSAGE": "Started Gamma healthy service.", "PRIORITY": "6", "_BOOT_ID": "fixtureboot0001"}
+this line is not json and must be skipped
+{"__REALTIME_TIMESTAMP": "not-a-number", "_SYSTEMD_UNIT": "ghost.service", "MESSAGE": "Started Ghost."}
+{"MESSAGE": "entry without unit or timestamp must be skipped"}
