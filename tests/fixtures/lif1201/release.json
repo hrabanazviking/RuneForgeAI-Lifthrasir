@@ -1,0 +1,70 @@
+{
+  "package": {
+    "name": "lifthrasir",
+    "version": "0.8.0",
+    "format": "tarball-plan",
+    "source_commit": "41e29b890637f52b410006dcad2c33a272909b96",
+    "build_epoch": 1762905600,
+    "license_spdx": "GPL-2.0-only",
+    "files": [
+      {
+        "path": "src/lifthrasir/releasepipeline.py",
+        "sha256": "a15c9689066ce6aaaab83475abde0f6f79a1faf6b5fd63966206bde0bae07683",
+        "size": 46,
+        "spdx": "GPL-2.0-only",
+        "spdx_reviewed": true,
+        "kind": "code",
+        "license_note": ""
+      },
+      {
+        "path": "docs/RELEASE-PIPELINE.md",
+        "sha256": "6ad492b56579773f361617844c6641428fb4102c7f500444704dc4ff82582fba",
+        "size": 44,
+        "spdx": "GPL-2.0-only",
+        "spdx_reviewed": true,
+        "kind": "documentation",
+        "license_note": ""
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "f435bf9bb471b91012dc3944036905c78f6a32302c26c7262e91543578f741de",
+        "size": 44,
+        "spdx": "GPL-2.0-only",
+        "spdx_reviewed": true,
+        "kind": "documentation",
+        "license_note": ""
+      },
+      {
+        "path": "assets/viking-tux-note.txt",
+        "sha256": "f0fe4ea384f63d62447aaf19bd559ee3876716cb73e4c26aac5706a57573d963",
+        "size": 47,
+        "spdx": "CC-BY-4.0",
+        "spdx_reviewed": true,
+        "kind": "artwork",
+        "license_note": "Fixture permission note recorded for this slice; not a real artwork grant."
+      }
+    ]
+  },
+  "fixture_key": {
+    "key_id": "fixture-lif1201-test-key",
+    "material": "fixture-material-not-a-real-key-1201",
+    "simulated": true
+  },
+  "evidence": {
+    "reproducer": "tests/test_release_pipeline.py + this fixture",
+    "differential": "build twice and from shuffled order; digests must match",
+    "negative_control": "mutant: drop spdx_reviewed flag; gate must block (see test suite)",
+    "tool_versions": "Python 3.14.8, pytest 9.1.1 (recorded at build)",
+    "artifact_hashes": "sha256 in hidden_files/lif1201_hashes.txt",
+    "limitations": "Fixture/record level only; no real package, no real signing, no publication.",
+    "undo": "Revert the single LIF-1201 commit.",
+    "suite": {
+      "passed": 1080,
+      "failed": 0
+    },
+    "licensing_reviewed": true,
+    "gate_g9": "not-run",
+    "gate_g10": "not-run",
+    "human_review": "pending"
+  }
+}
