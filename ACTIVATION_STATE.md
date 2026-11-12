@@ -23,8 +23,10 @@ workers are claimed for slice A.
   criteria MET 2026-11-12 (see slice A log). Slice B (2026-11-12) wired
   the real runner, built the golden qcow2 from the pinned ISO, and
   proved real boot/reset/boot. Slice C (2026-11-12) proved the guest access path: serial-console login + a working shell inside the live guest.
-  Next is slice D (Calamares unattended install -> installed golden), then
-  the F01 fault loop inside the guest.
+  Slice D1 (2026-11-12) proved the Calamares recon inside the live guest
+  and built the unattended config builder. Next is slice D2 (Calamares
+  unattended install -> installed golden), then the F01 fault loop
+  inside the guest.
 - **Phase 2 — Host observe + propose: NOT STARTED.** Blocked on Phase 1
   exit evidence, by design.
 - **Phase 3 — Approval-gated repair classes: NOT STARTED.** Blocked on
@@ -111,4 +113,23 @@ Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-ag
 - Suite: 1513 passed / 0 failed (1509 at slice B + 4 new).
 - Phase 1 exit NOT met: installed-system golden (slice D), the F01 fault loop inside the guest, and the kill-switch drill remain.
 - Next slice (D): Calamares unattended install -> golden-installed.qcow2; boot it; verify serial + QGA + SSH; snapshot/reset proof; then the F01 fault loop.
+- Invariants: lab only; no host mutation beyond lab files; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
+
+---
+
+## Keeper tick - 2026-11-12 10:37 EST (keeper run 3)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers are claimed. Work had stopped after slice C (no lab processes), so the keeper continued with the next Phase 1 slice.
+
+### Slice D1 - Calamares recon (live guest) + unattended config builder: DONE
+
+- lab/calamares_config.py (new): pure unattended-config builder. build_settings() intersects the wanted sequence with the DISCOVERED module set and refuses (ValueError) when a critical exec module (partition/mount/unpackfs/users/bootloader) is missing; partition/users/packages module configs (lab user is a throwaway account in the disposable offline VM only; pinned packages openssh-server + qemu-guest-agent + spice-vdagent); render_settings_conf(); config_iso_argv() for a genisoimage config CD. Tests in tests/test_calamares_config.py (5 tests).
+- lab/run_sliceD_recon.py (new) driver + evidence: vault /mnt/vault/lifthrasir-lab/evidence/sliceD-recon.json; copy banked at lab/evidence/sliceD-recon.json. ISO sha OK vs pin; guest booted, serial login OK, recon dump captured between markers; VM stopped cleanly; overlay deleted; no QEMU left; caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10); host untouched, session undisturbed.
+- REAL DISCOVERIES from inside the guest: stock /etc/calamares/settings.conf sequence - show: welcome, locale, keyboard, pkgselect, partition, users, summary; exec: partition, mount, unpackfs, machineid, fstab, locale, keyboard, localecfg, luksbootkeyfile, users, displaymanager, networkcfg, hwclock, initramfscfg, initramfs, grubcfg, bootloader, automirror, packages, umount (+ contextualprocess/shellprocess instances); show: finished. Stock keys use disable-cancel / disable-cancel-during-exec (builder key names to be aligned to stock in D2). Module configs live in /etc/calamares/modules/ (bootloader, displaymanager, finished, fstab, grubcfg, locale, machineid, mount, packages, partition, unpackfs, umount, users, welcome + instance confs).
+- Qt finding: calamares in the guest fails Qt xcb (no display) - the unattended run in D2 must use QT_QPA_PLATFORM=offscreen.
+- Target finding: the live guest sees only the 8G golden overlay (vda with ISO partitions) + sr0 - D2 must attach a separate empty 32 GiB qcow2 as the install target.
+- Evidence-honesty fix in-driver: the first BEGIN/END block in the serial log is the shell echo of the recon command itself; the banked evidence records the LAST block (the real output) and says so.
+- Suite: 1518 passed / 0 failed (1513 at slice C + 5 new).
+- Phase 1 exit NOT met: installed-system golden (slice D2), the F01 fault loop inside the guest, and the kill-switch drill remain.
+- Next slice (D2): align builder keys to stock, stage config CD from discovered modules, attach empty 32 GiB target, run Calamares unattended (offscreen Qt) detached with a 30-min budget, then boot the installed disk and verify serial + QGA + SSH; that disk becomes golden-installed.qcow2.
 - Invariants: lab only; no host mutation beyond lab files; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
