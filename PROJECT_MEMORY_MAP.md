@@ -77,7 +77,7 @@ commit — never a bare claim. Queue order and titles per WAVE_PLAN.md.
 | Slice | Phase | Status | Evidence / commit |
 |---|---|---|---|
 | — | — | Campaign stood up 2026-11-12 | seat stand-up commit on main (WAVE_PLAN + this map + KEEPER); ls-remote verified |
-| LIF-0001 | P0 | assigned (team-01, probe) | — |
+| LIF-0001 | P0 | banked | e72ad6a on main, ls-remote verified 2026-11-12; docs/CHARTER.md sha256 f24a22a5f9c3b8a16b9beccbeab70aee5bb92c8a36428d1e3b57f27d9da423d2, tests/test_charter.py sha256 9f1a50882083db7dbe20e5540ae354b5181a7ed7321a4494886914d55957eafa; suite 7 passed / 0 failed (pytest 9.1.1, Python 3.14.8, seat-verified in team worktree and at seat); negative control 1 failed / 6 passed as designed; undo = revert e72ad6a; README link proposed in team-01 CAMPAIGN_STATE.md, human to apply |
 | LIF-0002 | P0 | assigned (team-02) | — |
 | LIF-0003 | P0 | assigned (team-03) | — |
 | LIF-0004 | P0 | assigned (team-04) | — |

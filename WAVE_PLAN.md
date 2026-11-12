@@ -129,6 +129,8 @@ the phase gates are dependency gates, not decoration (master roadmap §1).
 
 After a team's slice banks, it takes the next unbuilt slice in order.
 
+**Banked: 1 of 64** (2026-11-12, keeper tick 01:47 EST) — LIF-0001 banked at e72ad6a, ls-remote verified. Next assignments: team-01 flows to LIF-0105 (next unbuilt in queue order); teams 02-09 hold their Wave 1 slices.
+
 **README note for LIF-0001:** the backlog's Done line says the charter is
 "reviewed and linked in README". Teams NEVER modify README.md (standing
 law). The charter slice delivers the charter document itself plus a
