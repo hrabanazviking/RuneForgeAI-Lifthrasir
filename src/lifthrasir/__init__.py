@@ -15,6 +15,7 @@ Banking union note (LIF-0305): this slice adds the hypotheses exports below on i
 Banking union note (LIF-0306): contextguard exports added at the seat at banking, per the team-03 flag.
 Banking union note (LIF-0402): policy exports added at the seat at banking.
 Banking union note (LIF-0403): executor exports added at the seat at banking.
+Banking union note (LIF-0404): approval exports added at the seat at banking.
 """
 from .actions import (
     CATALOG,
@@ -128,6 +129,30 @@ from .executor import (
     ExecutionResult,
     run_confined,
 )
+from .approval import (
+    ApprovalError,
+    MalformedPlanError,
+    ConsentFloorError,
+    ForbiddenApprovalError,
+    SignatureError,
+    DigestMismatchError,
+    DuplicateReferenceError,
+    UnknownReferenceError,
+    ExpiredReferenceError,
+    ReplayError,
+    ResourceScopeError,
+    DecisionError,
+    PlanReference,
+    ApprovalRecord,
+    ApprovalLedger,
+    canonical_plan_bytes,
+    check_plan_shape,
+    plan_digest,
+    resource_scope,
+    mint_plan_reference,
+    verify_reference_signature,
+    render_approval_prompt,
+)
 __all__ = [
     "CATALOG",
     "CATALOG_VERSION",
@@ -224,4 +249,26 @@ __all__ = [
     "PolicyGrant",
     "ExecutionResult",
     "run_confined",
+    "ApprovalError",
+    "MalformedPlanError",
+    "ConsentFloorError",
+    "ForbiddenApprovalError",
+    "SignatureError",
+    "DigestMismatchError",
+    "DuplicateReferenceError",
+    "UnknownReferenceError",
+    "ExpiredReferenceError",
+    "ReplayError",
+    "ResourceScopeError",
+    "DecisionError",
+    "PlanReference",
+    "ApprovalRecord",
+    "ApprovalLedger",
+    "canonical_plan_bytes",
+    "check_plan_shape",
+    "plan_digest",
+    "resource_scope",
+    "mint_plan_reference",
+    "verify_reference_signature",
+    "render_approval_prompt",
 ]
