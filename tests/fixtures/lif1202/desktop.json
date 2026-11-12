@@ -1,0 +1,275 @@
+{
+  "descriptor": {
+    "schema": "lifthrasir.desktop-ux.v0.1",
+    "app_id": "org.runforge.lifthrasir",
+    "toolkit": "kde-qt",
+    "network": "none",
+    "telemetry": false,
+    "analytics": false,
+    "crash_reporting": false,
+    "views": [
+      {
+        "view_id": "overview",
+        "data_source": "local-event-store",
+        "widgets": [
+          {
+            "widget_id": "overview-status",
+            "kind": "status-banner",
+            "action": "observe",
+            "accessible_name": "System status",
+            "keyboard_operable": false,
+            "min_target_px": 0,
+            "redundant_channel": "text",
+            "live_region": "polite"
+          },
+          {
+            "widget_id": "overview-incidents",
+            "kind": "list",
+            "action": "navigate",
+            "accessible_name": "Recent incidents",
+            "keyboard_operable": true,
+            "min_target_px": 44,
+            "redundant_channel": null,
+            "live_region": "off"
+          }
+        ]
+      },
+      {
+        "view_id": "incidents",
+        "data_source": "local-event-store",
+        "widgets": [
+          {
+            "widget_id": "incidents-list",
+            "kind": "list",
+            "action": "navigate",
+            "accessible_name": "Incident list",
+            "keyboard_operable": true,
+            "min_target_px": 44,
+            "redundant_channel": null,
+            "live_region": "off"
+          },
+          {
+            "widget_id": "incidents-status",
+            "kind": "status-banner",
+            "action": "observe",
+            "accessible_name": "Incident list status",
+            "keyboard_operable": false,
+            "min_target_px": 0,
+            "redundant_channel": "icon",
+            "live_region": "polite"
+          }
+        ]
+      },
+      {
+        "view_id": "incident-detail",
+        "data_source": "local-event-store",
+        "widgets": [
+          {
+            "widget_id": "incident-detail-body",
+            "kind": "detail",
+            "action": "observe",
+            "accessible_name": "",
+            "keyboard_operable": false,
+            "min_target_px": 0,
+            "redundant_channel": null,
+            "live_region": "off"
+          },
+          {
+            "widget_id": "incident-evidence",
+            "kind": "text",
+            "action": "observe",
+            "accessible_name": "",
+            "keyboard_operable": false,
+            "min_target_px": 0,
+            "redundant_channel": null,
+            "live_region": "off"
+          }
+        ]
+      },
+      {
+        "view_id": "sensors",
+        "data_source": "local-event-store",
+        "widgets": [
+          {
+            "widget_id": "sensors-table",
+            "kind": "sensor-table",
+            "action": "observe",
+            "accessible_name": "Sensor permissions",
+            "keyboard_operable": true,
+            "min_target_px": 44,
+            "redundant_channel": null,
+            "live_region": "off"
+          }
+        ]
+      },
+      {
+        "view_id": "approvals",
+        "data_source": "approval-ledger",
+        "widgets": [
+          {
+            "widget_id": "approvals-list",
+            "kind": "list",
+            "action": "navigate",
+            "accessible_name": "Pending approvals",
+            "keyboard_operable": true,
+            "min_target_px": 44,
+            "redundant_channel": null,
+            "live_region": "off"
+          },
+          {
+            "widget_id": "approvals-prompt",
+            "kind": "approval-prompt",
+            "action": "request-approval",
+            "accessible_name": "Approval prompt",
+            "keyboard_operable": true,
+            "min_target_px": 44,
+            "redundant_channel": null,
+            "live_region": "off"
+          }
+        ]
+      },
+      {
+        "view_id": "approval-detail",
+        "data_source": "approval-ledger",
+        "widgets": [
+          {
+            "widget_id": "approval-detail-prompt",
+            "kind": "approval-prompt",
+            "action": "request-approval",
+            "accessible_name": "Approval detail",
+            "keyboard_operable": true,
+            "min_target_px": 44,
+            "redundant_channel": null,
+            "live_region": "off"
+          },
+          {
+            "widget_id": "approval-diff",
+            "kind": "diff-preview",
+            "action": "observe",
+            "accessible_name": "",
+            "keyboard_operable": false,
+            "min_target_px": 0,
+            "redundant_channel": null,
+            "live_region": "off"
+          }
+        ]
+      },
+      {
+        "view_id": "recovery",
+        "data_source": "transaction-store",
+        "widgets": [
+          {
+            "widget_id": "recovery-list",
+            "kind": "list",
+            "action": "navigate",
+            "accessible_name": "Undo manifests",
+            "keyboard_operable": true,
+            "min_target_px": 44,
+            "redundant_channel": null,
+            "live_region": "off"
+          },
+          {
+            "widget_id": "recovery-prompt",
+            "kind": "approval-prompt",
+            "action": "request-approval",
+            "accessible_name": "Recovery approval",
+            "keyboard_operable": true,
+            "min_target_px": 44,
+            "redundant_channel": null,
+            "live_region": "off"
+          }
+        ]
+      },
+      {
+        "view_id": "settings",
+        "data_source": "local-config",
+        "widgets": [
+          {
+            "widget_id": "settings-form",
+            "kind": "settings-form",
+            "action": "local-setting",
+            "accessible_name": "Local settings",
+            "keyboard_operable": true,
+            "min_target_px": 44,
+            "redundant_channel": null,
+            "live_region": "off"
+          }
+        ]
+      },
+      {
+        "view_id": "about",
+        "data_source": "static-bundle",
+        "widgets": [
+          {
+            "widget_id": "about-text",
+            "kind": "text",
+            "action": "observe",
+            "accessible_name": "",
+            "keyboard_operable": false,
+            "min_target_px": 0,
+            "redundant_channel": null,
+            "live_region": "off"
+          }
+        ]
+      }
+    ],
+    "global_widgets": [
+      {
+        "widget_id": "global-stop",
+        "kind": "emergency-stop",
+        "action": "emergency-stop",
+        "accessible_name": "Emergency stop",
+        "keyboard_operable": true,
+        "min_target_px": 48,
+        "redundant_channel": "text",
+        "live_region": "assertive"
+      }
+    ],
+    "focus_order": [
+      "overview-incidents",
+      "incidents-list",
+      "sensors-table",
+      "approvals-list",
+      "approvals-prompt",
+      "approval-detail-prompt",
+      "recovery-list",
+      "recovery-prompt",
+      "settings-form",
+      "global-stop"
+    ],
+    "theme": {
+      "body_text_px": 16,
+      "contrast_text": 7.0,
+      "contrast_large": 4.5,
+      "corner_cut_px": 8,
+      "focus_indicator": "2px outline + underline",
+      "supports_text_scaling_to_pct": 200,
+      "honors_reduced_motion": true,
+      "grayscale_coherent": true
+    },
+    "approval": {
+      "sections": [
+        "proposal",
+        "scope",
+        "risk-consent",
+        "rollback",
+        "verification",
+        "expiry",
+        "reference"
+      ],
+      "plain_language_summary": true
+    },
+    "emergency_stop": {
+      "widget_id": "global-stop",
+      "requires_model": false,
+      "requires_network": false
+    }
+  },
+  "expected": {
+    "views": 9,
+    "widgets": 16,
+    "interactive_widgets": 10,
+    "network": "none",
+    "toolkit": "kde-qt"
+  }
+}
