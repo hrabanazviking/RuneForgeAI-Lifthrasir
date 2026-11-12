@@ -126,7 +126,7 @@ commit — never a bare claim. Queue order and titles per WAVE_PLAN.md.
 | LIF-0903 | P9 | banked | aacd976 on main (cherry-pick of team-09 7a5d2c7; lab module, no package union), verified 2026-11-12; suite 932/0 (seat); negative controls PASS (13 refusal tests); undo = revert aacd976 |
 | LIF-0904 | P9 | banked | ceaea05 on main (cherry-pick of team-06 2e34939 + seat union of 34 patchdossier exports amended; patchdossier EVIDENCE_LADDER/VERDICTS stay at submodule), verified 2026-11-12; suite 955/0 (seat); negative control PASS; undo = revert ceaea05 |
 | LIF-0905 | P9 | banked | 3990dd6 on main (cherry-pick of team-03 458fc34 + seat-amend of 18 staticanalysis exports; staticanalysis SEVERITIES stays at submodule, security_triage owns it), verified 2026-11-12; suite 981/0 (seat; the committed test file carries 26 tests - the team record said 21 from its pre-amend log; seat count governs); negative control PASS (2 failed as designed); undo = revert 3990dd6. P9 SET COMPLETE (0901-0905) |
-| LIF-1001 | P10 | assigned | team-02 assigned 2026-11-12 (keeper tick 04:57 EST, flowing after LIF-0603 banked) |
+| LIF-1001 | P10 | banked | 9f9339f on main (cherry-pick of team-02 commit 18e214a; lab module, no package union), verified 2026-11-12; benchmark harness: controlled environment + repetitions, deterministic fixture workloads only, no heavy runs; suite at banking 1006 passed / 0 failed (seat full suite); negative control PASS (mutated samples flip verdict, cross-seed comparison refused, nondeterministic checksum refused); undo = revert 9f9339f |
 | LIF-1002 | P10 | queued | — |
 | LIF-1003 | P10 | queued | — |
 | LIF-1101 | P11 | queued | — |
