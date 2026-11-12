@@ -1,0 +1,44 @@
+{
+  "citations": [
+    {"citation_id": "ev-2026-201", "source_kind": "log-excerpt", "locator": "journal:fixture-service:2026-201", "title": "Fixture service journal excerpt"},
+    {"citation_id": "ev-2026-202", "source_kind": "sensor-reading", "locator": "sensor:fixture-disk:2026-202", "title": "Fixture disk sensor reading"},
+    {"citation_id": "ev-2026-203", "source_kind": "experiment-result", "locator": "lab:fixture-restart:2026-203", "title": "Fixture restart experiment"}
+  ],
+  "incident_summary": {
+    "template_id": "tmpl-incident-summary",
+    "values": {
+      "incident_id": "inc-2026-201",
+      "summary": "The fixture service stopped after its disk filled.",
+      "evidence_detail": "The journal shows write failures and the sensor shows a full disk.",
+      "uncertainty": "Low: two independent fixture sources agree."
+    },
+    "citations_by_section": {
+      "summary": ["ev-2026-201"],
+      "evidence": ["ev-2026-202"],
+      "uncertainty": []
+    }
+  },
+  "hypothesis_record": {
+    "schema": "lifthrasir.hypothesis.v0.1",
+    "schema_version": "0.1",
+    "hypothesis_id": "hyp-fixture-disk",
+    "incident_id": "inc-2026-201",
+    "claim": "The fixture service stopped because its disk filled.",
+    "status": "supported",
+    "confidence": 0.8,
+    "evidence_for": ["ev-2026-201", "ev-2026-202"],
+    "evidence_against": ["ev-2026-203"],
+    "test_plan": "Restart the fixture service on an empty disk and observe.",
+    "evidence_status": "lab-verified",
+    "created_at": "2026-11-12T00:00:00Z"
+  },
+  "structured_explanation": {
+    "schema": "lifthrasir.explanation.v0.1",
+    "schema_version": "0.1",
+    "kind": "explanation",
+    "summary": "The fixture service stopped after its disk filled.",
+    "citations": ["ev-2026-201", "ev-2026-202"],
+    "uncertainty": 0.2
+  },
+  "invented_citation": "ev-9999-invented"
+}
