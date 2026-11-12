@@ -103,25 +103,25 @@ commit — never a bare claim. Queue order and titles per WAVE_PLAN.md.
 | LIF-0402 | P4 | banked | 272d9e1 on main (cherry-pick of team-05 commit 2a05e27 + seat union of policy exports, amended into the slice commit), ls-remote verified 2026-11-12; policy decisions: identity, resource, risk level, preconditions; suite at banking 338 passed / 0 failed (seat full suite); undo = revert 272d9e1 |
 | LIF-0403 | P4 | banked | 0accdd3 on main (cherry-pick of team-06 commit 8190798 + seat union of executor exports, amended into the slice commit; NOTE: executor.ActionRequest deliberately NOT exported at top level - the name stays with actions.ActionRequest banked in LIF-0401, per the SchemaVersionError precedent; the executor class remains at lifthrasir.executor.ActionRequest), ls-remote verified 2026-11-12; separate process and limited permissions for executor; suite at banking 355 passed / 0 failed (seat full suite); undo = revert 0accdd3 |
 | LIF-0404 | P4 | banked | 4f352eb on main (cherry-pick of team-07 commit 782c708 + seat union of approval exports, amended into the slice commit), ls-remote verified 2026-11-12; user approval UX and signed/unique plan references; suite at banking 372 passed / 0 failed (seat full suite); undo = revert 4f352eb |
-| LIF-0405 | P4 | building | team-08 building (still building at banking closure 2026-11-12) |
-| LIF-0406 | P4 | built | team-09 commit c1b6aa8 built, awaiting banking - banks after LIF-0405 (team-08, still building) |
-| LIF-0407 | P4 | queued | — |
-| LIF-0501 | P5 | queued | — |
-| LIF-0502 | P5 | queued | — |
-| LIF-0503 | P5 | queued | — |
-| LIF-0504 | P5 | queued | — |
-| LIF-0505 | P5 | queued | — |
-| LIF-0506 | P5 | queued | — |
-| LIF-0601 | P6 | queued | — |
-| LIF-0602 | P6 | queued | — |
-| LIF-0603 | P6 | queued | — |
-| LIF-0701 | P7 | queued | — |
-| LIF-0702 | P7 | queued | — |
-| LIF-0703 | P7 | queued | — |
-| LIF-0801 | P8 | queued | — |
-| LIF-0802 | P8 | queued | — |
-| LIF-0803 | P8 | queued | — |
-| LIF-0901 | P9 | queued | — |
+| LIF-0405 | P4 | banked | 749384a on main (FF merge of team-08 commit), ls-remote verified 2026-11-12; src/lifthrasir/transactions.py durable transaction store (SQLite WAL + synchronous=FULL, caller-supplied paths, hash-chained history, undo manifest recorded at creation, forward/undo verbs validated against the banked LIF-0401 catalog) + 49 tests + fixture; suite at banking 421 passed / 0 failed (seat full suite); undo = revert 749384a |
+| LIF-0406 | P4 | banked | e2920ba on main (cherry-pick of recovered team-09 commit c1b6aa8 + seat fix amended in), ls-remote verified 2026-11-12; src/lifthrasir/killswitch.py + 17 tests + journal fixtures; NO __init__ exports (module deliberate, submodule import works); RECOVERY: the team commit was orphaned by a branch reset and recovered by the keeper (pinned as local branch yrsa/lifthrasir-lif0406-recovery); SEAT FIX: latent fork/exec race - FixtureRegistry.register()/spawn_fixture read /proc/<pid>/cmdline once, immediately after spawn, before exec landed, so registration intermittently refused the fixture's own processes under load (failed ~half of runs at the seat; the team's idle-machine run had passed 243/0); fixed in-slice at the seat - register() and spawn_fixture() now poll briefly for the marker to appear in the child's own cmdline, registration still requires observing the marker there and records starttime from the same matching read, foreign processes still refused; verified 15/15 killswitch runs + 3/3 full suites green after the fix; suite at banking 438 passed / 0 failed (seat full suite); note: killswitch.py keeps its own journal shape (lif0406-txn-journal/1) and does not consume LIF-0405's store - the two coexist, bridging is future integration work, not a defect in either slice; undo = revert e2920ba |
+| LIF-0407 | P4 | banked | 221d037 on main (cherry-pick of team-01 363dbcc + seat __init__ union amended), ls-remote verified 2026-11-12; confinement review; seat unioned 24 confinement exports; confinement.Finding deliberately NOT top-level (name stays with contextguard.Finding, LIF-0306 precedent; it remains lifthrasir.confinement.Finding); suite at banking 451 passed / 0 failed (seat full suite); undo = revert 221d037. P4 SET COMPLETE (0401-0407) |
+| LIF-0501 | P5 | banked | a24bce1 on main (cherry-pick of team-02 8fb60b8 + seat union of 26 recipes exports amended), ls-remote verified 2026-11-12; suite at banking 487 passed / 0 failed (seat full suite); undo = revert a24bce1 |
+| LIF-0502 | P5 | banked | 07c01dc on main (cherry-pick of team-03 5b99868 + seat union of 14 recovery_demo exports amended), ls-remote verified 2026-11-12; fixture/in-memory demonstration only, no real host service touched; suite at banking 502 passed / 0 failed (seat full suite); undo = revert 07c01dc |
+| LIF-0503 | P5 | banked | 3a268a5 on main (cherry-pick of team-04 8a4fa68 + seat union of 21 configpreview exports amended), ls-remote verified 2026-11-12; suite at banking 536 passed / 0 failed (seat full suite); undo = revert 3a268a5 |
+| LIF-0504 | P5 | banked | 932f1a2 on main (cherry-pick of team-05 7355e49 + seat union of 17 soak exports amended), ls-remote verified 2026-11-12; soak.VERDICTS deliberately NOT top-level (name stays with configpreview.VERDICTS, LIF-0503; soak's remains lifthrasir.soak.VERDICTS); suite at banking 557 passed / 0 failed (seat full suite); undo = revert 932f1a2 |
+| LIF-0505 | P5 | banked | f6cd236 on main (cherry-pick of team-06 1e9c318 + seat union of 21 reversal exports amended), ls-remote verified 2026-11-12; reversal.py is a fixture-state engine with its own durable manifest format; it re-declared the LIF-0405 contract locally and does not consume transactions.py; the two coexist, bridging is future work; suite at banking 577 passed / 0 failed (seat full suite); undo = revert f6cd236 |
+| LIF-0506 | P5 | banked | a1cf23c on main (cherry-pick of team-07 c1266fc + seat union amended), ls-remote verified 2026-11-12; service_intent exports unioned with SCHEMA_VERSION aliased as SERVICE_INTENT_SCHEMA_VERSION (top-level SCHEMA_VERSION stays with the event bus, LIF-0201) and service_intent.VERDICTS held at submodule (configpreview owns the top-level name); suite at banking 587 passed / 0 failed (seat full suite); undo = revert a1cf23c. P5 SET COMPLETE (0501-0506) |
+| LIF-0601 | P6 | banked | e54e702 on main (cherry-pick of team-09 38270aa + seat union of 27 modelprovider exports amended), ls-remote verified 2026-11-12; modelprovider.MalformedRequestError and modelprovider.request_from_dict deliberately NOT top-level (names stay with actions / the earlier banked module respectively; both remain at lifthrasir.modelprovider.*); no real inference claimed (protocol + deterministic mock + local-only adapter); suite at banking 638 passed / 0 failed (seat full suite); undo = revert e54e702 |
+| LIF-0602 | P6 | banked | 2ed211b on main (cherry-pick of team-01 commit 37f0449 + seat union of 34 explanations exports + seat-amended collision-guard test rewritten as post-banking union-integrity test, both amended into the slice commit), ls-remote verified 2026-11-12; structured explanation + hypothesis templates with registry-resolved citations (invented citations refused); suite at banking 664 passed / 0 failed (seat full suite); negative control 8 failed / 18 passed as designed; undo = revert 2ed211b |
+| LIF-0603 | P6 | assigned | team-02 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0701 | P7 | assigned | team-03 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0702 | P7 | assigned | team-04 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0703 | P7 | assigned | team-05 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0801 | P8 | assigned | team-06 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0802 | P8 | assigned | team-07 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0803 | P8 | assigned | team-08 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0901 | P9 | assigned | team-09 assigned 2026-11-12 (flowing after LIF-0601 banked) |
 | LIF-0902 | P9 | queued | — |
 | LIF-0903 | P9 | queued | — |
 | LIF-0904 | P9 | queued | — |
