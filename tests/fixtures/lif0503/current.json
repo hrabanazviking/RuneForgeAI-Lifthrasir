@@ -1,0 +1,8 @@
+{
+  "demo": {
+    "enabled": true,
+    "interval_seconds": 60,
+    "limits": {"memory_mb": 256, "nice": 0}
+  },
+  "log_level": "info"
+}
