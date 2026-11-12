@@ -1,0 +1,435 @@
+{
+  "author": {
+    "name": "Hilde Human",
+    "email": "hilde@fixture.example",
+    "kind": "human"
+  },
+  "submission_review": {
+    "reviewer": "Hilde Human",
+    "reviewer_kind": "human",
+    "items": [
+      {
+        "item": "candidate-dossier-complete",
+        "state": "pass"
+      },
+      {
+        "item": "maintainers-and-lists-identified",
+        "state": "pass"
+      },
+      {
+        "item": "cover-letter-reviewed",
+        "state": "pass"
+      },
+      {
+        "item": "disclosure-route-correct",
+        "state": "pass"
+      },
+      {
+        "item": "dco-stance-acknowledged",
+        "state": "pass"
+      },
+      {
+        "item": "verification-limits-accepted",
+        "state": "pass"
+      }
+    ],
+    "notes": "fixture submission review; the real submission decision belongs to a real human"
+  },
+  "complete_bug": {
+    "upstream_id": "upstream-fixture-counter-1",
+    "candidate": {
+      "dossier_id": "dossier-fixture-counter-1",
+      "incident_id": "inc-kernel-lab-1",
+      "title": "fixture counter increments before the device is armed",
+      "problem": "fixture_count() increments when fixture_ready() is true even before fixture_armed(), so the recorded count is one too high on the pinned baseline.",
+      "affected_commit": "0123456789abcdef0123456789abcdef01234567",
+      "arch": "x86_64",
+      "kernel_release": "6.12.117",
+      "patch_diff": "diff --git a/drivers/fixture/fixture_counter.c b/drivers/fixture/fixture_counter.c\n--- a/drivers/fixture/fixture_counter.c\n+++ b/drivers/fixture/fixture_counter.c\n@@ -10,7 +10,7 @@ static int fixture_count(void)\n int count = 0;\n \n-if (fixture_ready())\n+if (fixture_ready() && fixture_armed())\n count++;\n \n return count;\ndiff --git a/include/fixture/fixture_counter.h b/include/fixture/fixture_counter.h\n--- a/include/fixture/fixture_counter.h\n+++ b/include/fixture/fixture_counter.h\n@@ -3,4 +3,5 @@\n #define FIXTURE_COUNTER_H\n \n int fixture_count(void);\n+int fixture_armed(void);\n \n #endif\n",
+      "reproducer": {
+        "description": "grep-based minimal reproducer over the fixture source: exits 1 while the unguarded call is present, 0 once the guard is applied.",
+        "script": "grep -n fixture_ready drivers/fixture/fixture_counter.c",
+        "baseline": {
+          "runs": 5,
+          "failures": 5
+        },
+        "candidate": {
+          "runs": 5,
+          "failures": 0
+        },
+        "control": {
+          "runs": 3,
+          "failures": 0
+        },
+        "control_expectation": "pass",
+        "reversed_patch": {
+          "runs": 3,
+          "failures": 3
+        }
+      },
+      "test_matrix": [
+        {
+          "name": "kunit fixture_counter suite",
+          "outcome": "passed",
+          "detail": "recorded fixture TAP"
+        },
+        {
+          "name": "kselftest fixture behaviour",
+          "outcome": "passed",
+          "detail": "recorded fixture TAP"
+        },
+        {
+          "name": "checkpatch",
+          "outcome": "passed",
+          "detail": "0 errors, 0 warnings on fixture diff"
+        }
+      ],
+      "analyzer_summary": "sparse/smatch fixture run: no new diagnostics on the touched files.",
+      "limitations": [
+        "fixture source only; no real kernel build or boot is claimed",
+        "arm64 not yet run for this candidate"
+      ],
+      "regressions": [],
+      "evidence_status": "lab-verified",
+      "review": {
+        "reviewer": "Hilde Human",
+        "reviewer_kind": "human",
+        "items": [
+          {
+            "item": "problem-and-affected-commit",
+            "state": "pass"
+          },
+          {
+            "item": "reproducer-minimal-and-pinned",
+            "state": "pass"
+          },
+          {
+            "item": "control-outcome-checked",
+            "state": "pass"
+          },
+          {
+            "item": "diff-minimal-and-scoped",
+            "state": "pass"
+          },
+          {
+            "item": "compiler-and-analyzer-logs-clean-or-explained",
+            "state": "pass"
+          },
+          {
+            "item": "test-matrix-differential-pass",
+            "state": "pass"
+          },
+          {
+            "item": "limitations-and-regressions-stated",
+            "state": "pass"
+          },
+          {
+            "item": "reversal-falsification-checked",
+            "state": "pass"
+          },
+          {
+            "item": "safety-invariants-respected",
+            "state": "pass"
+          }
+        ],
+        "notes": "fixture review recorded for the upstream slice; no real kernel review is claimed"
+      }
+    },
+    "disclosure": "bug",
+    "author": {
+      "name": "Hilde Human",
+      "email": "hilde@fixture.example",
+      "kind": "human"
+    },
+    "cover_letter": {
+      "subject": "drivers/fixture: arm the counter before counting",
+      "body": "The fixture counter increments before the device is armed, so the recorded count is one too high on the pinned baseline. This change gates the increment on fixture_armed() and declares the helper in the header. Reproducer, test matrix and limits of verification are in the attached dossier."
+    }
+  },
+  "incomplete": {
+    "upstream_id": "upstream-fixture-counter-2",
+    "candidate": {
+      "dossier_id": "dossier-fixture-counter-2",
+      "incident_id": "inc-kernel-lab-1",
+      "title": "fixture counter increments before the device is armed",
+      "problem": "fixture_count() increments when fixture_ready() is true even before fixture_armed(), so the recorded count is one too high on the pinned baseline.",
+      "affected_commit": "0123456789abcdef0123456789abcdef01234567",
+      "arch": "x86_64",
+      "kernel_release": "6.12.117",
+      "patch_diff": "diff --git a/drivers/fixture/fixture_counter.c b/drivers/fixture/fixture_counter.c\n--- a/drivers/fixture/fixture_counter.c\n+++ b/drivers/fixture/fixture_counter.c\n@@ -10,7 +10,7 @@ static int fixture_count(void)\n int count = 0;\n \n-if (fixture_ready())\n+if (fixture_ready() && fixture_armed())\n count++;\n \n return count;\ndiff --git a/include/fixture/fixture_counter.h b/include/fixture/fixture_counter.h\n--- a/include/fixture/fixture_counter.h\n+++ b/include/fixture/fixture_counter.h\n@@ -3,4 +3,5 @@\n #define FIXTURE_COUNTER_H\n \n int fixture_count(void);\n+int fixture_armed(void);\n \n #endif\n",
+      "reproducer": {
+        "description": "grep-based minimal reproducer over the fixture source: exits 1 while the unguarded call is present, 0 once the guard is applied.",
+        "script": "grep -n fixture_ready drivers/fixture/fixture_counter.c",
+        "baseline": {
+          "runs": 5,
+          "failures": 5
+        },
+        "candidate": {
+          "runs": 5,
+          "failures": 0
+        },
+        "control": {
+          "runs": 3,
+          "failures": 0
+        },
+        "control_expectation": "pass"
+      },
+      "test_matrix": [
+        {
+          "name": "kunit fixture_counter suite",
+          "outcome": "passed",
+          "detail": "recorded fixture TAP"
+        },
+        {
+          "name": "kselftest fixture behaviour",
+          "outcome": "passed",
+          "detail": "recorded fixture TAP"
+        },
+        {
+          "name": "checkpatch",
+          "outcome": "passed",
+          "detail": "0 errors, 0 warnings on fixture diff"
+        }
+      ],
+      "analyzer_summary": "sparse/smatch fixture run: no new diagnostics on the touched files.",
+      "limitations": [
+        "fixture source only; no real kernel build or boot is claimed",
+        "arm64 not yet run for this candidate"
+      ],
+      "regressions": [],
+      "evidence_status": "lab-verified"
+    },
+    "disclosure": "bug",
+    "author": {
+      "name": "Hilde Human",
+      "email": "hilde@fixture.example",
+      "kind": "human"
+    },
+    "cover_letter": {
+      "subject": "drivers/fixture: arm the counter before counting",
+      "body": "Work in progress fixture record: the candidate dossier is deliberately incomplete (no reversal leg, no human code review)."
+    }
+  },
+  "blocked": {
+    "upstream_id": "upstream-fixture-fw-1",
+    "candidate": {
+      "dossier_id": "dossier-fixture-fw-1",
+      "incident_id": "inc-kernel-lab-1",
+      "title": "fixture counter increments before the device is armed",
+      "problem": "fixture_count() increments when fixture_ready() is true even before fixture_armed(), so the recorded count is one too high on the pinned baseline.",
+      "affected_commit": "89abcdef0123456789abcdef0123456789abcdef",
+      "arch": "x86_64",
+      "kernel_release": "6.12.117",
+      "patch_diff": "diff --git a/drivers/firmware/fixture_fw.c b/drivers/firmware/fixture_fw.c\n--- a/drivers/firmware/fixture_fw.c\n+++ b/drivers/firmware/fixture_fw.c\n@@ -5,4 +5,4 @@ static int fixture_fw_load(void)\n int ret = 0;\n \n-ret = fixture_fw_parse();\n+ret = fixture_fw_parse_checked();\n \n return ret;\n",
+      "reproducer": {
+        "description": "grep-based minimal reproducer over the fixture source: exits 1 while the unguarded call is present, 0 once the guard is applied.",
+        "script": "grep -n fixture_ready drivers/fixture/fixture_counter.c",
+        "baseline": {
+          "runs": 5,
+          "failures": 5
+        },
+        "candidate": {
+          "runs": 5,
+          "failures": 0
+        },
+        "control": {
+          "runs": 3,
+          "failures": 0
+        },
+        "control_expectation": "pass",
+        "reversed_patch": {
+          "runs": 3,
+          "failures": 3
+        }
+      },
+      "test_matrix": [
+        {
+          "name": "kunit fixture_counter suite",
+          "outcome": "passed",
+          "detail": "recorded fixture TAP"
+        },
+        {
+          "name": "kselftest fixture behaviour",
+          "outcome": "passed",
+          "detail": "recorded fixture TAP"
+        },
+        {
+          "name": "checkpatch",
+          "outcome": "passed",
+          "detail": "0 errors, 0 warnings on fixture diff"
+        }
+      ],
+      "analyzer_summary": "sparse/smatch fixture run: no new diagnostics on the touched files.",
+      "limitations": [
+        "fixture source only; no real kernel build or boot is claimed",
+        "arm64 not yet run for this candidate"
+      ],
+      "regressions": [],
+      "evidence_status": "lab-verified",
+      "review": {
+        "reviewer": "Hilde Human",
+        "reviewer_kind": "human",
+        "items": [
+          {
+            "item": "problem-and-affected-commit",
+            "state": "pass"
+          },
+          {
+            "item": "reproducer-minimal-and-pinned",
+            "state": "pass"
+          },
+          {
+            "item": "control-outcome-checked",
+            "state": "pass"
+          },
+          {
+            "item": "diff-minimal-and-scoped",
+            "state": "pass"
+          },
+          {
+            "item": "compiler-and-analyzer-logs-clean-or-explained",
+            "state": "pass"
+          },
+          {
+            "item": "test-matrix-differential-pass",
+            "state": "pass"
+          },
+          {
+            "item": "limitations-and-regressions-stated",
+            "state": "pass"
+          },
+          {
+            "item": "reversal-falsification-checked",
+            "state": "pass"
+          },
+          {
+            "item": "safety-invariants-respected",
+            "state": "pass"
+          }
+        ],
+        "notes": "fixture review recorded for the upstream slice; no real kernel review is claimed"
+      }
+    },
+    "disclosure": "bug",
+    "author": {
+      "name": "Hilde Human",
+      "email": "hilde@fixture.example",
+      "kind": "human"
+    },
+    "cover_letter": {
+      "subject": "drivers/firmware: check the fixture firmware parse",
+      "body": "Fixture record whose diff touches a firmware path, so the candidate dossier is blocked for human handling under the safety invariants."
+    }
+  },
+  "security": {
+    "upstream_id": "upstream-fixture-ssp-1",
+    "candidate": {
+      "dossier_id": "dossier-fixture-ssp-1",
+      "incident_id": "inc-kernel-lab-1",
+      "title": "fixture counter increments before the device is armed",
+      "problem": "fixture_count() increments when fixture_ready() is true even before fixture_armed(), so the recorded count is one too high on the pinned baseline.",
+      "affected_commit": "fedcba9876543210fedcba9876543210fedcba98",
+      "arch": "x86_64",
+      "kernel_release": "6.12.117",
+      "patch_diff": "diff --git a/drivers/fixture/fixture_counter.c b/drivers/fixture/fixture_counter.c\n--- a/drivers/fixture/fixture_counter.c\n+++ b/drivers/fixture/fixture_counter.c\n@@ -10,7 +10,7 @@ static int fixture_count(void)\n int count = 0;\n \n-if (fixture_ready())\n+if (fixture_ready() && fixture_armed())\n count++;\n \n return count;\ndiff --git a/include/fixture/fixture_counter.h b/include/fixture/fixture_counter.h\n--- a/include/fixture/fixture_counter.h\n+++ b/include/fixture/fixture_counter.h\n@@ -3,4 +3,5 @@\n #define FIXTURE_COUNTER_H\n \n int fixture_count(void);\n+int fixture_armed(void);\n \n #endif\n",
+      "reproducer": {
+        "description": "grep-based minimal reproducer over the fixture source: exits 1 while the unguarded call is present, 0 once the guard is applied.",
+        "script": "grep -n fixture_ready drivers/fixture/fixture_counter.c",
+        "baseline": {
+          "runs": 5,
+          "failures": 5
+        },
+        "candidate": {
+          "runs": 5,
+          "failures": 0
+        },
+        "control": {
+          "runs": 3,
+          "failures": 0
+        },
+        "control_expectation": "pass",
+        "reversed_patch": {
+          "runs": 3,
+          "failures": 3
+        }
+      },
+      "test_matrix": [
+        {
+          "name": "kunit fixture_counter suite",
+          "outcome": "passed",
+          "detail": "recorded fixture TAP"
+        },
+        {
+          "name": "kselftest fixture behaviour",
+          "outcome": "passed",
+          "detail": "recorded fixture TAP"
+        },
+        {
+          "name": "checkpatch",
+          "outcome": "passed",
+          "detail": "0 errors, 0 warnings on fixture diff"
+        }
+      ],
+      "analyzer_summary": "sparse/smatch fixture run: no new diagnostics on the touched files.",
+      "limitations": [
+        "fixture source only; no real kernel build or boot is claimed",
+        "arm64 not yet run for this candidate"
+      ],
+      "regressions": [],
+      "evidence_status": "lab-verified",
+      "review": {
+        "reviewer": "Hilde Human",
+        "reviewer_kind": "human",
+        "items": [
+          {
+            "item": "problem-and-affected-commit",
+            "state": "pass"
+          },
+          {
+            "item": "reproducer-minimal-and-pinned",
+            "state": "pass"
+          },
+          {
+            "item": "control-outcome-checked",
+            "state": "pass"
+          },
+          {
+            "item": "diff-minimal-and-scoped",
+            "state": "pass"
+          },
+          {
+            "item": "compiler-and-analyzer-logs-clean-or-explained",
+            "state": "pass"
+          },
+          {
+            "item": "test-matrix-differential-pass",
+            "state": "pass"
+          },
+          {
+            "item": "limitations-and-regressions-stated",
+            "state": "pass"
+          },
+          {
+            "item": "reversal-falsification-checked",
+            "state": "pass"
+          },
+          {
+            "item": "safety-invariants-respected",
+            "state": "pass"
+          }
+        ],
+        "notes": "fixture review recorded for the upstream slice; no real kernel review is claimed"
+      }
+    },
+    "disclosure": "security",
+    "author": {
+      "name": "Hilde Human",
+      "email": "hilde@fixture.example",
+      "kind": "human"
+    },
+    "cover_letter": {
+      "subject": "fixture counter: unarmed increment may leak state",
+      "body": "Fixture security record: the unarmed increment is treated as a security disclosure for routing purposes, so this package must go only to the kernel security team."
+    }
+  }
+}

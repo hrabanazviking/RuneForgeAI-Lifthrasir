@@ -1,0 +1,24 @@
+FIXTURE COUNTER DRIVER
+M: Fiona Fixture <fiona@fixture.example>
+R: Ravi Reviewer <ravi@fixture.example>
+L: fixture-counter@lists.example
+S: Maintained
+F: drivers/fixture/
+
+FIXTURE COUNTER HEADERS
+M: Hana Header <hana@fixture.example>
+L: fixture-headers@lists.example
+S: Maintained
+F: include/fixture/*.h
+
+FIXTURE NETWORKING CORE
+M: Nils Net <nils@fixture.example>
+L: fixture-net@lists.example
+S: Maintained
+X: net/fixture/legacy/
+F: net/fixture/
+
+FIXTURE LEGACY NETWORKING
+M: Lena Legacy <lena@fixture.example>
+S: Odd Fixes
+F: net/fixture/legacy/
