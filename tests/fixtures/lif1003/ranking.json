@@ -1,0 +1,41 @@
+{
+  "schema": "lifthrasir.ranking.v0.1",
+  "spec": {"schema": "lifthrasir.benchmark.v0.1", "workload_id": "hash-chain", "seed": 7, "repetitions": 5, "warmup": 1, "timeout_s": 30.0, "pinned_env": {"OMP_NUM_THREADS": "1"}},
+  "noise_floor_percent": 1.0,
+  "energy_noise_floor_percent": 1.0,
+  "max_energy_regression_percent": 5.0,
+  "baseline": {
+    "candidate_id": "baseline",
+    "correctness": "pass",
+    "time_samples": [0.100, 0.102, 0.098, 0.101, 0.099],
+    "energy_samples": [100.0, 102.0, 98.0, 101.0, 99.0]
+  },
+  "candidates": [
+    {"candidate_id": "cand-fast-clean", "correctness": "pass",
+     "time_samples": [0.080, 0.081, 0.079, 0.080, 0.082],
+     "energy_samples": [90.0, 91.0, 89.0, 90.0, 92.0]},
+    {"candidate_id": "cand-fast-hungry", "correctness": "pass",
+     "time_samples": [0.075, 0.076, 0.074, 0.075, 0.077],
+     "energy_samples": [130.0, 131.0, 129.0, 130.0, 132.0]},
+    {"candidate_id": "cand-guard-regress", "correctness": "pass",
+     "time_samples": [0.082, 0.083, 0.081, 0.082, 0.084],
+     "energy_samples": [99.0, 100.0, 98.0, 99.0, 101.0]},
+    {"candidate_id": "cand-plain", "correctness": "pass",
+     "time_samples": [0.100, 0.115, 0.085, 0.110, 0.090],
+     "energy_samples": null},
+    {"candidate_id": "cand-slow", "correctness": "pass",
+     "time_samples": [0.120, 0.121, 0.119, 0.120, 0.122],
+     "energy_samples": [101.0, 99.0, 102.0, 100.0, 98.0]}
+  ],
+  "guards": [
+    {"spec": {"schema": "lifthrasir.benchmark.v0.1", "workload_id": "sort-fixed", "seed": 7, "repetitions": 5, "warmup": 1, "timeout_s": 30.0, "pinned_env": {"OMP_NUM_THREADS": "1"}},
+     "baseline_samples": [0.200, 0.202, 0.198, 0.201, 0.199],
+     "candidate_samples": {
+       "cand-fast-clean": [0.195, 0.196, 0.194, 0.195, 0.197],
+       "cand-fast-hungry": [0.200, 0.210, 0.190, 0.205, 0.195],
+       "cand-guard-regress": [0.240, 0.241, 0.239, 0.240, 0.242],
+       "cand-plain": [0.201, 0.199, 0.202, 0.200, 0.198],
+       "cand-slow": [0.205, 0.195, 0.210, 0.200, 0.190]
+     }}
+  ]
+}
