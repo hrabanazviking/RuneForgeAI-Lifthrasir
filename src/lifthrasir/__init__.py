@@ -14,6 +14,7 @@ Banking union note (LIF-0305): this slice adds the hypotheses exports below on i
 
 Banking union note (LIF-0306): contextguard exports added at the seat at banking, per the team-03 flag.
 Banking union note (LIF-0402): policy exports added at the seat at banking.
+Banking union note (LIF-0403): executor exports added at the seat at banking.
 """
 from .actions import (
     CATALOG,
@@ -115,6 +116,18 @@ from .policy import (
     evaluate,
     evaluate_dict,
 )
+from .executor import (
+    ExecutorError,
+    ConfinementError,
+    GrantError,
+    ActionRefusedError,
+    ExecutionTimeoutError,
+    ExecutionFailedError,
+    ConfinementProfile,
+    PolicyGrant,
+    ExecutionResult,
+    run_confined,
+)
 __all__ = [
     "CATALOG",
     "CATALOG_VERSION",
@@ -201,4 +214,14 @@ __all__ = [
     "request_from_dict",
     "evaluate",
     "evaluate_dict",
+    "ExecutorError",
+    "ConfinementError",
+    "GrantError",
+    "ActionRefusedError",
+    "ExecutionTimeoutError",
+    "ExecutionFailedError",
+    "ConfinementProfile",
+    "PolicyGrant",
+    "ExecutionResult",
+    "run_confined",
 ]
