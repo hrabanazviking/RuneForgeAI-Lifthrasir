@@ -1,0 +1,11 @@
+{
+  "schema": "lifthrasir.reproverify.cases.v0.1",
+  "cases": [
+    {"name": "both-reproduce", "repro": "reproduced", "verify": "reproduced", "verdict": "confirmed", "status": "corroborated"},
+    {"name": "both-not-reproduced", "repro": "not-reproduced", "verify": "not-reproduced", "verdict": "confirmed", "status": "refuted"},
+    {"name": "verifier-disagrees", "repro": "reproduced", "verify": "not-reproduced", "verdict": "contradicted", "status": "disputed"},
+    {"name": "reproducer-disagrees", "repro": "not-reproduced", "verify": "reproduced", "verdict": "contradicted", "status": "disputed"},
+    {"name": "verifier-inconclusive", "repro": "reproduced", "verify": "inconclusive", "verdict": "inconclusive", "status": "inconclusive"},
+    {"name": "reproducer-inconclusive", "repro": "inconclusive", "verify": "reproduced", "verdict": "inconclusive", "status": "inconclusive"}
+  ]
+}
