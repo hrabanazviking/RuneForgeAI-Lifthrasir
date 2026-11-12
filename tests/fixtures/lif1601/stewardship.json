@@ -1,0 +1,192 @@
+{
+  "areas": [
+    {
+      "area": "broker",
+      "backup_ids": [
+        "bjorn-maintainer"
+      ],
+      "criticality": "critical",
+      "primary_id": "anna-maintainer"
+    },
+    {
+      "area": "policy",
+      "backup_ids": [],
+      "criticality": "critical",
+      "primary_id": "bjorn-maintainer"
+    },
+    {
+      "area": "documentation",
+      "backup_ids": [
+        "anna-maintainer"
+      ],
+      "criticality": "standard",
+      "primary_id": "celia-maintainer"
+    },
+    {
+      "area": "release-engineering",
+      "backup_ids": [
+        "yrsa-agent"
+      ],
+      "criticality": "standard",
+      "primary_id": "anna-maintainer"
+    }
+  ],
+  "audits": [
+    {
+      "audit_id": "audit-sec-2026",
+      "due_at": "2026-11-01T00:00:00Z",
+      "kind": "security-review",
+      "subject": "broker"
+    },
+    {
+      "audit_id": "audit-rel-2026",
+      "due_at": "2026-12-01T00:00:00Z",
+      "kind": "release-audit",
+      "subject": "2.0.0"
+    }
+  ],
+  "incidents": [
+    {
+      "content_digest": "sha256:96c774e55e71f415211aa920b3f450a64a02982918d1329402b9914a315a83a3",
+      "incident_id": "inc-96c774e55e71",
+      "kind": "security",
+      "reported_at": "2026-11-10T08:00:00Z",
+      "reporter_id": "anna-maintainer",
+      "schema": "lifthrasir.stewardship.v0.1",
+      "severity": "high",
+      "summary": "Fixture security incident: broker log leak"
+    },
+    {
+      "content_digest": "sha256:f1c5d0b24f927b50417bb4159d4cd1d183f0c5721aed8ccb944353c22c00c723",
+      "incident_id": "inc-f1c5d0b24f92",
+      "kind": "operational",
+      "reported_at": "2026-11-09T08:00:00Z",
+      "reporter_id": "bjorn-maintainer",
+      "schema": "lifthrasir.stewardship.v0.1",
+      "severity": "medium",
+      "summary": "Fixture operational incident: mirror outage"
+    }
+  ],
+  "maintainers": [
+    {
+      "email": "anna@example.org",
+      "kind": "human",
+      "maintainer_id": "anna-maintainer",
+      "name": "Anna Maintainer"
+    },
+    {
+      "email": "bjorn@example.org",
+      "kind": "human",
+      "maintainer_id": "bjorn-maintainer",
+      "name": "Bjorn Maintainer"
+    },
+    {
+      "email": "celia@example.org",
+      "kind": "human",
+      "maintainer_id": "celia-maintainer",
+      "name": "Celia Maintainer"
+    },
+    {
+      "email": "yrsa@example.org",
+      "kind": "agent",
+      "maintainer_id": "yrsa-agent",
+      "name": "Yrsa Agent"
+    }
+  ],
+  "plugin_apis": [
+    {
+      "api_id": "core-hooks",
+      "migration_note": null,
+      "stability": "stable",
+      "version": "1.0.0"
+    },
+    {
+      "api_id": "legacy-hooks",
+      "migration_note": "Use core-hooks instead.",
+      "stability": "deprecated",
+      "version": "0.9.0"
+    }
+  ],
+  "proposals": [
+    {
+      "checklist": {},
+      "content_digest": "sha256:e885e61767695c564e8c443c9dec1b9cfeefabafa66a9cda8b676fdc4ed53785",
+      "created_at": "2026-11-10T09:00:00Z",
+      "kind": "policy-change",
+      "proposal_id": "prop-e885e6176769",
+      "proposer_id": "anna-maintainer",
+      "schema": "lifthrasir.stewardship.v0.1",
+      "subject": "policy",
+      "title": "Tighten broker review quorum"
+    },
+    {
+      "checklist": {},
+      "content_digest": "sha256:9aeba70c77f86d0d1823d49598e75097110491807e92f2b08bf22b0781c5b47b",
+      "created_at": "2026-11-10T10:00:00Z",
+      "kind": "plugin-removal",
+      "proposal_id": "prop-9aeba70c77f8",
+      "proposer_id": "bjorn-maintainer",
+      "schema": "lifthrasir.stewardship.v0.1",
+      "subject": "legacy-hooks",
+      "title": "Remove the legacy hooks api"
+    },
+    {
+      "checklist": {
+        "changes-tied-to-issue-or-adr": true,
+        "feature-risk-scope-reviewed": true,
+        "human-reviewer-accepts-release-notes": true,
+        "no-critical-security-gate-failure": true,
+        "no-unsafe-default-permissions": true,
+        "offline-mode-verified": true,
+        "recovery-and-uninstall-documented": true,
+        "reproducible-packages-and-checksums": true,
+        "schema-migration-and-rollback-tested": true,
+        "supported-distros-and-exclusions-published": true,
+        "test-matrix-and-provenance-recorded": true,
+        "ui-copy-and-accessibility-reviewed": true
+      },
+      "content_digest": "sha256:42e9e71c510a936e98acd09fc5d1c6bc5c2a1337c9d4c37eb60c79ca36e0ad44",
+      "created_at": "2026-11-11T09:00:00Z",
+      "kind": "release-acceptance",
+      "proposal_id": "prop-42e9e71c510a",
+      "proposer_id": "celia-maintainer",
+      "schema": "lifthrasir.stewardship.v0.1",
+      "subject": "2.0.0",
+      "title": "Accept the 2.0.0 stewardship release"
+    }
+  ],
+  "releases": [
+    {
+      "content_digest": "sha256:9cb2741d1fb7f530accf889ee79d3d57bf64b23003589e54fe8e1caed74f4389",
+      "released_at": "2026-11-01T00:00:00Z",
+      "schema": "lifthrasir.stewardship.v0.1",
+      "support_until": "2027-11-01T00:00:00Z",
+      "tier": "officially-tested",
+      "version": "2.0.0"
+    },
+    {
+      "content_digest": "sha256:a2acd9bd3eaa3b46f132ee84c8309015b11a23bc9acb713dc0d2879003fa72e2",
+      "released_at": "2025-11-01T00:00:00Z",
+      "schema": "lifthrasir.stewardship.v0.1",
+      "support_until": "2026-06-01T00:00:00Z",
+      "tier": "officially-tested",
+      "version": "1.0.0"
+    },
+    {
+      "content_digest": "sha256:6cf6187f9945ed6a3f19c2b772920828ea4de9814ce5307598ba629d778cb6a8",
+      "released_at": "2026-09-01T00:00:00Z",
+      "schema": "lifthrasir.stewardship.v0.1",
+      "support_until": null,
+      "tier": "experimental",
+      "version": "0.9.0"
+    },
+    {
+      "content_digest": "sha256:5da43ec42a1dd09a18d364b2ec1d0334fd90faacc39d05f2920d50fd3370aa5f",
+      "released_at": "2024-01-01T00:00:00Z",
+      "schema": "lifthrasir.stewardship.v0.1",
+      "support_until": null,
+      "tier": "unsupported",
+      "version": "0.5.0"
+    }
+  ]
+}
