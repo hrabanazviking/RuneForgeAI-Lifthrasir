@@ -127,8 +127,8 @@ commit — never a bare claim. Queue order and titles per WAVE_PLAN.md.
 | LIF-0904 | P9 | banked | ceaea05 on main (cherry-pick of team-06 2e34939 + seat union of 34 patchdossier exports amended; patchdossier EVIDENCE_LADDER/VERDICTS stay at submodule), verified 2026-11-12; suite 955/0 (seat); negative control PASS; undo = revert ceaea05 |
 | LIF-0905 | P9 | banked | 3990dd6 on main (cherry-pick of team-03 458fc34 + seat-amend of 18 staticanalysis exports; staticanalysis SEVERITIES stays at submodule, security_triage owns it), verified 2026-11-12; suite 981/0 (seat; the committed test file carries 26 tests - the team record said 21 from its pre-amend log; seat count governs); negative control PASS (2 failed as designed); undo = revert 3990dd6. P9 SET COMPLETE (0901-0905) |
 | LIF-1001 | P10 | banked | 9f9339f on main (cherry-pick of team-02 commit 18e214a; lab module, no package union), verified 2026-11-12; benchmark harness: controlled environment + repetitions, deterministic fixture workloads only, no heavy runs; suite at banking 1006 passed / 0 failed (seat full suite); negative control PASS (mutated samples flip verdict, cross-seed comparison refused, nondeterministic checksum refused); undo = revert 9f9339f |
-| LIF-1002 | P10 | queued | — |
-| LIF-1003 | P10 | queued | — |
+| LIF-1002 | P10 | banked | f4f9d4b on main (cherry-pick of team-01 commit 49852ae; lab module, no package union), verified 2026-11-12; workload profiles for all five families, declarative fixture-level only (no heavy workload ran); suite at banking 1034 passed / 0 failed (seat); negative control PASS; differential PASS; undo = revert f4f9d4b |
+| LIF-1003 | P10 | banked | 95b8b03 on main (cherry-pick of team-03 commit d9e9e78; lab module, no package union), verified 2026-11-12; candidate ranking with regressions + recorded energy (unrecorded energy stays UNMEASURED, never estimated); suite at banking 1055 passed / 0 failed (seat); negative control PASS; undo = revert 95b8b03. P10 SET COMPLETE (1001-1003) |
 | LIF-1101 | P11 | queued | — |
 | LIF-1102 | P11 | queued | — |
 | LIF-1103 | P11 | queued | — |
