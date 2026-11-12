@@ -1,0 +1,9 @@
+# Pinned lab package set for the Kubuntu 24.04.5 amd64 recipe (LIF-0101).
+# One package per line, alphabetical, no versions invented: packages are
+# resolved by the guest's own apt against the pinned ISO's release series
+# (24.04 LTS) at lab build time; the pin that this recipe controls is the
+# ISO itself (recipe.json). Blank lines and #-comments are ignored by
+# build_manifest.py. Keep sorted: determinism depends on stable input.
+openssh-server
+qemu-guest-agent
+spice-vdagent

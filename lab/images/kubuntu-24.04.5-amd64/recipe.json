@@ -1,0 +1,17 @@
+{
+  "slice": "LIF-0101",
+  "name": "kubuntu-24.04.5-desktop-amd64",
+  "distro": "Kubuntu",
+  "version": "24.04.5",
+  "release_series": "24.04 LTS",
+  "architecture": "amd64",
+  "variant": "desktop",
+  "iso_filename": "kubuntu-24.04.5-desktop-amd64.iso",
+  "origin_url": "https://cdimage.ubuntu.com/kubuntu/releases/24.04.5/release/kubuntu-24.04.5-desktop-amd64.iso",
+  "checksum_url": "https://cdimage.ubuntu.com/kubuntu/releases/24.04.5/release/SHA256SUMS",
+  "checksum_sha256": "ae59e59c54337bcd8f8e60825b4a3f58797121ae0e89855524ffc92b8075c1d6",
+  "checksum_status": "retrieved-from-official-source",
+  "checksum_retrieved": "2026-11-12",
+  "checksum_cross_checked_url": "https://cdimage.ubuntu.com/kubuntu/releases/24.04/release/SHA256SUMS",
+  "iso_size_bytes": 5457694720
+}
