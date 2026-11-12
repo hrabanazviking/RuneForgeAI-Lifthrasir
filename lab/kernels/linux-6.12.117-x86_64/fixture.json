@@ -1,0 +1,77 @@
+{
+  "slice": "LIF-0901",
+  "schema": "lifthrasir.kernel-fixture.v1",
+  "fixture_id": "linux-6.12.117-x86_64",
+  "architecture": "x86_64",
+  "make_arch": "x86_64",
+  "defconfig": "x86_64_defconfig",
+  "source": {
+    "version": "6.12.117",
+    "series": "6.12",
+    "release_kind": "longterm",
+    "tarball": "linux-6.12.117.tar.xz",
+    "origin_url": "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.117.tar.xz",
+    "checksum_url": "https://cdn.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc",
+    "checksum_sha256": "74e99aa5e60e242e0a165fed8cb2ea0d054bf7a401f01861d403d75733456613",
+    "checksum_status": "retrieved-from-official-source",
+    "checksum_retrieved": "2026-11-12",
+    "tarball_size_bytes": 148959092,
+    "git_repo": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git",
+    "git_tag": "v6.12.117",
+    "git_tag_object": "3edfb92cd34f439b2e2878c3544a1683871d29ee",
+    "git_commit": "d3417611a3b40b7f04a29e558cebac2bf69889d7",
+    "git_status": "retrieved-from-official-source"
+  },
+  "config_fragments": [
+    {
+      "name": "lab-guest",
+      "file": "config.fragment",
+      "sha256": "f725cffe4f8bcbcbfe47be2d4390301212558ca596c2958dc468b58c94dc0247",
+      "required_options": [
+        "CONFIG_64BIT=y",
+        "CONFIG_DEVTMPFS=y",
+        "CONFIG_EXT4_FS=y",
+        "CONFIG_VIRTIO_PCI=y",
+        "CONFIG_VIRTIO_BLK=y",
+        "CONFIG_SERIAL_8250_CONSOLE=y"
+      ]
+    }
+  ],
+  "toolchain": [
+    {
+      "role": "compiler",
+      "tool": "gcc",
+      "command": "gcc",
+      "expected_version": "15.3.0",
+      "version_status": "lab-observed",
+      "note": "Observed on the lab host purpleraider 2026-11-12: gcc (Ubuntu 15.3.0-4ubuntu1) 15.3.0. Lab expectation, not an upstream kernel minimum."
+    },
+    {
+      "role": "linker",
+      "tool": "GNU ld",
+      "command": "ld",
+      "expected_version": "2.47",
+      "version_status": "lab-observed",
+      "note": "Observed on the lab host purpleraider 2026-11-12: GNU ld (GNU Binutils for Ubuntu) 2.47."
+    },
+    {
+      "role": "build",
+      "tool": "GNU Make",
+      "command": "make",
+      "expected_version": "4.4.1",
+      "version_status": "lab-observed",
+      "note": "Observed on the lab host purpleraider 2026-11-12: GNU Make 4.4.1."
+    }
+  ],
+  "guest": {
+    "emulator": "qemu-system-x86_64",
+    "machine": "q35",
+    "disposable": true
+  },
+  "safety": {
+    "disposable_vm_only": true,
+    "host_kernel_touched": false,
+    "bootloader_touched": false,
+    "firmware_touched": false
+  }
+}

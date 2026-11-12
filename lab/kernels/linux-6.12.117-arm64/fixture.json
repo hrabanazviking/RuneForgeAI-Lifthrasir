@@ -1,0 +1,69 @@
+{
+  "slice": "LIF-0901",
+  "schema": "lifthrasir.kernel-fixture.v1",
+  "fixture_id": "linux-6.12.117-arm64",
+  "architecture": "arm64",
+  "make_arch": "arm64",
+  "defconfig": "defconfig",
+  "source": {
+    "version": "6.12.117",
+    "series": "6.12",
+    "release_kind": "longterm",
+    "tarball": "linux-6.12.117.tar.xz",
+    "origin_url": "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.117.tar.xz",
+    "checksum_url": "https://cdn.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc",
+    "checksum_sha256": "74e99aa5e60e242e0a165fed8cb2ea0d054bf7a401f01861d403d75733456613",
+    "checksum_status": "retrieved-from-official-source",
+    "checksum_retrieved": "2026-11-12",
+    "tarball_size_bytes": 148959092,
+    "git_repo": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git",
+    "git_tag": "v6.12.117",
+    "git_tag_object": "3edfb92cd34f439b2e2878c3544a1683871d29ee",
+    "git_commit": "d3417611a3b40b7f04a29e558cebac2bf69889d7",
+    "git_status": "retrieved-from-official-source"
+  },
+  "config_fragments": [
+    {
+      "name": "lab-guest",
+      "file": "config.fragment",
+      "sha256": "bb70a02e93deee7786a4d04c1b5de775701d7ee84aea51399fee9bec7c7314c8",
+      "required_options": [
+        "CONFIG_64BIT=y",
+        "CONFIG_DEVTMPFS=y",
+        "CONFIG_EXT4_FS=y",
+        "CONFIG_VIRTIO_PCI=y",
+        "CONFIG_VIRTIO_BLK=y",
+        "CONFIG_SERIAL_AMBA_PL011_CONSOLE=y"
+      ]
+    }
+  ],
+  "toolchain": [
+    {
+      "role": "compiler",
+      "tool": "aarch64-linux-gnu-gcc",
+      "command": "aarch64-linux-gnu-gcc",
+      "expected_version": null,
+      "version_status": "UNVERIFIED",
+      "note": "No aarch64 cross-compiler is installed on the lab host purpleraider (checked 2026-11-12: command not found), so no version is claimed. The fixture is valid but NOT buildable until a cross toolchain is installed and its observed version replaces this UNVERIFIED entry."
+    },
+    {
+      "role": "build",
+      "tool": "GNU Make",
+      "command": "make",
+      "expected_version": "4.4.1",
+      "version_status": "lab-observed",
+      "note": "Observed on the lab host purpleraider 2026-11-12: GNU Make 4.4.1 (architecture-neutral host tool)."
+    }
+  ],
+  "guest": {
+    "emulator": "qemu-system-aarch64",
+    "machine": "virt",
+    "disposable": true
+  },
+  "safety": {
+    "disposable_vm_only": true,
+    "host_kernel_touched": false,
+    "bootloader_touched": false,
+    "firmware_touched": false
+  }
+}

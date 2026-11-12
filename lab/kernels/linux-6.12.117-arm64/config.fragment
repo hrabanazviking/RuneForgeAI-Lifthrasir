@@ -1,0 +1,16 @@
+# LIF-0901 lab-guest config fragment - Linux 6.12.117, arm64 disposable guest.
+# Declarative fixture input only: applied on top of arm64 defconfig inside a
+# disposable VM build (roadmap section 0, invariant 5). Never applied to the
+# host kernel. KUnit/kselftest options are LIF-0902 scope, not this fragment.
+CONFIG_64BIT=y
+CONFIG_DEVTMPFS=y
+CONFIG_TMPFS=y
+CONFIG_EXT4_FS=y
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_BLK=y
+CONFIG_VIRTIO_NET=y
+CONFIG_SERIAL_AMBA_PL011=y
+CONFIG_SERIAL_AMBA_PL011_CONSOLE=y
+CONFIG_PRINTK=y
+CONFIG_IKCONFIG=y
+CONFIG_IKCONFIG_PROC=y
