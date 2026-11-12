@@ -1,0 +1,56 @@
+{
+  "created_at": "2026-11-10T08:00:00Z",
+  "dossier_digest": "sha256:81cfe5ab53c711a5db4b29b71955172c0412d49a7639c902160d3e6452029c6c",
+  "dossier_id": "dossier-lif1402-fixture",
+  "feedback": [
+    {
+      "body": "Reviewed the checkpoint design; the gate order reads correctly.",
+      "content_digest": "sha256:e4d87e5859896dd67876e507f786a33014c36eaf174e24dd8f02567e9395de03",
+      "dossier_digest": "sha256:81cfe5ab53c711a5db4b29b71955172c0412d49a7639c902160d3e6452029c6c",
+      "dossier_id": "dossier-lif1402-fixture",
+      "kind": "reviewed-by",
+      "maintainer_email": "marta@example.org",
+      "maintainer_name": "Marta Maintainer",
+      "received_at": "2026-11-10T09:15:00Z",
+      "schema": "lifthrasir.upstreamreview.v0.1",
+      "source": "mailing-list"
+    },
+    {
+      "body": "Acked for the docs tree.",
+      "content_digest": "sha256:a6326c4717100058fe165d9fce8955b11650d6ed52d52b6f017ad6721a06f8ed",
+      "dossier_digest": "sha256:81cfe5ab53c711a5db4b29b71955172c0412d49a7639c902160d3e6452029c6c",
+      "dossier_id": "dossier-lif1402-fixture",
+      "kind": "acked-by",
+      "maintainer_email": "owen@example.org",
+      "maintainer_name": "Owen Oddvar",
+      "received_at": "2026-11-10T11:02:00Z",
+      "schema": "lifthrasir.upstreamreview.v0.1",
+      "source": "forge-review"
+    },
+    {
+      "body": "Ran the fixture suite on arm64; all green.",
+      "content_digest": "sha256:3d4440af43f1e0a4f1b078ce3c0f659305c6003e1eb8ef22344b293f02491186",
+      "dossier_digest": "sha256:81cfe5ab53c711a5db4b29b71955172c0412d49a7639c902160d3e6452029c6c",
+      "dossier_id": "dossier-lif1402-fixture",
+      "kind": "tested-by",
+      "maintainer_email": "tessa@example.org",
+      "maintainer_name": "Tessa Tester",
+      "received_at": "2026-11-10T12:40:00Z",
+      "schema": "lifthrasir.upstreamreview.v0.1",
+      "source": "email"
+    },
+    {
+      "body": "Please split the docs change from the code change before resubmission.",
+      "content_digest": "sha256:5dd0678f82b1686e0af5080ea838b96b3a7104d9033b4e49c8ace6bc8ce53612",
+      "dossier_digest": "sha256:81cfe5ab53c711a5db4b29b71955172c0412d49a7639c902160d3e6452029c6c",
+      "dossier_id": "dossier-lif1402-fixture",
+      "kind": "requested-changes",
+      "maintainer_email": "marta@example.org",
+      "maintainer_name": "Marta Maintainer",
+      "received_at": "2026-11-10T13:05:00Z",
+      "schema": "lifthrasir.upstreamreview.v0.1",
+      "source": "mailing-list"
+    }
+  ],
+  "patch_text": "From: Human Submitter <human@example.org>\nSubject: [PATCH] lifthrasir: add upstream review checkpoint fixture\n\nBody of the fixture patch. It changes one documentation line so the\nreview-checkpoint slice has a realistic, tiny dossier to pin.\n\n---\n docs/example.txt | 1 +\n 1 file changed, 1 insertion(+)\n\n"
+}
