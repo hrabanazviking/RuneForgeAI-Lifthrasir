@@ -1,0 +1,50 @@
+{
+  "fixture": "lif0504-soak-scenarios-0.1",
+  "note": "Scripted fixture workloads only: each check maps to the sequence of probe outcomes the soak consumes, one per round. No live host is probed.",
+  "scenarios": {
+    "healthy": {
+      "rounds": 4,
+      "checks": {
+        "service-active": [true, true, true, true],
+        "config-valid": [true, true, true, true]
+      },
+      "expected_verdict": "verified"
+    },
+    "flaky": {
+      "rounds": 4,
+      "checks": {
+        "service-active": [true, false, true, false],
+        "port-open": [true, true, true, true]
+      },
+      "expected_verdict": "flaky",
+      "expected_flapped": ["service-active"]
+    },
+    "dead": {
+      "rounds": 3,
+      "checks": {
+        "service-active": [false, false, false],
+        "config-valid": [false, false, false]
+      },
+      "expected_verdict": "failed"
+    },
+    "recovering": {
+      "rounds": 4,
+      "required_consecutive_passes": 3,
+      "checks": {
+        "service-active": [false, true, true, true],
+        "config-valid": [true, true, true, true]
+      },
+      "expected_verdict": "verified",
+      "expected_trailing_streak": 3
+    },
+    "early-verify": {
+      "rounds": 6,
+      "required_consecutive_passes": 2,
+      "checks": {
+        "service-active": [true, true, true, true, true, true]
+      },
+      "expected_verdict": "verified",
+      "expected_rounds_completed": 2
+    }
+  }
+}
