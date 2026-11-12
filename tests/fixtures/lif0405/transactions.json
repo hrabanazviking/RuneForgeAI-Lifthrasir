@@ -1,0 +1,74 @@
+{
+  "description": "LIF-0405 transaction fixtures. Plain mappings for lifthrasir.transactions.TransactionStore.create_transaction; all timestamps are fixed so no case depends on wall time. undoable_tx is fully undoable; guest_config_tx is honestly non-undoable (its mutating step records no inverse); readonly_tx has no mutating steps at all.",
+  "undoable_tx": {
+    "schema": "lifthrasir.transaction.v0.1",
+    "schema_version": "0.1",
+    "transaction_id": "tx-2026-001",
+    "plan_id": "plan-2026-101",
+    "plan_digest": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "title": "Restart demo service and install the staged demo package",
+    "created_at": "2026-11-12T04:00:00Z",
+    "expires_at": "2026-11-12T06:00:00Z",
+    "steps": [
+      {
+        "step_id": "step-1",
+        "action_verb": "read_service_status",
+        "target": {"type": "systemd-unit", "name": "demo.service"},
+        "args": {}
+      },
+      {
+        "step_id": "step-2",
+        "action_verb": "restart_unit",
+        "target": {"type": "systemd-unit", "name": "demo.service"},
+        "args": {},
+        "prior_digest": "sha256:abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+        "undo": {"action_verb": "stop_unit", "args": {}}
+      },
+      {
+        "step_id": "step-3",
+        "action_verb": "install_package",
+        "target": {"type": "package", "name": "demo-pkg"},
+        "args": {"version": "1.2.3"},
+        "undo": {"action_verb": "remove_package", "args": {"version": "1.2.3"}}
+      }
+    ]
+  },
+  "guest_config_tx": {
+    "schema": "lifthrasir.transaction.v0.1",
+    "schema_version": "0.1",
+    "transaction_id": "tx-2026-002",
+    "plan_id": "plan-2026-102",
+    "title": "Edit one config setting inside the lab guest (no inverse recorded)",
+    "created_at": "2026-11-12T04:10:00Z",
+    "steps": [
+      {
+        "step_id": "step-1",
+        "action_verb": "edit_config_in_guest",
+        "target": {"type": "config-file", "name": "/etc/demo/demo.conf"},
+        "args": {"guest": "lab-guest-01", "setting": "data_path", "value": "/var/lib/demo"}
+      }
+    ]
+  },
+  "readonly_tx": {
+    "schema": "lifthrasir.transaction.v0.1",
+    "schema_version": "0.1",
+    "transaction_id": "tx-2026-003",
+    "plan_id": "plan-2026-103",
+    "title": "Observe only: read demo service status and journal",
+    "created_at": "2026-11-12T04:20:00Z",
+    "steps": [
+      {
+        "step_id": "step-1",
+        "action_verb": "read_service_status",
+        "target": {"type": "systemd-unit", "name": "demo.service"},
+        "args": {}
+      },
+      {
+        "step_id": "step-2",
+        "action_verb": "read_journal",
+        "target": {"type": "systemd-unit", "name": "demo.service"},
+        "args": {"max_entries": 50}
+      }
+    ]
+  }
+}

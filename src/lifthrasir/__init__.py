@@ -16,6 +16,7 @@ Banking union note (LIF-0306): contextguard exports added at the seat at banking
 Banking union note (LIF-0402): policy exports added at the seat at banking.
 Banking union note (LIF-0403): executor exports added at the seat at banking.
 Banking union note (LIF-0404): approval exports added at the seat at banking.
+Banking union note (LIF-0405): transactions exports added on the team-08 branch; the seat must union them at banking. Name note: transactions also defines a StaleTimestampError; the top-level name stays the hypotheses one (LIF-0305 banked behaviour). The transactions class remains available as lifthrasir.transactions.StaleTimestampError and is not shadowed there - same precedent as the event store SchemaVersionError above.
 """
 from .actions import (
     CATALOG,
@@ -153,6 +154,33 @@ from .approval import (
     verify_reference_signature,
     render_approval_prompt,
 )
+from .transactions import (
+    TRANSACTION_SCHEMA,
+    TRANSACTION_SCHEMA_VERSION,
+    STATES,
+    TRANSITIONS,
+    TERMINAL_STATES,
+    UNDO_ENTRY_STATES,
+    CURRENT_MIGRATION_VERSION,
+    TransactionError,
+    MalformedTransactionError,
+    DuplicateTransactionError,
+    UnknownTransactionError,
+    UnknownStateError,
+    InvalidTransitionError,
+    CorruptTransactionError,
+    NonUndoableError,
+    AlreadyUndoneError,
+    TransactionPathError,
+    DirectMutationError,
+    ManifestStep,
+    TransactionRecord,
+    UndoAction,
+    UndoManifest,
+    HistoryEntry,
+    TransactionStore,
+    validate_transaction,
+)
 __all__ = [
     "CATALOG",
     "CATALOG_VERSION",
@@ -271,4 +299,29 @@ __all__ = [
     "mint_plan_reference",
     "verify_reference_signature",
     "render_approval_prompt",
+    "TRANSACTION_SCHEMA",
+    "TRANSACTION_SCHEMA_VERSION",
+    "STATES",
+    "TRANSITIONS",
+    "TERMINAL_STATES",
+    "UNDO_ENTRY_STATES",
+    "CURRENT_MIGRATION_VERSION",
+    "TransactionError",
+    "MalformedTransactionError",
+    "DuplicateTransactionError",
+    "UnknownTransactionError",
+    "UnknownStateError",
+    "InvalidTransitionError",
+    "CorruptTransactionError",
+    "NonUndoableError",
+    "AlreadyUndoneError",
+    "TransactionPathError",
+    "DirectMutationError",
+    "ManifestStep",
+    "TransactionRecord",
+    "UndoAction",
+    "UndoManifest",
+    "HistoryEntry",
+    "TransactionStore",
+    "validate_transaction",
 ]
