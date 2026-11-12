@@ -26,7 +26,11 @@ workers are claimed for slice A.
   Slice D1 (2026-11-12) proved the Calamares recon inside the live guest
   and built the unattended config builder. Next is slice D2 (Calamares
   unattended install -> installed golden), then the F01 fault loop
-  inside the guest.
+  inside the guest. Slice D3 (2026-11-12, keeper run 8) COMPLETED the
+  installed golden via the scripted manual road: golden-installed.qcow2
+  (9.2G, sha256 d9edd18c...) boots UEFI, serial lab login + ssh +
+  qemu-guest-agent all active inside the guest. Next: snapshot/reset
+  proof against the installed golden, then the F01 fault loop.
 - **Phase 2 — Host observe + propose: NOT STARTED.** Blocked on Phase 1
   exit evidence, by design.
 - **Phase 3 — Approval-gated repair classes: NOT STARTED.** Blocked on
@@ -203,3 +207,31 @@ Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-ag
 - Deviation recorded precisely: LIF-0101 pins only the ISO (sha-verified) + the guest package set (packages.txt); it does not mandate Calamares. The Calamares assumption lived in lab/UNATTENDED_INSTALL.md (slice C research, explicitly unproven there) - that note now carries the disproof. The manual road still derives the golden from the pinned ISO and must land exactly the pinned package set, so the LIF-0101 pin is honoured in full.
 - NEXT SLICE (D3, next tick): scripted manual install driver (lab/run_sliceD3.py), all inside the disposable guest via the proven serial path: GPT partition the 32 GiB target (EFI FAT32 /boot/efi + ext4 /), mount, unpack /cdrom/casper/filesystem.squashfs to the target (the unpackfs equivalent), chroot-configure (fstab by UUID, machine-id, locale/keyboard, lab user + hostname per calamares_config.py values, apt-install the pinned set openssh-server + qemu-guest-agent + spice-vdagent, update-initramfs, grub-install --efi + grub-mkconfig), poweroff, then the existing verify phase (UEFI boot, serial lab login, QGA ping, sshd banner) and golden-installed.qcow2 copy. Each step marker-checked over serial with an evidence pack, stall/timeout guards like D2. Then F01 fault loop + kill-switch drill remain for Phase 1 exit.
 - Phase 1 exit NOT met: installed golden (now D3), F01 fault loop, kill-switch drill remain. Invariants: lab only; caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10, one VM at a time); host and Volmarr session untouched; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
+
+---
+
+## Keeper tick - 2026-11-12 12:57-13:35 EST (keeper run 8)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers claimed. Work had stopped after run 7 (no lab processes), so the keeper continued with slice D3 (road 3, adopted run 7).
+
+### Slice D3 probe: DONE
+
+- lab/run_sliceD3_probe.py + evidence lab/evidence/sliceD3-probe.json (D3P_OK): live guest inventory -- sudo -n root OK; sfdisk/parted/mkfs.vfat/mkfs.ext4/unsquashfs/rsync/grub-install/update-grub/update-initramfs/chroot/apt-get all present (sgdisk missing, not needed); squashfs 4.3G at /cdrom/casper/filesystem.squashfs; NO pool debs for the pinned set on the ISO; apt sources name archive.ubuntu.com and a TCP probe to it returned NET_OK via QEMU user NAT -- the archive apt road is the install road. Target enumerates as vda alone, vdb with the config disk attached (D2 lesson) -- the install script auto-detects the unique 32G virtio disk in-guest, fail-closed (D3_NODEV).
+
+### Slice D3 builders: DONE
+
+- lab/manual_install.py (new): sfdisk GPT script (512M EFI + ext4 root), fstab builder (fail-closed on missing UUID), guest install script, chroot scripts, apt roads. full_install_script() = ONE root script riding a genisoimage config ISO (proven D2 transport): partition/format/mount/unpack (cp -a of the mounted squashfs), fstab+hostname from the live side, bind mounts, chroot (lab user, machine-id, locale, pinned apt set, GRUB EFI). Tests tests/test_manual_install.py: 8 tests.
+- lab/run_sliceD3.py (new driver): fresh 32G target + fresh OVMF VARS (shared by install and verify boots so the GRUB NVRAM entry survives), stall detector, verify phase inherited from D2. Suite: 1528 passed / 0 failed (1520 + 8 new).
+
+### Slice D3 attempt 1: install OK, verify FAIL (kernel-less golden) -- root-caused
+
+- Install ran clean in ~2 min: ALL markers, apt installed openssh-server + qemu-guest-agent from the archive (policy-rc.d guard worked, services enabled), grub-install "No error reported". Evidence preserved as lab/evidence/sliceD3-attempt1-evidence.json.
+- Verify FAILED (SLICED3_INCOMPLETE): OVMF loaded Boot0002 Ubuntu -> shimx64.efi, then nothing -- no serial login, QGA/SSH silent after 300 s. Root cause from the attempt-1 install log tail: update-grub found ONLY memtest86+ -- no linux image. The casper squashfs carries no kernel in /boot (the live kernel lives on the ISO outside the squashfs), so the unpacked target was kernel-less and GRUB had nothing to boot. Attempt 1 also had no serial console in the installed GRUB cmdline, which would have hidden a boot anyway.
+
+### Slice D3 attempt 2: DONE -- installed golden PROVEN
+
+- Fixes: apt installs linux-generic after the pinned set (kernel 6.8.0-149-generic; update-grub: "Found linux image: /boot/vmlinuz-6.8.0-149-generic" + initrd); GRUB_CMDLINE_LINUX_DEFAULT gains console=tty0 console=ttyS0,115200n8 (appended in chroot, later assignment wins); serial-getty@ttyS0 enabled; install script now logs ls of /mnt/sq/boot + target /boot after unpack. A first rendering of the GRUB fix as an unquoted sed was caught by bash -n / tests BEFORE launch and replaced -- no bad script ever ran in a guest.
+- Evidence (lab/evidence/sliceD3-evidence.json, SLICED3_OK): install_done=True, all markers; verify boot reached serial login; login as lab succeeded; inside the INSTALLED guest: id uid=1000(lab), uname 6.8.0-149-generic, systemctl is-active ssh = active, qemu-guest-agent = active, ss LISTEN 0.0.0.0:22 + [::]:22; verify shell proven in 43 s. Golden copied: /mnt/vault/lifthrasir-lab/golden-installed.qcow2, 9.2G, sha256 d9edd18c4d0d8406038fc180ce6a177c9d7d16a0892f12263d791331bf192c90. No QEMU left; both boots stopped cleanly; caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10, one VM at a time).
+- Honest blemish: evidence fields qga_ping=False / ssh_tcp=False are a VERIFY-ORDERING BUG inherited from D2 (both are probed AFTER the serial poweroff is sent, so the guest is already going down). The in-guest service proof above supersedes them; the ordering fix (probe before poweroff) is owed in the next slice that touches the verify phase -- recorded here, not hidden.
+- Phase 1 exit NOT met: snapshot/reset proof against the installed golden (twice), the F01 fault loop inside the guest, and the kill-switch drill remain. NEXT SLICE: reset-to-golden proof x2 against golden-installed.qcow2, then F01 fault loop (detect -> propose -> approve -> fix -> verify -> rollback inside the guest, evidence pack).
+- Invariants: lab only; host and Volmarr session untouched; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
