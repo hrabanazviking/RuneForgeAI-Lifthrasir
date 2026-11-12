@@ -1,0 +1,310 @@
+{
+  "actions": [
+    {
+      "args": [
+        {
+          "kind": "name",
+          "name": "rule_id",
+          "required": true
+        }
+      ],
+      "consent_floor": "per-action",
+      "description": "Change one named non-critical firewall rule after per-action approval, with the prior ruleset backed up. Critical network state is out of scope and refused.",
+      "max_duration_seconds": 120,
+      "reversible": true,
+      "risk_level": "L4",
+      "scope": "live-host",
+      "target_types": [
+        "firewall-rule"
+      ],
+      "title": "Change one non-critical firewall rule",
+      "undo_method": "change_firewall_rule",
+      "verb": "change_firewall_rule"
+    },
+    {
+      "args": [],
+      "consent_floor": "none",
+      "description": "Compare installed package files against the package database, read-only.",
+      "max_duration_seconds": 60,
+      "reversible": true,
+      "risk_level": "L0",
+      "scope": "live-readonly",
+      "target_types": [
+        "package"
+      ],
+      "title": "Check package file integrity",
+      "undo_method": "none",
+      "verb": "check_package_integrity"
+    },
+    {
+      "args": [
+        {
+          "kind": "name",
+          "name": "image_recipe",
+          "required": true
+        }
+      ],
+      "consent_floor": "session-blanket",
+      "description": "Create a disposable QEMU/KVM guest from a pinned lab image recipe.",
+      "max_duration_seconds": 600,
+      "reversible": true,
+      "risk_level": "L2",
+      "scope": "lab-guest",
+      "target_types": [
+        "lab-guest"
+      ],
+      "title": "Create a disposable lab guest",
+      "undo_method": "delete_lab_guest",
+      "verb": "create_lab_guest"
+    },
+    {
+      "args": [],
+      "consent_floor": "session-blanket",
+      "description": "Delete a disposable lab guest and everything inside it. Lab only.",
+      "max_duration_seconds": 120,
+      "reversible": true,
+      "risk_level": "L2",
+      "scope": "lab-guest",
+      "target_types": [
+        "lab-guest"
+      ],
+      "title": "Delete a disposable lab guest",
+      "undo_method": "none",
+      "verb": "delete_lab_guest"
+    },
+    {
+      "args": [
+        {
+          "kind": "name",
+          "name": "guest",
+          "required": true
+        },
+        {
+          "kind": "name",
+          "name": "setting",
+          "required": true
+        },
+        {
+          "kind": "string",
+          "name": "value",
+          "required": false
+        }
+      ],
+      "consent_floor": "session-blanket",
+      "description": "Change one named setting in one config file inside a disposable guest.",
+      "max_duration_seconds": 60,
+      "reversible": true,
+      "risk_level": "L2",
+      "scope": "lab-guest",
+      "target_types": [
+        "config-file"
+      ],
+      "title": "Edit a config file inside a lab guest",
+      "undo_method": "reset_lab_guest",
+      "verb": "edit_config_in_guest"
+    },
+    {
+      "args": [
+        {
+          "kind": "string",
+          "name": "version",
+          "required": true
+        }
+      ],
+      "consent_floor": "per-action",
+      "description": "Install one exact staged package version after per-action approval, with rollback staged first. Trust-root and boot packages are refused.",
+      "max_duration_seconds": 900,
+      "reversible": true,
+      "risk_level": "L4",
+      "scope": "live-host",
+      "target_types": [
+        "package"
+      ],
+      "title": "Install one staged package version",
+      "undo_method": "remove_package",
+      "verb": "install_package"
+    },
+    {
+      "args": [
+        {
+          "kind": "name",
+          "name": "incident_id",
+          "required": false
+        }
+      ],
+      "consent_floor": "standing-opt-in",
+      "description": "Read local incident evidence and sensor history; data stays local.",
+      "max_duration_seconds": 15,
+      "reversible": true,
+      "risk_level": "L1",
+      "scope": "live-readonly",
+      "target_types": [
+        "evidence-store"
+      ],
+      "title": "Read the local evidence store",
+      "undo_method": "none",
+      "verb": "read_evidence_store"
+    },
+    {
+      "args": [
+        {
+          "kind": "integer",
+          "name": "max_entries",
+          "required": false
+        }
+      ],
+      "consent_floor": "standing-opt-in",
+      "description": "Read consented journal detail for one unit to build a timeline.",
+      "max_duration_seconds": 15,
+      "reversible": true,
+      "risk_level": "L1",
+      "scope": "live-readonly",
+      "target_types": [
+        "systemd-unit"
+      ],
+      "title": "Read journal entries for one unit",
+      "undo_method": "none",
+      "verb": "read_journal"
+    },
+    {
+      "args": [],
+      "consent_floor": "none",
+      "description": "Observe whether one systemd unit is active or failed. No mutation.",
+      "max_duration_seconds": 10,
+      "reversible": true,
+      "risk_level": "L0",
+      "scope": "live-readonly",
+      "target_types": [
+        "systemd-unit"
+      ],
+      "title": "Read the status of one service",
+      "undo_method": "none",
+      "verb": "read_service_status"
+    },
+    {
+      "args": [],
+      "consent_floor": "none",
+      "description": "Read public CPU, memory and pressure counters for a health report.",
+      "max_duration_seconds": 10,
+      "reversible": true,
+      "risk_level": "L0",
+      "scope": "live-readonly",
+      "target_types": [
+        "host"
+      ],
+      "title": "Read public system counters",
+      "undo_method": "none",
+      "verb": "read_system_counters"
+    },
+    {
+      "args": [
+        {
+          "kind": "string",
+          "name": "version",
+          "required": true
+        }
+      ],
+      "consent_floor": "per-action",
+      "description": "Remove one exact package version after per-action approval. This is the rollback for install_package; trust-root and boot packages are refused.",
+      "max_duration_seconds": 900,
+      "reversible": true,
+      "risk_level": "L4",
+      "scope": "live-host",
+      "target_types": [
+        "package"
+      ],
+      "title": "Remove one installed package version",
+      "undo_method": "install_package",
+      "verb": "remove_package"
+    },
+    {
+      "args": [],
+      "consent_floor": "session-blanket",
+      "description": "Reset a disposable lab guest to its pinned clean state.",
+      "max_duration_seconds": 300,
+      "reversible": true,
+      "risk_level": "L2",
+      "scope": "lab-guest",
+      "target_types": [
+        "lab-guest"
+      ],
+      "title": "Reset a disposable lab guest",
+      "undo_method": "none",
+      "verb": "reset_lab_guest"
+    },
+    {
+      "args": [],
+      "consent_floor": "allowlist-notice",
+      "description": "Restart one explicitly allowlisted noncritical service under monitoring, with a tested undo. Critical units are refused by the validator.",
+      "max_duration_seconds": 60,
+      "reversible": true,
+      "risk_level": "L3",
+      "scope": "live-host",
+      "target_types": [
+        "systemd-unit"
+      ],
+      "title": "Restart an allowlisted noncritical service",
+      "undo_method": "stop_unit",
+      "verb": "restart_unit"
+    },
+    {
+      "args": [
+        {
+          "kind": "name",
+          "name": "guest",
+          "required": true
+        }
+      ],
+      "consent_floor": "session-blanket",
+      "description": "Restart one unit inside a disposable lab guest. No live-host effect.",
+      "max_duration_seconds": 60,
+      "reversible": true,
+      "risk_level": "L2",
+      "scope": "lab-guest",
+      "target_types": [
+        "systemd-unit"
+      ],
+      "title": "Restart a unit inside a lab guest",
+      "undo_method": "none",
+      "verb": "restart_unit_in_guest"
+    },
+    {
+      "args": [
+        {
+          "kind": "string",
+          "name": "prior_version_digest",
+          "required": true
+        }
+      ],
+      "consent_floor": "allowlist-notice",
+      "description": "Revert one proven user-level config file to its recorded prior version. Protected paths are refused by the validator.",
+      "max_duration_seconds": 60,
+      "reversible": true,
+      "risk_level": "L3",
+      "scope": "live-host",
+      "target_types": [
+        "config-file"
+      ],
+      "title": "Revert a user-level config file",
+      "undo_method": "revert_user_config",
+      "verb": "revert_user_config"
+    },
+    {
+      "args": [],
+      "consent_floor": "allowlist-notice",
+      "description": "Stop one explicitly allowlisted noncritical service under monitoring. This is the tested undo for restart_unit; critical units are refused by the validator.",
+      "max_duration_seconds": 60,
+      "reversible": true,
+      "risk_level": "L3",
+      "scope": "live-host",
+      "target_types": [
+        "systemd-unit"
+      ],
+      "title": "Stop an allowlisted noncritical service",
+      "undo_method": "restart_unit",
+      "verb": "stop_unit"
+    }
+  ],
+  "catalog_version": "0.1",
+  "schema": "lifthrasir.action-catalog.v0.1"
+}

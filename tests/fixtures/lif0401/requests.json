@@ -1,0 +1,73 @@
+{
+  "now": 1800000000.0,
+  "valid": [
+    {
+      "verb": "read_service_status",
+      "target": {
+        "type": "systemd-unit",
+        "name": "demo.service"
+      },
+      "args": {}
+    },
+    {
+      "verb": "read_journal",
+      "target": {
+        "type": "systemd-unit",
+        "name": "demo.service"
+      },
+      "args": {
+        "max_entries": 50
+      }
+    },
+    {
+      "verb": "edit_config_in_guest",
+      "target": {
+        "type": "config-file",
+        "name": "/etc/demo/demo.conf"
+      },
+      "args": {
+        "guest": "lab-guest-01",
+        "setting": "data_path",
+        "value": "/var/lib/demo"
+      }
+    },
+    {
+      "verb": "restart_unit_in_guest",
+      "target": {
+        "type": "systemd-unit",
+        "name": "demo.service"
+      },
+      "args": {
+        "guest": "lab-guest-01"
+      }
+    },
+    {
+      "verb": "restart_unit",
+      "target": {
+        "type": "systemd-unit",
+        "name": "demo.service"
+      },
+      "args": {}
+    },
+    {
+      "verb": "revert_user_config",
+      "target": {
+        "type": "config-file",
+        "name": "/etc/demo/settings.conf"
+      },
+      "args": {
+        "prior_version_digest": "sha256:abc123"
+      }
+    },
+    {
+      "verb": "install_package",
+      "target": {
+        "type": "package",
+        "name": "demo-tool"
+      },
+      "args": {
+        "version": "1.2.3"
+      }
+    }
+  ]
+}

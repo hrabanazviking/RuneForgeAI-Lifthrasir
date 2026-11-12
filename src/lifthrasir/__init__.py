@@ -14,6 +14,27 @@ Banking union note (LIF-0305): this slice adds the hypotheses exports below on i
 
 Banking union note (LIF-0306): contextguard exports added at the seat at banking, per the team-03 flag.
 """
+from .actions import (
+    CATALOG,
+    CATALOG_VERSION,
+    CONSENT_FLOOR,
+    ActionError,
+    ActionRequest,
+    ActionResult,
+    ActionSpec,
+    ActionTarget,
+    Authorization,
+    ConsentError,
+    DryRunExecutor,
+    ExpiredRequestError,
+    MalformedRequestError,
+    ProhibitedActionError,
+    UnknownVerbError,
+    catalog_as_dict,
+    get_action,
+    validate_plan_steps,
+    validate_request,
+)
 from .eventbus import (
     SCHEMA_VERSION,
     SUPPORTED_SCHEMA_VERSIONS,
@@ -81,6 +102,25 @@ from .contextguard import (
     scan_document,
 )
 __all__ = [
+    "CATALOG",
+    "CATALOG_VERSION",
+    "CONSENT_FLOOR",
+    "ActionError",
+    "ActionRequest",
+    "ActionResult",
+    "ActionSpec",
+    "ActionTarget",
+    "Authorization",
+    "ConsentError",
+    "DryRunExecutor",
+    "ExpiredRequestError",
+    "MalformedRequestError",
+    "ProhibitedActionError",
+    "UnknownVerbError",
+    "catalog_as_dict",
+    "get_action",
+    "validate_plan_steps",
+    "validate_request",
     "SCHEMA_VERSION",
     "SUPPORTED_SCHEMA_VERSIONS",
     "BootIdMismatchError",
