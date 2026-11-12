@@ -78,15 +78,15 @@ commit — never a bare claim. Queue order and titles per WAVE_PLAN.md.
 |---|---|---|---|
 | — | — | Campaign stood up 2026-11-12 | seat stand-up commit on main (WAVE_PLAN + this map + KEEPER); ls-remote verified |
 | LIF-0001 | P0 | banked | e72ad6a on main, ls-remote verified 2026-11-12; docs/CHARTER.md sha256 f24a22a5f9c3b8a16b9beccbeab70aee5bb92c8a36428d1e3b57f27d9da423d2, tests/test_charter.py sha256 9f1a50882083db7dbe20e5540ae354b5181a7ed7321a4494886914d55957eafa; suite 7 passed / 0 failed (pytest 9.1.1, Python 3.14.8, seat-verified in team worktree and at seat); negative control 1 failed / 6 passed as designed; undo = revert e72ad6a; README link proposed in team-01 CAMPAIGN_STATE.md, human to apply |
-| LIF-0002 | P0 | assigned (team-02) | — |
-| LIF-0003 | P0 | assigned (team-03) | — |
+| LIF-0002 | P0 | banked | 9003355 on main, ls-remote verified 2026-11-12; docs/architecture/ADR-0002-architecture.md sha256 23b563ee0d8a1b7d91f56e95c15ef4b34a9d4e2ccd8209d8eb9dae58dc67bb85, tests/test_architecture_adr.py sha256 0f771686eaaf0c16deeae6a1374f2cdb6f059197bc8107d819545d660e023d86; suite at banking 19 passed / 0 failed (seat-verified); negative control 1 failed / 11 passed as designed; undo = revert 9003355 |
+| LIF-0003 | P0 | banked | ad50632 on main (cherry-pick of team commit 37a9e37), ls-remote verified 2026-11-12; docs/RISK-MATRIX.md sha256 0bb82704975816ecf5e44f1929b6e2a196e2628d1fe28a88683e9967b3ea0f10, tests/test_risk_matrix.py sha256 ddb7ba713edb9d5030f1bee7902db7e34c7178e6a8c7e99def01b47ffd3335d6; suite at banking 31 passed / 0 failed (seat full suite); negative control 1 failed / 11 passed as designed; HUMAN REVIEW of the risk matrix remains PENDING (recorded in the doc, never claimed); undo = revert ad50632 |
 | LIF-0004 | P0 | assigned (team-04) | — |
 | LIF-0005 | P0 | assigned (team-05) | — |
 | LIF-0101 | P1 | assigned (team-06) | — |
 | LIF-0102 | P1 | assigned (team-07) | — |
 | LIF-0103 | P1 | assigned (team-08) | — |
 | LIF-0104 | P1 | assigned (team-09) | — |
-| LIF-0105 | P1 | queued | — |
+| LIF-0105 | P1 | built (team-01, awaiting banking) | commit 4b70e71 on yrsa/lifthrasir-team-01; lab/ci_runner.py + tests/test_ci_runner.py; suite 13 passed / 0 failed in team worktree; e2e trace lif-20261112T065755Z-2623f7a1743c; banking waits queue order + P0 gate |
 | LIF-0201 | P2 | queued | — |
 | LIF-0202 | P2 | queued | — |
 | LIF-0203 | P2 | queued | — |
