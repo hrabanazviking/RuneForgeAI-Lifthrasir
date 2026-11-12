@@ -1,0 +1,35 @@
+{
+  "valid": {
+    "schema": "lifthrasir.modelprovider.v0.1",
+    "schema_version": "0.1",
+    "task_id": "task-fixture-valid",
+    "prompt": "Summarise incident inc-2026-201 from the cited evidence.",
+    "model_id": "mock-1",
+    "model_revision": "mock-rev-1",
+    "prompt_template_version": "tmpl-1",
+    "context_refs": ["ev-2026-201", "ev-2026-202"],
+    "system_constraints": ["cite only supplied evidence"],
+    "max_input_tokens": 4096,
+    "max_output_tokens": 256,
+    "temperature": 0.0,
+    "deadline_s": 30.0,
+    "output_schema": null
+  },
+  "structured": {
+    "task_id": "task-fixture-structured",
+    "prompt": "Propose rival hypotheses for inc-2026-201.",
+    "context_refs": ["ev-2026-201"],
+    "output_schema": "hypothesis-v0.1",
+    "max_output_tokens": 512
+  },
+  "abstain": {
+    "task_id": "task-fixture-abstain",
+    "prompt": "Explain the unexplainable. [[abstain]]",
+    "context_refs": []
+  },
+  "failing": {
+    "task_id": "task-fixture-failing",
+    "prompt": "Diagnose the fault. [[mock-fail]]",
+    "context_refs": ["ev-2026-201"]
+  }
+}
