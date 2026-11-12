@@ -1,5 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-only
-"""Tests for lab/calamares_config.py (Activation Phase 1, slice D)."""
+"""Tests for lab/calamares_config.py (Activation Phase 1, slice D).
+
+Slice D2: assertions updated to the stock-aligned contract (stock
+settings keys + stock exec order read from the live guest in the
+D1 recon). The D1-era key names (dont-cancel,
+disable-during-installation) and stale module names (initcpiocfg,
+services-systemd) are asserted ABSENT so they cannot creep back.
+"""
 import sys
 from pathlib import Path
 
@@ -10,20 +17,40 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from lab.calamares_config import (CRITICAL, PINNED_PACKAGES,
                                   build_settings, config_iso_argv,
                                   packages_config, partition_config,
+                                  render_module_conf,
                                   render_settings_conf, users_config)
 
-FULL = CRITICAL | {"welcome", "locale", "keyboard", "summary",
-                   "fstab", "machineid", "finished", "umount",
-                   "mount", "grubcfg", "hwclock"}
+# The module universe the D1 recon actually discovered in the guest.
+FULL = CRITICAL | {"welcome", "locale", "keyboard", "pkgselect",
+                   "summary", "finished", "fstab", "machineid",
+                   "mount", "unpackfs", "localecfg",
+                   "luksbootkeyfile", "displaymanager",
+                   "networkcfg", "hwclock", "initramfscfg",
+                   "initramfs", "grubcfg", "automirror",
+                   "packages", "umount"}
 
 
-def test_settings_intersect_discovered_and_unattended():
+def test_settings_unattended_stock_keys():
     s = build_settings(set(FULL))
-    assert s["dont-cancel"] is True
+    assert s["disable-cancel"] is True
+    assert s["disable-cancel-during-exec"] is True
     assert s["prompt-install"] is False
-    exec_mods = s["sequence"][1]["exec"]
+    assert s["dont-chroot"] is False
+    assert "dont-cancel" not in s
+    assert "disable-during-installation" not in s
+
+
+def test_exec_is_stock_order_and_complete():
+    s = build_settings(set(FULL))
+    exec_mods = s["sequence"][0]["exec"]
     assert set(CRITICAL) <= set(exec_mods)
-    assert "nonexistent-module" not in exec_mods
+    assert "packages" in exec_mods and "automirror" in exec_mods
+    order = [exec_mods.index(m) for m in
+             ("initramfscfg", "initramfs", "grubcfg", "bootloader")]
+    assert order == sorted(order)
+    for stale in ("initcpiocfg", "initcpio", "services-systemd"):
+        assert stale not in exec_mods
+    assert s["sequence"][1] == {"show": ["finished"]}
 
 
 def test_missing_critical_refused():
@@ -31,10 +58,14 @@ def test_missing_critical_refused():
         build_settings(set(FULL) - {"bootloader"})
 
 
-def test_render_is_parseable_shape():
+def test_render_settings_conf_stock_shape():
     text = render_settings_conf(build_settings(set(FULL)))
-    assert "dont-cancel: true" in text
+    assert "disable-cancel: true" in text
+    assert "disable-cancel-during-exec: true" in text
+    assert "prompt-install: false" in text
+    assert "modules-search: [ local ]" in text
     assert "- exec:" in text and "- partition" in text
+    assert "dont-cancel" not in text
 
 
 def test_module_configs():
@@ -44,6 +75,18 @@ def test_module_configs():
     assert u["hostname"]["template"] == "lifthrasir-lab"
     ops = packages_config()["operations"][0]["install"]
     assert ops == PINNED_PACKAGES
+
+
+def test_render_module_conf():
+    users = render_module_conf("users")
+    assert "name: lab" in users and "template: lifthrasir-lab" in users
+    pkgs = render_module_conf("packages")
+    for pkg in PINNED_PACKAGES:
+        assert pkg in pkgs
+    part = render_module_conf("partition")
+    assert "initialPartitioningMode: erase" in part
+    with pytest.raises(ValueError):
+        render_module_conf("bootloader")
 
 
 def test_config_iso_argv():
