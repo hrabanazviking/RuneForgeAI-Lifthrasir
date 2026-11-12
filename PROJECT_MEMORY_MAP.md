@@ -114,18 +114,18 @@ commit — never a bare claim. Queue order and titles per WAVE_PLAN.md.
 | LIF-0506 | P5 | banked | a1cf23c on main (cherry-pick of team-07 c1266fc + seat union amended), ls-remote verified 2026-11-12; service_intent exports unioned with SCHEMA_VERSION aliased as SERVICE_INTENT_SCHEMA_VERSION (top-level SCHEMA_VERSION stays with the event bus, LIF-0201) and service_intent.VERDICTS held at submodule (configpreview owns the top-level name); suite at banking 587 passed / 0 failed (seat full suite); undo = revert a1cf23c. P5 SET COMPLETE (0501-0506) |
 | LIF-0601 | P6 | banked | e54e702 on main (cherry-pick of team-09 38270aa + seat union of 27 modelprovider exports amended), ls-remote verified 2026-11-12; modelprovider.MalformedRequestError and modelprovider.request_from_dict deliberately NOT top-level (names stay with actions / the earlier banked module respectively; both remain at lifthrasir.modelprovider.*); no real inference claimed (protocol + deterministic mock + local-only adapter); suite at banking 638 passed / 0 failed (seat full suite); undo = revert e54e702 |
 | LIF-0602 | P6 | banked | 2ed211b on main (cherry-pick of team-01 commit 37f0449 + seat union of 34 explanations exports + seat-amended collision-guard test rewritten as post-banking union-integrity test, both amended into the slice commit), ls-remote verified 2026-11-12; structured explanation + hypothesis templates with registry-resolved citations (invented citations refused); suite at banking 664 passed / 0 failed (seat full suite); negative control 8 failed / 18 passed as designed; undo = revert 2ed211b |
-| LIF-0603 | P6 | assigned | team-02 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0701 | P7 | assigned | team-03 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0603 | P6 | banked | faf72a1 on main (cherry-pick of team-02 10bbd42 + seat union of 29 quotas exports amended; quotas.OUTCOMES stays at submodule), verified 2026-11-12; suite at banking 692 passed / 0 failed (seat full suite); negative control PASS; undo = revert faf72a1. P6 SET COMPLETE |
+| LIF-0701 | P7 | banked | 6300680 on main (cherry-pick of recovered team-03 commit 6570345 + seat union of 32 dagexecutor exports amended; dagexecutor.STATUSES stays at submodule), verified 2026-11-12; RECOVERY: commit was orphaned by branch reset, recovered from reflog, pinned as yrsa/lifthrasir-lif0701-recovery; suite at banking 707 passed / 0 failed (seat full suite); negative control PASS; undo = revert 6300680 |
 | LIF-0702 | P7 | assigned | team-04 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0703 | P7 | assigned | team-05 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0801 | P8 | assigned | team-06 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0802 | P8 | assigned | team-07 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0803 | P8 | assigned | team-08 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0901 | P9 | assigned | team-09 assigned 2026-11-12 (flowing after LIF-0601 banked) |
-| LIF-0902 | P9 | queued | — |
-| LIF-0903 | P9 | queued | — |
+| LIF-0703 | P7 | built | team-05 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0801 | P8 | built (orphan 876e5ea pinned as yrsa/lifthrasir-lif0801-recovery) | team-06 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0802 | P8 | built | team-07 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0803 | P8 | built | team-08 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0901 | P9 | built (orphan 0aa9447 pinned as yrsa/lifthrasir-lif0901-recovery) | team-09 assigned 2026-11-12 (flowing after LIF-0601 banked) |
+| LIF-0902 | P9 | built | — |
+| LIF-0903 | P9 | built | — |
 | LIF-0904 | P9 | queued | — |
-| LIF-0905 | P9 | queued | — |
+| LIF-0905 | P9 | built | — |
 | LIF-1001 | P10 | queued | — |
 | LIF-1002 | P10 | queued | — |
 | LIF-1003 | P10 | queued | — |
