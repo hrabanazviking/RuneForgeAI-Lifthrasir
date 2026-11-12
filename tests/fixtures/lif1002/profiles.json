@@ -1,0 +1,163 @@
+{
+ "profiles": [
+  {
+   "category": "compilation",
+   "description": "Hash-chain and fixed-sort pattern standing in for a parallel build pipeline; no compiler is invoked.",
+   "harness_workload": "sort-fixed",
+   "memory_cap_mb": 256,
+   "metrics": [
+    "wall_time_s",
+    "checksum",
+    "ops_completed"
+   ],
+   "operations": [
+    {
+     "kind": "hash-chain",
+     "size": 20000
+    },
+    {
+     "kind": "sort-fixed",
+     "size": 4000
+    }
+   ],
+   "pinned_env": {
+    "MAKEFLAGS": "-j4"
+   },
+   "profile_id": "compile-fixture.v1",
+   "repetitions": 5,
+   "safety_class": "fixture",
+   "schema": "lifthrasir.workload-profile.v0.1",
+   "seed": 12,
+   "threads": 4,
+   "timeout_s": 30.0,
+   "title": "Compilation (fixture)",
+   "warmup": 1
+  },
+  {
+   "category": "graphics",
+   "description": "In-memory pixel-buffer mixing standing in for a graphics frame workload; no GPU, display or driver is touched.",
+   "harness_workload": "sort-fixed",
+   "memory_cap_mb": 128,
+   "metrics": [
+    "wall_time_s",
+    "checksum",
+    "bytes_touched"
+   ],
+   "operations": [
+    {
+     "kind": "pixel-mix",
+     "size": 16384
+    },
+    {
+     "kind": "buffer-copy",
+     "size": 8192
+    }
+   ],
+   "pinned_env": {},
+   "profile_id": "graphics-fixture.v1",
+   "repetitions": 5,
+   "safety_class": "fixture",
+   "schema": "lifthrasir.workload-profile.v0.1",
+   "seed": 14,
+   "threads": 1,
+   "timeout_s": 30.0,
+   "title": "Graphics (fixture)",
+   "warmup": 1
+  },
+  {
+   "category": "inference",
+   "description": "Small deterministic matrix-vector pattern standing in for local model inference; no model is loaded or run.",
+   "harness_workload": "hash-chain",
+   "memory_cap_mb": 512,
+   "metrics": [
+    "wall_time_s",
+    "checksum",
+    "ops_completed"
+   ],
+   "operations": [
+    {
+     "kind": "matvec",
+     "size": 4096
+    },
+    {
+     "kind": "hash-chain",
+     "size": 8000
+    }
+   ],
+   "pinned_env": {},
+   "profile_id": "inference-fixture.v1",
+   "repetitions": 5,
+   "safety_class": "fixture",
+   "schema": "lifthrasir.workload-profile.v0.1",
+   "seed": 13,
+   "threads": 2,
+   "timeout_s": 30.0,
+   "title": "Local inference (fixture)",
+   "warmup": 1
+  },
+  {
+   "category": "io",
+   "description": "In-memory buffer copy and checksum pattern standing in for storage I/O; nothing is written to any disk.",
+   "harness_workload": "hash-chain",
+   "memory_cap_mb": 64,
+   "metrics": [
+    "wall_time_s",
+    "checksum",
+    "bytes_touched"
+   ],
+   "operations": [
+    {
+     "kind": "buffer-copy",
+     "size": 32768
+    },
+    {
+     "kind": "hash-chain",
+     "size": 8000
+    }
+   ],
+   "pinned_env": {},
+   "profile_id": "io-fixture.v1",
+   "repetitions": 5,
+   "safety_class": "fixture",
+   "schema": "lifthrasir.workload-profile.v0.1",
+   "seed": 15,
+   "threads": 1,
+   "timeout_s": 30.0,
+   "title": "I/O (fixture)",
+   "warmup": 1
+  },
+  {
+   "category": "memory-pressure",
+   "description": "Bounded allocation-touch and copy pattern standing in for allocation, reclaim and pressure behaviour; synthetic and in-memory only, never real host pressure.",
+   "harness_workload": "hash-chain",
+   "memory_cap_mb": 64,
+   "metrics": [
+    "wall_time_s",
+    "checksum",
+    "bytes_touched",
+    "allocations"
+   ],
+   "operations": [
+    {
+     "kind": "alloc-touch",
+     "size": 32768
+    },
+    {
+     "kind": "buffer-copy",
+     "size": 16384
+    }
+   ],
+   "pinned_env": {},
+   "profile_id": "mem-pressure-fixture.v1",
+   "repetitions": 5,
+   "safety_class": "fixture",
+   "schema": "lifthrasir.workload-profile.v0.1",
+   "seed": 11,
+   "threads": 1,
+   "timeout_s": 30.0,
+   "title": "Memory pressure (fixture)",
+   "warmup": 1
+  }
+ ],
+ "schema": "lifthrasir.workload-catalog.v0.1"
+}
