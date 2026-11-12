@@ -1,0 +1,35 @@
+{
+  "fault_id": "F05",
+  "roadmap_case": 5,
+  "title": "Simulated isolated disk quota exhaustion",
+  "description": "Filesystem at 100 percent inside the lab guest.",
+  "injected_state": {
+    "filesystem": {
+      "mount": "/var",
+      "use_percent": 100,
+      "free_bytes": 0
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "gte",
+      "field": "filesystem.use_percent",
+      "value": 100
+    },
+    {
+      "kind": "equals",
+      "field": "filesystem.free_bytes",
+      "value": 0
+    }
+  ],
+  "golden_observed_state": {
+    "filesystem": {
+      "mount": "/var",
+      "use_percent": 100,
+      "free_bytes": 0,
+      "inode_use_percent": 42
+    }
+  },
+  "golden_verdict": "fault",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host"
+}

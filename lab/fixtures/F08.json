@@ -1,0 +1,35 @@
+{
+  "fault_id": "F08",
+  "roadmap_case": 14,
+  "title": "A process identifier is stale",
+  "description": "Recorded PID no longer exists / was reused.",
+  "injected_state": {
+    "process": {
+      "recorded_pid": 4242,
+      "pid_exists": false,
+      "pid_reused_by_other": true
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "equals",
+      "field": "process.pid_exists",
+      "value": false
+    },
+    {
+      "kind": "equals",
+      "field": "process.pid_reused_by_other",
+      "value": true
+    }
+  ],
+  "golden_observed_state": {
+    "process": {
+      "recorded_pid": 4242,
+      "pid_exists": false,
+      "pid_reused_by_other": true,
+      "current_owner": "unrelated"
+    }
+  },
+  "golden_verdict": "fault",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host"
+}

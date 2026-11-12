@@ -1,0 +1,45 @@
+{
+  "fault_id": "F04",
+  "roadmap_case": 4,
+  "title": "Missing demo service dependency",
+  "description": "Required dependency unit is absent.",
+  "injected_state": {
+    "service": {
+      "name": "demo.service",
+      "active_state": "failed"
+    },
+    "dependencies": {
+      "missing": [
+        "demo-helper.service"
+      ]
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "contains",
+      "field": "dependencies.missing",
+      "value": "demo-helper.service"
+    },
+    {
+      "kind": "equals",
+      "field": "service.active_state",
+      "value": "failed"
+    }
+  ],
+  "golden_observed_state": {
+    "service": {
+      "name": "demo.service",
+      "active_state": "failed"
+    },
+    "dependencies": {
+      "missing": [
+        "demo-helper.service"
+      ],
+      "present": [
+        "dbus.service"
+      ]
+    }
+  },
+  "golden_verdict": "fault",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host"
+}

@@ -1,0 +1,38 @@
+{
+  "fault_id": "F02",
+  "roadmap_case": 2,
+  "title": "Service intentionally disabled, requiring abstention",
+  "description": "Service disabled on purpose; oracle must abstain, not fault.",
+  "injected_state": {
+    "service": {
+      "name": "opt-in.service",
+      "active_state": "inactive",
+      "enabled": false,
+      "intentionally_disabled": true
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "equals",
+      "field": "service.active_state",
+      "value": "inactive"
+    }
+  ],
+  "golden_observed_state": {
+    "service": {
+      "name": "opt-in.service",
+      "active_state": "inactive",
+      "enabled": false,
+      "intentionally_disabled": true
+    }
+  },
+  "golden_verdict": "abstain",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host",
+  "abstain_when": [
+    {
+      "kind": "equals",
+      "field": "service.intentionally_disabled",
+      "value": true
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "fault_id": "F03",
+  "roadmap_case": 3,
+  "title": "Invalid noncritical test configuration",
+  "description": "Config file carries an invalid directive.",
+  "injected_state": {
+    "config": {
+      "path": "/etc/demo/demo.conf",
+      "valid": false,
+      "invalid_directive": "BogusKey=1"
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "equals",
+      "field": "config.valid",
+      "value": false
+    },
+    {
+      "kind": "equals",
+      "field": "config.invalid_directive",
+      "value": "BogusKey=1"
+    }
+  ],
+  "golden_observed_state": {
+    "config": {
+      "path": "/etc/demo/demo.conf",
+      "valid": false,
+      "invalid_directive": "BogusKey=1",
+      "parse_errors": 1
+    }
+  },
+  "golden_verdict": "fault",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host"
+}

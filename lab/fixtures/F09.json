@@ -1,0 +1,33 @@
+{
+  "fault_id": "F09",
+  "roadmap_case": 17,
+  "title": "Sensor clock jumps or is corrected",
+  "description": "Clock offset jumps beyond tolerance.",
+  "injected_state": {
+    "clock": {
+      "offset_ms": 45000,
+      "synchronized": false
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "gte",
+      "field": "clock.offset_ms",
+      "value": 5000
+    },
+    {
+      "kind": "equals",
+      "field": "clock.synchronized",
+      "value": false
+    }
+  ],
+  "golden_observed_state": {
+    "clock": {
+      "offset_ms": 45000,
+      "synchronized": false,
+      "source": "ntp-correction"
+    }
+  },
+  "golden_verdict": "fault",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host"
+}

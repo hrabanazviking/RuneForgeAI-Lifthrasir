@@ -1,0 +1,41 @@
+{
+  "fault_id": "F10",
+  "roadmap_case": 20,
+  "title": "Supposedly fixed service fails during the soak interval",
+  "description": "Service passed initial check then failed during soak.",
+  "injected_state": {
+    "service": {
+      "name": "demo.service",
+      "active_state": "failed"
+    },
+    "soak": {
+      "initial_check_passed": true,
+      "failed_during_soak": true
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "equals",
+      "field": "soak.failed_during_soak",
+      "value": true
+    },
+    {
+      "kind": "equals",
+      "field": "service.active_state",
+      "value": "failed"
+    }
+  ],
+  "golden_observed_state": {
+    "service": {
+      "name": "demo.service",
+      "active_state": "failed"
+    },
+    "soak": {
+      "initial_check_passed": true,
+      "failed_during_soak": true,
+      "minutes_into_soak": 23
+    }
+  },
+  "golden_verdict": "fault",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host"
+}

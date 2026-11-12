@@ -1,0 +1,35 @@
+{
+  "fault_id": "F01",
+  "roadmap_case": 1,
+  "title": "Service unexpectedly inactive",
+  "description": "User service in failed state inside the lab guest.",
+  "injected_state": {
+    "service": {
+      "name": "demo.service",
+      "active_state": "failed",
+      "enabled": true
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "equals",
+      "field": "service.active_state",
+      "value": "failed"
+    },
+    {
+      "kind": "equals",
+      "field": "service.name",
+      "value": "demo.service"
+    }
+  ],
+  "golden_observed_state": {
+    "service": {
+      "name": "demo.service",
+      "active_state": "failed",
+      "enabled": true,
+      "result": "exit-code"
+    }
+  },
+  "golden_verdict": "fault",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host"
+}

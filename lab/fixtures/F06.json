@@ -1,0 +1,35 @@
+{
+  "fault_id": "F06",
+  "roadmap_case": 8,
+  "title": "Intermittent service crash and restart loop",
+  "description": "Service restarts repeatedly.",
+  "injected_state": {
+    "service": {
+      "name": "flaky.service",
+      "active_state": "activating",
+      "restart_count": 7
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "gte",
+      "field": "service.restart_count",
+      "value": 5
+    },
+    {
+      "kind": "equals",
+      "field": "service.active_state",
+      "value": "activating"
+    }
+  ],
+  "golden_observed_state": {
+    "service": {
+      "name": "flaky.service",
+      "active_state": "activating",
+      "restart_count": 7,
+      "result": "exit-code"
+    }
+  },
+  "golden_verdict": "fault",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host"
+}

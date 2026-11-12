@@ -1,0 +1,35 @@
+{
+  "fault_id": "F07",
+  "roadmap_case": 9,
+  "title": "Evidence collector lacks a required permission",
+  "description": "Collector cannot read its source (permission denied).",
+  "injected_state": {
+    "collector": {
+      "name": "journal-collector",
+      "can_read": false,
+      "error": "permission-denied"
+    }
+  },
+  "expected_symptoms": [
+    {
+      "kind": "equals",
+      "field": "collector.can_read",
+      "value": false
+    },
+    {
+      "kind": "equals",
+      "field": "collector.error",
+      "value": "permission-denied"
+    }
+  ],
+  "golden_observed_state": {
+    "collector": {
+      "name": "journal-collector",
+      "can_read": false,
+      "error": "permission-denied",
+      "events_collected": 0
+    }
+  },
+  "golden_verdict": "fault",
+  "lab_scope": "disposable lab guest only; recorded data, never injected into the real host"
+}
