@@ -1,0 +1,8 @@
+TAP version 13
+1..5
+ok 1 selftests: net: socket_test
+not ok 2 selftests: net: bind_test # exit=1
+ok 3 selftests: net: ipv6_test # SKIP ipv6 not available
+not ok 4 selftests: timers: alarmtimer-suspend # TIMEOUT 45 seconds
+ok 5 selftests: net: reuseport_bpf
+# Totals: pass:2 fail:2 xfail:0 xpass:0 skip:1 error:0

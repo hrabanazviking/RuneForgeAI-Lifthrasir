@@ -1,0 +1,6 @@
+KTAP version 1
+1..2
+    # Subtest: example
+    1..3
+    ok 1 - example_simple_test
+    ok 2 - example_mock_test

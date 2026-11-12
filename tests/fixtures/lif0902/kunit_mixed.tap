@@ -1,0 +1,18 @@
+TAP version 14
+1..2
+    # Subtest: example
+    1..4
+    ok 1 - example_simple_test
+    not ok 2 - example_failing_test
+    # example_failing_test: EXPECTATION FAILED at lib/kunit/example-test.c:42
+    # Expected 2 == 3, but
+    # 2 == 2
+    ok 3 - example_skip_test # SKIP this test is skipped
+    ok 4 - example_another_test
+    # example: pass:2 fail:1 skip:1 total:4
+not ok 1 - example
+    # Subtest: second-suite
+    1..1
+    ok 1 - second_ok
+    # second-suite: pass:1 fail:0 skip:0 total:1
+ok 2 - second-suite
