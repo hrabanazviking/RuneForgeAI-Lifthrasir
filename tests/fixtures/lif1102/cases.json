@@ -1,0 +1,17 @@
+{
+  "hosts": [
+    {"name": "fedora42", "os_release": "ID=fedora\nVERSION_ID=42\nNAME=Fedora Linux\n", "distro_id": "fedora", "adapter": "fedora", "status": "unverified"},
+    {"name": "debian12", "os_release": "ID=debian\nVERSION_ID=12\nVERSION_CODENAME=bookworm\n", "distro_id": "debian", "adapter": "debian", "status": "unverified"},
+    {"name": "leap156", "os_release": "ID=opensuse-leap\nVERSION_ID=15.6\nNAME=openSUSE Leap\n", "distro_id": "opensuse", "adapter": "opensuse", "status": "unverified"},
+    {"name": "tumbleweed", "os_release": "ID=opensuse-tumbleweed\nVERSION_ID=20251101\nNAME=openSUSE Tumbleweed\n", "distro_id": "opensuse", "adapter": "opensuse", "status": "unverified"},
+    {"name": "ubuntu-host", "os_release": "ID=ubuntu\nVERSION_ID=26.10\nNAME=Ubuntu\n", "distro_id": "ubuntu", "adapter": null, "status": "unverified"},
+    {"name": "unknown", "os_release": "ID=arch\nVERSION_ID=rolling\nNAME=Arch\n", "distro_id": null, "adapter": null, "status": "unsupported-distro"}
+  ],
+  "commands": [
+    {"distro_id": "fedora", "operation": "query_package", "concept": "kernel_image", "argv": ["rpm", "-q", "kernel-core"]},
+    {"distro_id": "debian", "operation": "query_package", "concept": "kernel_image", "argv": ["dpkg-query", "-W", "linux-image-amd64"]},
+    {"distro_id": "opensuse", "operation": "query_package", "concept": "ssh_server", "argv": ["rpm", "-q", "openssh"]},
+    {"distro_id": "fedora", "operation": "install_package", "concept": "shim", "argv": ["dnf", "install", "shim-x64"], "mutating": true},
+    {"distro_id": "opensuse", "operation": "list_updates", "concept": null, "argv": ["zypper", "list-updates"]}
+  ]
+}
