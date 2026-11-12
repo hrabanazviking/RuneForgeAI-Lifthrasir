@@ -1,0 +1,215 @@
+{
+  "slice": "activation-phase1-F-f01-loop",
+  "golden": "/mnt/vault/lifthrasir-lab/golden-installed.qcow2",
+  "golden_sha256": "d9edd18c4d0d8406038fc180ce6a177c9d7d16a0892f12263d791331bf192c90",
+  "golden_sha_ok": true,
+  "boot": {
+    "argv": [
+      "qemu-system-x86_64",
+      "-name",
+      "lifthrasir-lab-F",
+      "-accel",
+      "kvm",
+      "-cpu",
+      "host",
+      "-machine",
+      "q35",
+      "-m",
+      "4096",
+      "-smp",
+      "4",
+      "-drive",
+      "if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd",
+      "-drive",
+      "if=pflash,format=raw,file=/mnt/vault/lifthrasir-lab/OVMF_VARS-F.fd",
+      "-drive",
+      "file=/mnt/vault/lifthrasir-lab/overlay-F.qcow2,format=qcow2,if=virtio",
+      "-chardev",
+      "socket,id=ser0,path=/mnt/vault/lifthrasir-lab/serial-F.sock,server=on,wait=off,logfile=/mnt/vault/lifthrasir-lab/serial-F.log",
+      "-serial",
+      "chardev:ser0",
+      "-chardev",
+      "socket,id=qga0,path=/mnt/vault/lifthrasir-lab/qga-F.sock,server=on,wait=off",
+      "-device",
+      "virtio-serial-pci,id=virtio-serial0",
+      "-device",
+      "virtserialport,chardev=qga0,name=org.qemu.guest_agent.0",
+      "-netdev",
+      "user,id=n0,hostfwd=tcp:127.0.0.1:2226-:22",
+      "-device",
+      "virtio-net-pci,netdev=n0",
+      "-display",
+      "none",
+      "-pidfile",
+      "/mnt/vault/lifthrasir-lab/qemu-F.pid",
+      "-qmp",
+      "unix:/mnt/vault/lifthrasir-lab/qmp-F.sock,server,nowait",
+      "-daemonize"
+    ],
+    "launcher_rc": 0,
+    "pid": 985967,
+    "boot_markers": {
+      "kernel_started": true,
+      "casper_live": true,
+      "systemd_reached": true,
+      "login_prompt": true,
+      "shell_proven": false
+    },
+    "qga_sock": "/mnt/vault/lifthrasir-lab/qga-F.sock"
+  },
+  "inject_ok": true,
+  "state_after_inject": {
+    "name": "demo.service",
+    "active_state": "failed",
+    "sub_state": "failed",
+    "unit_file_state": "enabled",
+    "mode": "broken"
+  },
+  "inject_tail": "id\r\n\u001b[?2004l\ruid=0(root) gid=0(root) groups=0(root)\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# mkdir -p /etc/demo\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# printf 'MODE=broken\\n' > /etc/demo/demo.conf\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# printf '%s\\n' '#!/bin/sh' '. /etc/demo/demo.conf' 'if [ \"$MODE\" = ok ]; then exec sleep 3600; fi' 'echo demo failing >&2' 'exit 1' > /usr/local/bin/lif-demo.sh\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# chmod 755 /usr/local/bin/lif-demo.sh\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# printf '%s\\n' '[Unit]' 'Description=Lifthrasir lab demo F01' '' '[Service]' 'Type=simple' 'ExecStart=/usr/local/bin/lif-demo.sh' '' '[Install]' 'WantedBy=multi-user.target' > /etc/systemd/system/demo.service\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# systemctl daemon-reload\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# systemctl enable demo.service\r\n\u001b[?2004l\rCreated symlink /etc/systemd/system/multi-user.target.wants/demo.service \u2192 /etc/systemd/system/demo.service.\r\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# systemctl reset-failed demo.service; systemctl start demo.service; sleep 2\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# echo INJ_STATE\r\n\u001b[?2004l\rINJ_STATE\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# systemctl show demo.service -p Id -p ActiveState -p SubState -p UnitFileState\r\n\u001b[?2004l\r\rId=demo.service\u001b[m\r\nActiveState=failed\u001b[m\r\nSubState=failed\u001b[m\r\nUnitFileState=enabled\u001b[m\r\n\r\u001b[K\u001b[?2004hroot@lifthrasir-lab:/home/lab# cat /etc/demo/demo.conf\r\n\u001b[?2004l\rMODE=broken\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# echo FINJ$((3+3))\r\n\u001b[?2004l\rFINJ6\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# ",
+  "observed_before": {
+    "service": {
+      "name": "demo.service",
+      "active_state": "failed",
+      "enabled": true
+    }
+  },
+  "collector_parse_show": {
+    "demo.service\u001b[m": {
+      "Id": "demo.service\u001b[m",
+      "ActiveState": "failed\u001b[m",
+      "SubState": "failed\u001b[m",
+      "UnitFileState": "enabled\u001b[m"
+    }
+  },
+  "gate": {
+    "fixture_errors": [],
+    "oracle_before": "fault",
+    "plan": {
+      "schema": "lifthrasir.plan.v0.1",
+      "schema_version": "0.1",
+      "plan_id": "plan-f01-lab-fix",
+      "incident_id": "inc-f01-lab",
+      "hypothesis_ids": [
+        "hyp-f01-config"
+      ],
+      "title": "Fix a faulty setting inside a disposable lab guest",
+      "status": "draft",
+      "risk_level": "L2",
+      "consent_mode": "session-blanket",
+      "steps": [
+        {
+          "step_id": "step-1",
+          "action_verb": "edit_config_in_guest",
+          "target": {
+            "type": "config-file",
+            "name": "/etc/demo/demo.conf"
+          },
+          "args": {
+            "guest": "lifthrasir-lab-F",
+            "setting": "MODE",
+            "value": "ok"
+          }
+        },
+        {
+          "step_id": "step-2",
+          "action_verb": "restart_unit_in_guest",
+          "target": {
+            "type": "systemd-unit",
+            "name": "demo.service"
+          },
+          "args": {
+            "guest": "lifthrasir-lab-F"
+          }
+        }
+      ],
+      "preconditions": [
+        "lab guest lifthrasir-lab-F is running and disposable",
+        "/etc/demo/demo.conf inside the guest holds the faulty setting"
+      ],
+      "rollback": {
+        "method": "reset_lab_guest",
+        "description": "Reset the disposable guest to its pinned clean state."
+      },
+      "verification": {
+        "method": "unit_healthy_in_guest",
+        "timeout_seconds": 30
+      },
+      "created_at": "2026-11-12T18:48:44Z",
+      "expires_at": "2026-11-12T19:18:44Z"
+    },
+    "policy_decision": {
+      "outcome": "ALLOW",
+      "policy_version": "0.1",
+      "plan_id": "plan-f01-lab-fix",
+      "declared_risk_level": "L2",
+      "effective_risk_level": "L2",
+      "required_consent_mode": "session-blanket",
+      "reason_codes": [
+        "ALL_CHECKS_PASSED"
+      ],
+      "reasons": [
+        "every policy check passed"
+      ],
+      "evaluated_at": "2026-11-12T18:48:44Z"
+    },
+    "policy_prohibited_outcome": "DENY",
+    "approval_prompt": "LIFTHRASIR APPROVAL REQUEST\nPlan: plan-f01-lab-fix - Fix a faulty setting inside a disposable lab guest\nRisk: L2  Consent required: session-blanket (floor for L2: session-blanket)\n\nWHAT IS PROPOSED\n- edit_config_in_guest -> config-file:/etc/demo/demo.conf\n- restart_unit_in_guest -> systemd-unit:demo.service\n\nEXACT SCOPE (nothing outside this list is authorized)\n- config-file:/etc/demo/demo.conf\n- systemd-unit:demo.service\n\nPRECONDITIONS\n- lab guest lifthrasir-lab-F is running and disposable\n- /etc/demo/demo.conf inside the guest holds the faulty setting\n\nROLLBACK\n- reset_lab_guest: Reset the disposable guest to its pinned clean state.\n\nVERIFICATION\n- unit_healthy_in_guest\n\nREFERENCE AND EXPIRY\n- Reference: pref-03ef3b6190d8edee1afb\n- Plan digest: sha256:f6159bcd8afba033ffe85899f6a125f3eb63c799031fef33ab6ae1d99a81c751\n- Check code: f615-9bcd-8afb\n- Issued: 2026-11-12T18:48:44Z  Expires: 2026-11-12T19:03:44Z\n- Approval is single-use, binds exactly this plan digest and scope, and cannot be replayed or transferred.\n",
+    "tamper_refused": "DigestMismatchError",
+    "replay_refused": "ReplayError",
+    "approval": {
+      "reference_id": "pref-03ef3b6190d8edee1afb",
+      "digest": "sha256:f6159bcd8afba033ffe85899f6a125f3eb63c799031fef33ab6ae1d99a81c751",
+      "check_code": "f615-9bcd-8afb",
+      "scope": [
+        "config-file:/etc/demo/demo.conf",
+        "systemd-unit:demo.service"
+      ],
+      "decision": "approved",
+      "approver": "keeper-under-volmarr-standing-order",
+      "consumed": true,
+      "key_note": "throwaway HMAC key generated in-process, never stored (fixture-scale per APPROVAL-UX)"
+    },
+    "gate_passed": true
+  },
+  "fix_ok": true,
+  "state_after_fix": {
+    "name": "demo.service",
+    "active_state": "active",
+    "sub_state": "running",
+    "unit_file_state": "enabled",
+    "mode": "ok"
+  },
+  "fix_tail": "sed -i 's/^MODE=.*/MODE=ok/' /etc/demo/demo.conf\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# systemctl restart demo.service; sleep 2\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# echo FIX_STATE\r\n\u001b[?2004l\rFIX_STATE\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# systemctl show demo.service -p Id -p ActiveState -p SubState -p UnitFileState\r\n\u001b[?2004l\r\rId=demo.service\u001b[m\r\nActiveState=active\u001b[m\r\nSubState=running\u001b[m\r\nUnitFileState=enabled\u001b[m\r\n\r\u001b[K\u001b[?2004hroot@lifthrasir-lab:/home/lab# cat /etc/demo/demo.conf\r\n\u001b[?2004l\rMODE=ok\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# echo FFIX$((4+4))\r\n\u001b[?2004l\rFFIX8\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# ",
+  "observed_after_fix": {
+    "service": {
+      "name": "demo.service",
+      "active_state": "active",
+      "enabled": true
+    }
+  },
+  "oracle_after_fix": "no_fault",
+  "rollback_ok": true,
+  "state_after_rollback": {
+    "name": "demo.service",
+    "active_state": "failed",
+    "sub_state": "failed",
+    "unit_file_state": "enabled",
+    "mode": "broken"
+  },
+  "rollback_tail": "sed -i 's/^MODE=.*/MODE=broken/' /etc/demo/demo.conf\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# systemctl restart demo.service; sleep 2\r\n\u001b[?2004l\r\u001b[?2004hroot@lifthrasir-lab:/home/lab# echo RB_STATE\r\n\u001b[?2004l\rRB_STATE\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# systemctl show demo.service -p Id -p ActiveState -p SubState -p UnitFileState\r\n\u001b[?2004l\r\rId=demo.service\u001b[m\r\nActiveState=failed\u001b[m\r\nSubState=failed\u001b[m\r\nUnitFileState=enabled\u001b[m\r\n\r\u001b[K\u001b[?2004hroot@lifthrasir-lab:/home/lab# cat /etc/demo/demo.conf\r\n\u001b[?2004l\rMODE=broken\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# echo FRB$((5+5))\r\n\u001b[?2004l\rFRB10\r\n\u001b[?2004hroot@lifthrasir-lab:/home/lab# ",
+  "observed_after_rollback": {
+    "service": {
+      "name": "demo.service",
+      "active_state": "failed",
+      "enabled": true
+    }
+  },
+  "oracle_after_rollback": "fault",
+  "rollback_note": "In-guest undo: faulty setting restored + unit restarted; pre-repair failed state verified. Disposable overlay is also deleted at driver end (recipe rollback reset_lab_guest).",
+  "qga_ping_before_poweroff": true,
+  "ssh_tcp_before_poweroff": true,
+  "stopped": true,
+  "loop_proven": true,
+  "golden_sha_after": "d9edd18c4d0d8406038fc180ce6a177c9d7d16a0892f12263d791331bf192c90",
+  "golden_unchanged": true
+}

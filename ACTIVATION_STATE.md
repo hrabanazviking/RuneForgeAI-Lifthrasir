@@ -34,8 +34,10 @@ workers are claimed for slice A.
   golden (dirty marker -> overlay deleted/recreated -> marker absent,
   services active; golden sha unchanged) and fixed the D3 verify-
   ordering blemish in its driver (QGA/SSH probed BEFORE poweroff).
-  Next: the F01 fault loop inside the guest, then the kill-switch
-  drill (last two Phase 1 exit items).
+  Slice F (2026-11-12, keeper run 10) PROVED the F01 fault loop
+  inside the guest end-to-end (detect -> propose -> approve -> fix ->
+  verify -> rollback, evidence pack banked). Next: the kill-switch
+  drill (last Phase 1 exit item).
 - **Phase 2 — Host observe + propose: NOT STARTED.** Blocked on Phase 1
   exit evidence, by design.
 - **Phase 3 — Approval-gated repair classes: NOT STARTED.** Blocked on
@@ -254,4 +256,24 @@ Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-ag
 - Attempt 1 (evidence preserved as lab/evidence/sliceE-attempt1-evidence.json): all four boots actually passed (clean transcripts show RESET_CLEAN2, services active, qga/ssh True) but the driver graded reset_proven=False - a grading bug of the known tty-echo class: the check searched the transcript tail for the plain marker name, which appears in the ECHO of the shell command itself. Fixed to the arithmetic-suffixed output form (RESET_DIRTY_STILL_THERE2), which the echo can never contain; attempt 2 re-ran the full proof.
 - Attempt 2 (lab/evidence/sliceE-evidence.json, SLICEE_OK): round 1 dirty=True clean reset=True; round 2 dirty=True clean reset=True; reset_x2_proven=True; golden sha unchanged after; overlay deleted; no QEMU left. Suite: 1528 passed / 0 failed (unchanged - the driver is lab tooling, no new unit tests claimed).
 - Phase 1 exit NOT met: the F01 fault loop inside the guest (detect -> propose -> approve -> fix -> verify -> rollback, evidence pack) and the kill-switch drill remain. NEXT SLICE (F): F01 loop in the guest - F01 fixture is a failed demo.service; inject inside the disposable guest only, observe via lab collectors/oracle, authorise one narrow reversible fix through policy+approval library path, apply, verify, roll back, evidence pack.
+- Invariants: lab only; host and Volmarr session untouched; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
+
+---
+
+## Keeper tick - 2026-11-12 13:43-13:52 EST (keeper run 10)
+
+Method note: keeper ran the six Mythic Engineering roles sequentially; no sub-agent workers claimed. Work had stopped after run 9 (no lab processes), so the keeper continued with slice F (the F01 fault loop, named next by run 9).
+
+### Slice F - F01 fault loop inside the guest: DONE
+
+- lab/run_sliceF_f01.py (new driver): one disposable overlay boot of golden-installed.qcow2 (sha verified d9edd18c... before and after, unchanged); all fault work inside the guest only, via the proven serial root shell. Caps honoured (4 vCPU / 4 GiB, CPU-only, nice 10, one VM); QGA + SSH both True BEFORE poweroff; VM stopped cleanly; overlay deleted; no QEMU left.
+- INJECT (F01 per lab/fixtures/F01.json): /etc/demo/demo.conf with MODE=broken, /usr/local/bin/lif-demo.sh (exits 1 unless MODE=ok), demo.service enabled + started. Observed in guest: Id=demo.service, ActiveState=failed, SubState=failed, UnitFileState=enabled, MODE=broken. Fixture validation: no errors. Independent oracle (lab/fault_oracle.py) verdict on the observed state: fault.
+- PROPOSE: banked recipe rec-lab-guest-config-fix instantiated (recipes.instantiate) with bindings guest=lifthrasir-lab-F, config_path=/etc/demo/demo.conf, setting=MODE, value=ok, unit=demo.service -> plan-f01-lab-fix (L2, session-blanket; steps edit_config_in_guest + restart_unit_in_guest), catalog-validated at binding time.
+- APPROVE (library path, host-side, before any fix was applied): policy engine (policy.evaluate_dict) returned ALLOW / ALL_CHECKS_PASSED (effective L2, consent session-blanket granted by human). Negative controls all refused as designed: a modify_bootloader plan -> policy DENY; a tampered plan (title edited) -> approval DigestMismatchError; a second consume of the approval -> ReplayError. Approval itself: HMAC plan reference minted (throwaway in-process key, never stored - fixture-scale per APPROVAL-UX, recorded honestly), registered, decided approved by keeper-under-volmarr-standing-order, consumed exactly once for config-file:/etc/demo/demo.conf with the full plan scope recorded.
+- FIX + VERIFY: MODE=ok applied in guest + demo.service restarted -> ActiveState=active, SubState=running, MODE=ok; oracle verdict: no_fault.
+- ROLLBACK: faulty setting restored in guest (MODE=broken) + restart -> ActiveState=failed again; oracle verdict: fault. The recipe rollback names reset_lab_guest; the in-guest inverse edit is the step-level undo and restores the exact pre-repair state, and the disposable overlay was additionally deleted at driver end - both recorded in the evidence pack, not conflated.
+- Evidence: lab/evidence/sliceF-evidence.json (SLICEF_OK, loop_proven=True): full plan, policy decision, approval prompt + reference/digest/scope, per-phase guest states and transcript tails. The gate logic was smoke-proven host-side before the VM boot (same verdicts), so the single guest run was not a blind attempt.
+- Honest blemish: the systemd-collector parse_show capture in the evidence carries ANSI escape suffixes (serial tty colour codes) on its values; the oracle grading used regex-extracted clean fields from the same transcript. The collector parse is supplementary evidence only.
+- Suite: 1528 passed / 0 failed (unchanged - the driver is lab tooling, no new unit tests claimed, as with slice E).
+- Phase 1 exit NOT met: only the kill-switch drill remains (halting the loop mid-run, per the Phase 1 exit evidence in ACTIVATION_PLAN.md). NEXT SLICE (G): kill-switch drill against the lab loop (killswitch.py machinery + campaign flag: engage mid-run, prove the loop halts and state is consistent, release, evidence pack). Phase 2 stays blocked on Phase 1 exit, by design.
 - Invariants: lab only; host and Volmarr session untouched; no Docker; no fingerprint; nothing pushed to the fixes repo; scrub gate still design-only.
