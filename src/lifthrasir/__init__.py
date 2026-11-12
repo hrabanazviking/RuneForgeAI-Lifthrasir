@@ -9,6 +9,9 @@ modules define a SchemaVersionError; the top-level name stays the
 event bus one (LIF-0201 banked behaviour, its tests import it from the
 package). The event store's class remains available as
 lifthrasir.eventstore.SchemaVersionError and is not shadowed there.
+
+Banking union note (LIF-0305): this slice adds the hypotheses exports below on its branch; the seat must union them with any other in-flight export lists when banking, as with the LIF-0301/LIF-0302 union above.
+
 """
 from .eventbus import (
     SCHEMA_VERSION,
@@ -33,6 +36,22 @@ from .provenance import (
     VerificationResult,
     record_source,
     verify_reference,
+)
+from .hypotheses import (
+    EVIDENCE_LADDER,
+    FAILED_STATUS,
+    SCHEMA,
+    STATUSES,
+    CausalLink,
+    CounterevidenceDroppedError,
+    DuplicateHypothesisError,
+    HypothesisError,
+    HypothesisLedger,
+    MalformedHypothesisError,
+    StaleTimestampError,
+    UnknownHypothesisError,
+    UnsupportedStatusError,
+    validate_hypothesis,
 )
 from .eventstore import (
     CURRENT_SCHEMA_VERSION,
@@ -70,6 +89,20 @@ __all__ = [
     "MalformedRecordError",
     "StorePathError",
     "StoredRecord",
+    "EVIDENCE_LADDER",
+    "FAILED_STATUS",
+    "SCHEMA",
+    "STATUSES",
+    "CausalLink",
+    "CounterevidenceDroppedError",
+    "DuplicateHypothesisError",
+    "HypothesisError",
+    "HypothesisLedger",
+    "MalformedHypothesisError",
+    "StaleTimestampError",
+    "UnknownHypothesisError",
+    "UnsupportedStatusError",
+    "validate_hypothesis",
     "ChangedSourceError",
     "MissingSourceError",
     "ProvenanceError",
