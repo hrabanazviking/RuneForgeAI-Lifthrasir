@@ -1,0 +1,362 @@
+{
+ "schema": "lifthrasir.distro-probe-fixtures.v0.1",
+ "note": "Recorded/synthetic host-fact fixtures for LIF-1101. Only kubuntu-lab mirrors purpleraider facts recorded by LIF-0407; the rest are synthetic recordings modelled on documented family shapes. No fixture is evidence about a real machine of its family.",
+ "hosts": [
+  {
+   "facts": {
+    "host_id": "kubuntu-lab",
+    "os_release_text": "ID=ubuntu\nID_LIKE=debian\nVERSION_ID=\"26.10\"\nPRETTY_NAME=\"Kubuntu 26.10\"\n",
+    "kernel_release": "7.3.0-10-generic",
+    "arch": "x86_64",
+    "present_commands": [
+     "systemctl",
+     "apt",
+     "dpkg",
+     "grub-install",
+     "efibootmgr",
+     "nmcli",
+     "bootctl"
+    ],
+    "present_paths": [
+     "/run/systemd/system",
+     "/sys/firmware/efi",
+     "/boot/grub",
+     "/boot/efi",
+     "/dev/kvm",
+     "/dev/dri",
+     "/dev/kfd"
+    ],
+    "lsm_list": [
+     "lockdown",
+     "capability",
+     "landlock",
+     "apparmor"
+    ],
+    "filesystems": [
+     "ext4"
+    ],
+    "markers": [],
+    "display_stack": "kde-wayland",
+    "complete_commands": true,
+    "complete_paths": true
+   },
+   "expected": {
+    "family": "ubuntu",
+    "variant": null,
+    "deployment_model": "live-mutable",
+    "mode": "probe-only",
+    "values": {
+     "package_manager": "apt/dpkg",
+     "service_manager": "systemd",
+     "mac_policy": "apparmor",
+     "boot_mechanism": "uefi+grub",
+     "snapshot_strategy": null,
+     "inference_backends": "rocm-kfd"
+    },
+    "outcomes": {
+     "snapshot_strategy": "absent",
+     "offline_availability": "unknown"
+    }
+   }
+  },
+  {
+   "facts": {
+    "host_id": "debian-stable",
+    "os_release_text": "ID=debian\nVERSION_ID=\"13\"\n",
+    "kernel_release": "6.12.0",
+    "arch": "x86_64",
+    "present_commands": [
+     "systemctl",
+     "apt",
+     "dpkg",
+     "grub-install",
+     "efibootmgr",
+     "nmcli"
+    ],
+    "present_paths": [
+     "/run/systemd/system",
+     "/sys/firmware/efi",
+     "/boot/grub"
+    ],
+    "lsm_list": [
+     "lockdown",
+     "capability",
+     "apparmor"
+    ],
+    "filesystems": [
+     "ext4"
+    ],
+    "markers": [],
+    "complete_commands": true,
+    "complete_paths": true
+   },
+   "expected": {
+    "family": "debian",
+    "variant": null,
+    "deployment_model": "live-mutable",
+    "mode": "probe-only",
+    "values": {
+     "package_manager": "apt/dpkg",
+     "mac_policy": "apparmor"
+    },
+    "outcomes": {}
+   }
+  },
+  {
+   "facts": {
+    "host_id": "debian-sysv",
+    "os_release_text": "ID=debian\nVERSION_ID=\"13\"\n",
+    "arch": "arm64",
+    "present_commands": [
+     "rc-service",
+     "apt",
+     "dpkg",
+     "grub-install"
+    ],
+    "present_paths": [
+     "/boot/grub"
+    ],
+    "lsm_list": [
+     "apparmor"
+    ],
+    "filesystems": [
+     "ext4"
+    ],
+    "markers": [],
+    "complete_commands": true,
+    "complete_paths": true
+   },
+   "expected": {
+    "family": "debian",
+    "variant": null,
+    "deployment_model": "live-mutable",
+    "mode": "probe-only",
+    "values": {
+     "service_manager": "openrc",
+     "package_manager": "apt/dpkg"
+    },
+    "outcomes": {}
+   }
+  },
+  {
+   "facts": {
+    "host_id": "fedora-workstation",
+    "os_release_text": "ID=fedora\nVERSION_ID=\"43\"\n",
+    "kernel_release": "6.17.0",
+    "arch": "x86_64",
+    "present_commands": [
+     "systemctl",
+     "dnf",
+     "rpm",
+     "grub2-install",
+     "efibootmgr",
+     "nmcli"
+    ],
+    "present_paths": [
+     "/run/systemd/system",
+     "/sys/firmware/efi",
+     "/boot/grub2"
+    ],
+    "lsm_list": [
+     "lockdown",
+     "capability",
+     "selinux"
+    ],
+    "filesystems": [
+     "btrfs"
+    ],
+    "markers": [],
+    "complete_commands": true,
+    "complete_paths": true
+   },
+   "expected": {
+    "family": "fedora",
+    "variant": null,
+    "deployment_model": "live-mutable",
+    "mode": "probe-only",
+    "values": {
+     "package_manager": "dnf/rpm",
+     "mac_policy": "selinux",
+     "snapshot_strategy": "btrfs-manual",
+     "boot_mechanism": "uefi+grub2"
+    },
+    "outcomes": {}
+   }
+  },
+  {
+   "facts": {
+    "host_id": "opensuse-leap",
+    "os_release_text": "ID=\"opensuse-leap\"\nID_LIKE=\"suse opensuse\"\nVERSION_ID=\"16.0\"\n",
+    "arch": "x86_64",
+    "present_commands": [
+     "systemctl",
+     "zypper",
+     "rpm",
+     "grub2-install",
+     "efibootmgr",
+     "wicked",
+     "snapper"
+    ],
+    "present_paths": [
+     "/run/systemd/system",
+     "/sys/firmware/efi",
+     "/boot/grub2"
+    ],
+    "lsm_list": [
+     "lockdown",
+     "capability",
+     "apparmor"
+    ],
+    "filesystems": [
+     "btrfs"
+    ],
+    "markers": [],
+    "complete_commands": true,
+    "complete_paths": true
+   },
+   "expected": {
+    "family": "opensuse",
+    "variant": null,
+    "deployment_model": "live-mutable",
+    "mode": "probe-only",
+    "values": {
+     "package_manager": "zypper/rpm",
+     "network_stack": "wicked",
+     "snapshot_strategy": "snapper"
+    },
+    "outcomes": {}
+   }
+  },
+  {
+   "facts": {
+    "host_id": "arch-rolling",
+    "os_release_text": "ID=arch\nPRETTY_NAME=\"Arch Linux\"\n",
+    "arch": "x86_64",
+    "present_commands": [
+     "systemctl",
+     "pacman",
+     "grub-install",
+     "efibootmgr",
+     "nmcli"
+    ],
+    "present_paths": [
+     "/run/systemd/system",
+     "/sys/firmware/efi",
+     "/boot/grub"
+    ],
+    "lsm_list": [],
+    "filesystems": [
+     "ext4"
+    ],
+    "markers": [],
+    "complete_commands": true,
+    "complete_paths": true
+   },
+   "expected": {
+    "family": "arch",
+    "variant": null,
+    "deployment_model": "live-mutable",
+    "mode": "probe-only",
+    "values": {
+     "package_manager": "pacman"
+    },
+    "outcomes": {
+     "mac_policy": "unknown"
+    }
+   }
+  },
+  {
+   "facts": {
+    "host_id": "microos-host",
+    "os_release_text": "ID=\"opensuse-microos\"\nID_LIKE=\"suse opensuse\"\n",
+    "arch": "x86_64",
+    "present_commands": [
+     "systemctl",
+     "zypper",
+     "rpm",
+     "grub2-install"
+    ],
+    "present_paths": [
+     "/run/systemd/system",
+     "/boot/grub2"
+    ],
+    "lsm_list": [
+     "selinux"
+    ],
+    "filesystems": [
+     "btrfs"
+    ],
+    "markers": [
+     "transactional-update"
+    ],
+    "complete_commands": true,
+    "complete_paths": true
+   },
+   "expected": {
+    "family": "opensuse",
+    "variant": "opensuse-microos",
+    "deployment_model": "transactional",
+    "mode": "observation-only",
+    "values": {},
+    "outcomes": {}
+   }
+  },
+  {
+   "facts": {
+    "host_id": "void-unknown",
+    "os_release_text": "ID=void\nPRETTY_NAME=\"Void Linux\"\n",
+    "arch": "x86_64",
+    "present_commands": [
+     "sv",
+     "xbps-install"
+    ],
+    "present_paths": [],
+    "lsm_list": [],
+    "filesystems": [
+     "ext4"
+    ],
+    "markers": [],
+    "complete_commands": true,
+    "complete_paths": true
+   },
+   "expected": {
+    "family": null,
+    "variant": null,
+    "deployment_model": "unknown",
+    "mode": "observation-only",
+    "values": {
+     "service_manager": "runit"
+    },
+    "outcomes": {
+     "package_manager": "absent"
+    }
+   }
+  },
+  {
+   "facts": {
+    "host_id": "partial-recording",
+    "os_release_text": "ID=debian\n",
+    "arch": "",
+    "present_commands": [],
+    "present_paths": [],
+    "lsm_list": [],
+    "filesystems": [],
+    "markers": [],
+    "complete_commands": false,
+    "complete_paths": false
+   },
+   "expected": {
+    "family": "debian",
+    "variant": null,
+    "deployment_model": "unknown",
+    "mode": "observation-only",
+    "values": {},
+    "outcomes": {
+     "package_manager": "unknown",
+     "service_manager": "unknown",
+     "hardware_interfaces": "unknown"
+    }
+   }
+  }
+ ]
+}
