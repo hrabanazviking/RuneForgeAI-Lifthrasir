@@ -1,0 +1,259 @@
+{
+  "arbitration": {
+    "agreeing-verdicts": {
+      "expected_loser": null,
+      "expected_outcome": "agree",
+      "expected_winner": null,
+      "first": {
+        "claim_id": "claim-one",
+        "confidence": 0.3,
+        "evidence_ids": [
+          "ev-note-1"
+        ],
+        "evidence_status": "idea",
+        "subject": "hyp-delta",
+        "verdict": "supported",
+        "work_id": "work-repro-a"
+      },
+      "second": {
+        "claim_id": "claim-two",
+        "confidence": 0.8,
+        "evidence_ids": [
+          "ev-run-1"
+        ],
+        "evidence_status": "lab-verified",
+        "subject": "hyp-delta",
+        "verdict": "supported",
+        "work_id": "work-verify-a"
+      }
+    },
+    "full-tie-unresolved": {
+      "expected_loser": null,
+      "expected_outcome": "unresolved",
+      "expected_winner": null,
+      "first": {
+        "claim_id": "claim-left",
+        "confidence": 0.95,
+        "evidence_ids": [
+          "ev-run-1"
+        ],
+        "evidence_status": "reproducer",
+        "subject": "hyp-gamma",
+        "verdict": "supported",
+        "work_id": "work-repro-a"
+      },
+      "second": {
+        "claim_id": "claim-right",
+        "confidence": 0.1,
+        "evidence_ids": [
+          "ev-run-9"
+        ],
+        "evidence_status": "reproducer",
+        "subject": "hyp-gamma",
+        "verdict": "refuted",
+        "work_id": "work-verify-a"
+      }
+    },
+    "ladder-beats-confidence": {
+      "expected_loser": "work-verify-a",
+      "expected_outcome": "upheld-first",
+      "expected_winner": "work-repro-a",
+      "first": {
+        "claim_id": "claim-repro",
+        "confidence": 0.4,
+        "evidence_ids": [
+          "ev-run-1"
+        ],
+        "evidence_status": "lab-verified",
+        "subject": "hyp-alpha",
+        "verdict": "supported",
+        "work_id": "work-repro-a"
+      },
+      "second": {
+        "claim_id": "claim-verify",
+        "confidence": 0.99,
+        "evidence_ids": [
+          "ev-note-1",
+          "ev-note-2"
+        ],
+        "evidence_status": "hypothesis",
+        "subject": "hyp-alpha",
+        "verdict": "refuted",
+        "work_id": "work-verify-a"
+      }
+    },
+    "same-rung-breadth": {
+      "expected_loser": "work-repro-a",
+      "expected_outcome": "upheld-second",
+      "expected_winner": "work-verify-a",
+      "first": {
+        "claim_id": "claim-narrow",
+        "confidence": 0.9,
+        "evidence_ids": [
+          "ev-run-1"
+        ],
+        "evidence_status": "reproducer",
+        "subject": "hyp-beta",
+        "verdict": "supported",
+        "work_id": "work-repro-a"
+      },
+      "second": {
+        "claim_id": "claim-broad",
+        "confidence": 0.2,
+        "evidence_ids": [
+          "ev-run-2",
+          "ev-run-3",
+          "ev-log-1"
+        ],
+        "evidence_status": "reproducer",
+        "subject": "hyp-beta",
+        "verdict": "refuted",
+        "work_id": "work-verify-a"
+      }
+    }
+  },
+  "budget": {
+    "cpu_milli": 3000,
+    "memory_mb": 4096,
+    "slots": 2,
+    "time_window_s": 600
+  },
+  "fixture": "lif0703-scheduler-arbitration-0.1",
+  "note": "Fixture work items and evidence claims only. No live host is scheduled and no real work runs; the scheduler and arbitrator decide over these records alone.",
+  "scheduling": {
+    "all-fit": {
+      "expected_admitted": [
+        "work-one",
+        "work-two"
+      ],
+      "expected_deferred": {},
+      "items": [
+        {
+          "cpu_milli": 100,
+          "duration_s": 10,
+          "kind": "generic",
+          "memory_mb": 100,
+          "priority": 50,
+          "sequence": 0,
+          "subject": "",
+          "work_id": "work-one"
+        },
+        {
+          "cpu_milli": 100,
+          "duration_s": 10,
+          "kind": "generic",
+          "memory_mb": 100,
+          "priority": 50,
+          "sequence": 1,
+          "subject": "",
+          "work_id": "work-two"
+        }
+      ]
+    },
+    "memory-bound": {
+      "expected_admitted": [
+        "work-fat-a"
+      ],
+      "expected_deferred": {
+        "work-fat-b": {
+          "fits_alone": true,
+          "primary": "memory"
+        }
+      },
+      "items": [
+        {
+          "cpu_milli": 100,
+          "duration_s": 30,
+          "kind": "analysis",
+          "memory_mb": 3000,
+          "priority": 50,
+          "sequence": 0,
+          "subject": "",
+          "work_id": "work-fat-a"
+        },
+        {
+          "cpu_milli": 100,
+          "duration_s": 30,
+          "kind": "analysis",
+          "memory_mb": 3000,
+          "priority": 40,
+          "sequence": 1,
+          "subject": "",
+          "work_id": "work-fat-b"
+        }
+      ]
+    },
+    "mixed-load": {
+      "expected_admitted": [
+        "work-repro-a",
+        "work-verify-a"
+      ],
+      "expected_deferred": {
+        "work-huge": {
+          "fits_alone": false,
+          "primary": "cpu"
+        },
+        "work-repro-b": {
+          "fits_alone": true,
+          "primary": "slots"
+        },
+        "work-slow": {
+          "fits_alone": false,
+          "primary": "time"
+        }
+      },
+      "items": [
+        {
+          "cpu_milli": 1000,
+          "duration_s": 120,
+          "kind": "reproducer",
+          "memory_mb": 1024,
+          "priority": 80,
+          "sequence": 0,
+          "subject": "hyp-alpha",
+          "work_id": "work-repro-a"
+        },
+        {
+          "cpu_milli": 1000,
+          "duration_s": 120,
+          "kind": "verifier",
+          "memory_mb": 1024,
+          "priority": 70,
+          "sequence": 1,
+          "subject": "hyp-alpha",
+          "work_id": "work-verify-a"
+        },
+        {
+          "cpu_milli": 500,
+          "duration_s": 60,
+          "kind": "reproducer",
+          "memory_mb": 512,
+          "priority": 60,
+          "sequence": 2,
+          "subject": "hyp-beta",
+          "work_id": "work-repro-b"
+        },
+        {
+          "cpu_milli": 4000,
+          "duration_s": 60,
+          "kind": "analysis",
+          "memory_mb": 512,
+          "priority": 90,
+          "sequence": 3,
+          "subject": "hyp-gamma",
+          "work_id": "work-huge"
+        },
+        {
+          "cpu_milli": 100,
+          "duration_s": 900,
+          "kind": "hypothesis",
+          "memory_mb": 128,
+          "priority": 75,
+          "sequence": 4,
+          "subject": "hyp-delta",
+          "work_id": "work-slow"
+        }
+      ]
+    }
+  }
+}
