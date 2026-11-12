@@ -1,0 +1,17 @@
+Id=tidy.service
+ActiveState=inactive
+SubState=dead
+UnitFileState=disabled
+Result=success
+ExecMainStatus=0
+ExecMainCode=exited
+NRestarts=0
+
+Id=crashed.service
+ActiveState=failed
+SubState=failed
+UnitFileState=enabled
+Result=exit-code
+ExecMainStatus=1
+ExecMainCode=exited
+NRestarts=4

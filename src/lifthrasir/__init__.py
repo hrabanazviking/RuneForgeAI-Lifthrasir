@@ -319,6 +319,19 @@ from .reversal import (
     TamperedManifestError,
     TransactionStateError,
 )
+from .service_intent import (
+    SCHEMA_VERSION as SERVICE_INTENT_SCHEMA_VERSION,
+    INTENTIONAL,
+    ACCIDENTAL,
+    HEALTHY,
+    UNKNOWN,
+    RESTART_LOOP_THRESHOLD,
+    UnitObservation,
+    Classification,
+    classify,
+    classify_many,
+    should_abstain,
+)
 __all__ = [
     "CATALOG",
     "CATALOG_VERSION",
@@ -585,4 +598,15 @@ __all__ = [
     "Step",
     "TamperedManifestError",
     "TransactionStateError",
+    "SERVICE_INTENT_SCHEMA_VERSION",
+    "INTENTIONAL",
+    "ACCIDENTAL",
+    "HEALTHY",
+    "UNKNOWN",
+    "RESTART_LOOP_THRESHOLD",
+    "UnitObservation",
+    "Classification",
+    "classify",
+    "classify_many",
+    "should_abstain",
 ]
