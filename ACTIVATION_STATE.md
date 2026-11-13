@@ -1232,3 +1232,18 @@ Method: six Mythic roles sequentially, no sub-agents claimed. Work NOT stopped; 
 - Banking before this append: HEAD 3156611db85e5cfac4016f2b7e38da50942e00c7 = ls-remote origin HEAD, verified. No unbanked code slice.
 - Host: no QEMU, load 2.08/2.07/2.12, up 23:07, seat0 session 11 undisturbed, no host mutations outside observer state dir, no Docker/fingerprint, nothing to fixes repo.
 - Phase 2: started 2026-11-12 14:11 EST, exit earliest 2026-11-19 14:11 EST, IN PROGRESS not met, elapsed ~10h37m. NEXT: verify cycling, track all three drafts only.
+
+## Keeper tick — 2026-11-13 00:57 EST (run lifthrasir-activation-keeper)
+- Observer: lifthrasir-observer.service active/running, NRestarts=0 (via XDG_RUNTIME_DIR bus). Latest cycle 2026-11-13T05:56:14Z, status observed, events.jsonl 132 lines.
+- Proposals this cycle: 3 drafts, NOT executed — whoopsie.path, fwupd-refresh.service, whoopsie.service (all L3 per-action restart_unit, expires 2026-11-20). Phase 2 read-only invariant holds; no host mutations.
+- Phase 2 clock: started 2026-11-12 14:11 EST, earliest exit 2026-11-19 14:11 EST; elapsed ~10h47m — IN PROGRESS, exit not met. Phase 3 remains blocked on Phase 2 exit + Volmarr seeing broker design.
+- No stopped work to restart; no new slice started. Nothing pushed to fixes repo. Kill-switch armed, no STOP present.
+## Keeper tick — 2026-11-13 01:07 EST (scheduled 01:07:58, checked 01:09 EST)
+- Method: six Mythic roles sequentially, no sub-agents claimed. Work NOT stopped; Phase 2 observer live, verified only (Phase 3 blocked on Phase 2 exit + Volmarr broker-design review). Independent direct checks only.
+- Observer: lifthrasir-observer.service active/running since 2026-11-12 14:11:11 EST, MainPID 995441 unchanged, NRestarts 0, MemoryCurrent 5500928, CPUUsageNSec 1902742000.
+- Cycle: latest.json+DIGEST.md 2026-11-13T06:06:14Z (01:06:14 EST), status observed, proposals 3, events.jsonl 134 (132->134).
+- Proposals: whoopsie.path sha256:6b463265..., fwupd-refresh.service sha256:e4e799ab..., whoopsie.service sha256:047d8851..., all L3 per-action restart_unit, expires 2026-11-20, NOT executed; systemctl --failed confirms all three failed.
+- Snapshot calm: disk_alerts [], warnings [], root 10pct, vault 1pct, mem_available 124562588 KB. Killswitch dir empty, no STOP.
+- Banking before this append: HEAD dbb9bfcd03a155a6dab99f8330a8727e6b395b97 = ls-remote origin HEAD, verified; working tree carried only the prior tick's ACTIVATION_STATE.md append.
+- Host: no QEMU, load 2.48/2.20/2.12, up 23:27, seat0 session 11 undisturbed, no Docker (not installed), no fingerprint, no host mutations outside observer state dir, nothing to fixes repo.
+- Phase 2: started 2026-11-12 14:11 EST, exit earliest 2026-11-19 14:11 EST, IN PROGRESS not met, elapsed ~10h58m. NEXT: verify cycling, track all three drafts only.
