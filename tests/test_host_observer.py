@@ -83,3 +83,29 @@ def test_duplicate_alert_targets_dedupe_to_one_proposal():
     # titles differ by kind, ids must not.
     props = obs.build_proposals([], alerts, datetime.now(timezone.utc))
     assert len(props) == 1
+
+
+def test_template_instance_unit_gets_valid_unique_plan_ids():
+    import re
+    from datetime import datetime, timezone
+    units = [{"unit": f"drkonqi-coredump-processor@24{i}-7782{i}-125291{i}_14751176{i}-0.service",
+              "state": "failed", "since": None, "restart_count": None}
+             for i in range(5)]
+    props = obs.build_proposals(units, [], datetime.now(timezone.utc))
+    assert len(props) == 5
+    ids = [pr["plan"]["plan_id"] for pr in props]
+    assert len(set(ids)) == 5
+    for pr in props:
+        pid = pr["plan"]["plan_id"]
+        assert re.match(r"^plan-[a-z0-9][a-z0-9-]*$", pid)
+        assert len(pid) <= 60
+        assert pr["digest"].startswith("sha256:")
+
+
+def test_legacy_plan_ids_unchanged():
+    from datetime import datetime, timezone
+    units = [{"unit": u, "state": "failed", "since": None, "restart_count": None}
+             for u in ("whoopsie.path", "fwupd-refresh.service", "whoopsie.service")]
+    props = obs.build_proposals(units, [], datetime.now(timezone.utc))
+    assert [p["plan"]["plan_id"] for p in props] == [
+        "plan-obs-whoopsie-path", "plan-obs-fwupd-refresh", "plan-obs-whoopsie"]

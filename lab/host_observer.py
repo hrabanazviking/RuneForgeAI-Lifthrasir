@@ -16,7 +16,9 @@ halt and collects nothing. Stopping by hand:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import re
 import subprocess
 import sys
 import time
@@ -39,6 +41,28 @@ def _now():
 
 def _iso(moment):
     return moment.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+_PLAN_ID_MAX = 60
+
+
+def _slugify(text):
+    """Slug satisfying approval.PLAN_ID_RE: [a-z0-9] runs joined by '-'."""
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-") or "unknown"
+
+
+def _obs_plan_id(prefix, raw, discriminator):
+    """plan_id <= 60 chars; overlong slugs keep a hash of the full raw
+    name so distinct template instances stay distinct (regression:
+    drkonqi-coredump-processor@<instance> units crashed the observer
+    on 2026-11-14 because '@' survived the old slug builder)."""
+    slug = _slugify(raw)
+    plan_id = f"{prefix}{slug}"
+    if len(plan_id) > _PLAN_ID_MAX:
+        digest = hashlib.sha256(discriminator.encode("utf-8")).hexdigest()[:8]
+        keep = _PLAN_ID_MAX - len(prefix) - len(digest) - 1
+        plan_id = f"{prefix}{slug[:keep].rstrip('-')}-{digest}"
+    return plan_id
+
 
 
 def stop_requested(state_dir):
@@ -71,9 +95,9 @@ def build_proposals(failed_units, alerts, now):
     expires = _iso(now + timedelta(days=7))
     for fu in failed_units:
         unit = fu["unit"] if isinstance(fu, dict) else fu.unit
-        slug = unit.replace(".service", "").replace(".", "-").replace("_", "-")
+        base = unit[:-len(".service")] if unit.endswith(".service") else unit
         plan = {
-            "plan_id": f"plan-obs-{slug}"[:60],
+            "plan_id": _obs_plan_id("plan-obs-", base, unit),
             "schema": "lifthrasir.plan.v0.1",
             "title": f"Investigate failed unit {unit} (observer draft, not approved)",
             "risk_level": "L3",
@@ -92,9 +116,8 @@ def build_proposals(failed_units, alerts, now):
         kind = alert["kind"] if isinstance(alert, dict) else alert.kind
         target = alert["target"] if isinstance(alert, dict) else alert.target
         sev = alert["severity"] if isinstance(alert, dict) else alert.severity
-        slug = (target.strip("/").replace("/", "-") or "root")
         plan = {
-            "plan_id": f"plan-obs-disk-{slug}"[:60],
+            "plan_id": _obs_plan_id("plan-obs-disk-", target.strip("/") or "root", target),
             "schema": "lifthrasir.plan.v0.1",
             "title": f"Inspect {kind} usage on {target} ({sev}, observer draft)",
             "risk_level": "L1",
